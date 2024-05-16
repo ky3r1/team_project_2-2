@@ -86,6 +86,10 @@ protected:
 
     //Ž€–S‚µ‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚é
     virtual void OnDead() {}
+public:
+    int GetHealth()const { return health; }
+
+    int GetMaxHealth()const { return maxHealth; }
 
 protected:
     DirectX::XMFLOAT3   position = { 0,0,0 };
@@ -104,6 +108,7 @@ protected:
     bool        isGround = false;
     float       height = 2.0f;
     int         health = 5;
+    int         maxHealth = 5;
     float       invincibleTimer = 1.0f;
     float       friction = 0.5f;
     float       acceleration = 1.0f;

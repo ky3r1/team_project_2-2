@@ -14,5 +14,5 @@ void Enemy::DrewDebugPrimitive()
 //”jŠü
 void Enemy::Destroy()
 {
-    EnemyManager::instance().Remove(this);
+    EnemyManager::Instance().Remove(this);
 }

@@ -43,4 +43,8 @@ public:
         const Model* model,
         HitResult& result
     );
+
+    //static bool HPbarPoint(
+
+    //);
 };

@@ -111,7 +111,7 @@ void Player::DrawDebugGUI()
 
 void Player::CollisionPlayerVsEnemies()
 {
-    EnemyManager& enemyManager = EnemyManager::instance();
+    EnemyManager& enemyManager = EnemyManager::Instance();
 
     //‚·‚×‚Ä‚Ì“G‚Æ‘“–‚½‚è‚ÅÕ“Ë”»’è
     int enemyCount = enemyManager.GetEnemyCount();
@@ -138,7 +138,7 @@ void Player::CollisionPlayerVsEnemies()
 
 void Player::CollisionProjectilesVsEnemies()
 {
-    EnemyManager& enemyManager = EnemyManager::instance();
+    EnemyManager& enemyManager = EnemyManager::Instance();
 
     //‚·‚×‚Ä‚Ì’eŠÛ‚Æ‚·‚×‚Ä‚Ì“G‚ğ‚»‚¤“–‚½‚è‚ÅÕ“Ëˆ—
     int projectileCount = projectileManager.GetProjectileCount();
@@ -353,12 +353,12 @@ void Player::InputProjectile()
 
         //ˆê”Ô‹ß‚­‚Ì“G‚ğƒ^[ƒQƒbƒg‚É‚·‚é
         float dist = FLT_MAX;
-        EnemyManager& enemyManager = EnemyManager::instance();
+        EnemyManager& enemyManager = EnemyManager::Instance();
         int enemyCount = enemyManager.GetEnemyCount();
         for (int i = 0; i < enemyCount; i++)
         {
             //“G‚Æ‚Ì‹——£”»’è
-            Enemy* enemy = EnemyManager::instance().GetEnemy(i);
+            Enemy* enemy = EnemyManager::Instance().GetEnemy(i);
             DirectX::XMVECTOR P = DirectX::XMLoadFloat3(&position);
             DirectX::XMVECTOR E = DirectX::XMLoadFloat3(&enemy->GetPosition());
             DirectX::XMVECTOR V = DirectX::XMVectorSubtract(E, P);

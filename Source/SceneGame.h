@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "CameraController.h"
 #include "Scene.h"
+#include "Graphics/Sprite.h"
+
 // ƒQ[ƒ€ƒV[ƒ“
 class SceneGame : public Scene
 {
@@ -22,7 +24,9 @@ public:
 	// •`‰æˆ—
 	void Render() override;
 private:
+	void RenderEnemyGauge(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection);
+private:
 	Player* player = nullptr;
 	CameraController* cameraController = nullptr;
-
+	Sprite* gauge = nullptr;
 };

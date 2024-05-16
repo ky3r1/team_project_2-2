@@ -13,7 +13,7 @@ private:
 
 public:
     //唯一のインスタンス取得
-    static EnemyManager& instance()
+    static EnemyManager& Instance()
     {
         static EnemyManager instance;
         return instance;
