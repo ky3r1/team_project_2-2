@@ -15,8 +15,8 @@ public:
     //•`‰æˆ—
     virtual void Render(ID3D11DeviceContext* dc, Shader* shader) = 0;
 
+    void DrewDebugPrimitive();
+
     //”jŠü
     void Destroy();
-
-    virtual void DrewDebugPrimitive();
 };

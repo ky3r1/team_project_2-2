@@ -64,6 +64,17 @@ void EnemyManager::DrawDebugPrimitive()
     }
 }
 
+void EnemyManager::DrawDebugGUI()
+{
+    ImGui::Begin("Enemy");
+    ImGui::SetNextTreeNodeOpen(true);
+    for (Enemy* enemy : enemies)
+    {
+        enemy->DrawDebugGUI();
+    }
+    ImGui::End();
+}
+
 //エネミー全削除
 void EnemyManager::clear()
 {

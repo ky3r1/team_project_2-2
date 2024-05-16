@@ -27,57 +27,8 @@ Player::~Player()
 
 void Player::Update(float elapsedTime)
 {
-    ////進行ベクトル取得
-    //DirectX::XMFLOAT3 moveVec = GetMoveVec();
-    //
-    ////移動処理
-    //float moveSpeed = this->moveSpeed * elapsedTime;
-    //position.x += moveVec.x * moveSpeed;
-    //position.z += moveVec.z * moveSpeed;
-
     //移動入力処理
     InputMove(elapsedTime);
-
-    ////入力情報の取得
-    //GamePad& gamePad = Input::Instance().GetGamePad();
-    //float ax = gamePad.GetAxisLX();
-    //float ay = gamePad.GetAxisLY();
-    //
-    ////移動操作
-    //float moveSpeed = 5.0f * elapsedTime;
-    //{
-    //    if (ax <0)
-    //    {
-    //        position.x -= moveSpeed;
-    //    }
-    //    if (ax >0)
-    //    {
-    //        position.x += moveSpeed;
-    //    }
-    //    if (ay >0)
-    //    {
-    //        position.z += moveSpeed;
-    //    }
-    //    if (ay <0)
-    //    {
-    //        position.z -= moveSpeed;
-    //    }
-    //}
-    //
-    //float rotateSpeed = DirectX::XMConvertToRadians(360) * elapsedTime;
-    //if (gamePad.GetButton() & GamePad::BTN_A)
-    //{
-    //    angle.x += rotateSpeed;
-    //}
-    //if (gamePad.GetButton() & GamePad::BTN_B)
-    //{
-    //    angle.y += rotateSpeed;
-    //}
-    //if (gamePad.GetButton() & GamePad::BTN_X)
-    //{
-    //    angle.z += rotateSpeed;
-    //}
-
 
     //ジャンプ処理
     InputJump();
@@ -122,48 +73,6 @@ void Player::InputMove(float elapsedTime)
     //旋回処理
     Turn(elapsedTime, moveVec.x, moveVec.z, turnSpeed);
 }
-
-//void Player::Turn(float elapsedTime, float vx, float vz, float speed)
-//{
-//    speed *= elapsedTime;
-//
-//    //進行ベクトルがゼロベクトルの場合は処理する必要なし
-//    float length = sqrtf(vx * vx + vz * vz);
-//    if (length<0.0001f) return;
-//
-//    //進行ベクトルを単位ベクトル化
-//    vx /= length;
-//    vz /= length;
-//
-//
-//    //自身の回転値から前方向を求める
-//    float frontX = sinf(angle.y);
-//    float frontZ = cosf(angle.y);
-//
-//    //回転角を求めるため、2つの単位ベクトルの内積を計算する
-//    float dot = (vx * frontX) + (vz * frontZ);
-//
-//    //内積値は-1.0～1.0で表現されており、2つの単位ベクトルの角度が
-//    // 小さいほど1.0に近づくという性質を利用して回転速度を調整する
-//    float rot = 1.0 - dot;
-//    if (rot > speed) { rot = speed; }
-//    //speed *= rot;
-//    //左右判定を行うために2つの単位ベクトルの外積を計算する
-//    float cross = (vz * frontX) - (vx * frontZ);
-//
-//    //2Dの外積値が正の場合か負の場合によって左右判定が行える
-//    //左右判定を行うことによって左右回転を選択する
-//
-//    if (cross < 0.0f)
-//    {
-//        angle.y += rot;
-//    }
-//    else
-//    {
-//        angle.y -= rot;
-//    }
-//
-//}
 
 void Player::Render(ID3D11DeviceContext* dc, Shader* shader)
 {

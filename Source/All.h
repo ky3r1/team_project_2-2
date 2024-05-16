@@ -10,7 +10,10 @@
 ///////////////////デバッグ用define////////////////////////
 
 //動く床
-//#define MovingStage
+#define MovingStage
+
+//壁
+//#define WallStage
 
 //ImGui
 #define DebugImGui

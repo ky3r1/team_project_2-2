@@ -22,7 +22,7 @@ public:
     void DrawDebugPrimitive();
 
     //デバッグ用GUI
-    void DrawDebugGUI();
+    void DrawDebugGUI() override;
 private:
     //スティック入力値から移動ベクトルを取得
     DirectX::XMFLOAT3 GetMoveVec() const;

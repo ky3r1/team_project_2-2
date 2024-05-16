@@ -37,4 +37,5 @@ bool StageMain::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3&
 
 void StageMain::DrawDebugGUI()
 {
+
 }

@@ -25,8 +25,11 @@ void SceneGame::Initialize()
 	stageMoveFloor->SetTrque(DirectX::XMFLOAT3(0, 1.0f, 0));
 	stageManager.Register(stageMoveFloor);
 #endif // MovingStage
+
+#ifdef WallStage
 	StageWall* stageWall = new StageWall();
 	stageManager.Register(stageWall);
+#endif // WallStage
 
 	player = new Player();
 
@@ -47,14 +50,18 @@ void SceneGame::Initialize()
 	//カメラコントローラー初期化
 	cameraController = new CameraController();
 
-	//エネミー初期化
-	//Enemy* enemy = new EnemySlime;
-	//enemy->SetPosition({ 0,0,5 });
-	//EnemyManager::instance().Register(enemy);
 	for (int i = 0; i < 2; i++)
 	{
 		EnemySlime* slime = new EnemySlime();
-		slime->SetPosition(DirectX::XMFLOAT3(i * 2.0f, 0, 5));
+		switch (i)
+		{
+		case 0:
+			slime->SetPosition(DirectX::XMFLOAT3( 2.0f, 0, 5));
+			break;
+		case 1:
+			slime->SetPosition(DirectX::XMFLOAT3( 4.0f, 0, 5));
+			break;
+		}
 		EnemyManager::instance().Register(slime);
 	}
 
@@ -167,6 +174,7 @@ void SceneGame::Render()
 	//プレイヤーデバッグ描画
 	player->DrawDebugGUI();
 	cameraController->DrawDebugGUI();
+	EnemyManager::instance().DrawDebugGUI();
 	StageManager::Instance().DrawDebugGUI();
 #endif // DebugImGui
 }

@@ -47,3 +47,14 @@ void EnemySlime::OnDead()
 {
     Destroy();
 }
+
+void EnemySlime::DrawDebugGUI()
+{
+    if (ImGui::TreeNode("EnemySlime"))
+    {
+        ImGui::SliderFloat3("position", &position.x, -5, 5);
+        ImGui::SliderFloat3("scale", &scale.x, 0.01f, 4.0f);
+        ImGui::SliderFloat3("angle", &angle.x, -3.14f, 3.14f);
+        ImGui::TreePop();
+    }
+}

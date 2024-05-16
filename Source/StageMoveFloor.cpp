@@ -132,5 +132,12 @@ bool StageMoveFloor::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFL
 
 void StageMoveFloor::DrawDebugGUI()
 {
+    if (ImGui::TreeNode("StageMoveFloor"))
+    {
+        ImGui::SliderFloat3("position", &position.x, -5, 5);
+        ImGui::SliderFloat3("scale", &scale.x, 0.001f, 4.0f);
+        ImGui::SliderFloat3("angle", &angle.x, -3.14f, 3.14f);
+        ImGui::TreePop();
+    }
 }
 

@@ -95,34 +95,6 @@ void Character::UpdateVelocity(float elapsedTime)
 
     //水平移動更新処理
     UpdateHorizontalMove(elapsedTime);
-
-
-
-
-
-    ////重力処理
-    //velocity.y += gravity * elapsedFrame;
-
-    ////移動処理
-    //position.y += velocity.y * elapsedTime;
-
-    ////地面判定
-    //if (position.y < 0.0f)
-    //{
-    //    position.y = 0.0f;
-    //    velocity.y = 0.0f;
-
-    //    //接地した
-    //    if (IsGround() == false)
-    //    {
-    //        OnLanding();
-    //    }
-    //    isGround = true;
-    //}
-    //else
-    //{
-    //    isGround = false;
-    //}
 }
 
 void Character::UpdateInvincibleTime(float elapsedTime)
@@ -176,27 +148,6 @@ void Character::UpdateVerticalVelocity(float elapsedFrame)
 
 void Character::UpdateVerticalMove(float elapsedTime)
 {
-    ////移動処理
-    //position.y += velocity.y * elapsedTime;
-
-    ////地面判定
-    //if (position.y < 0.0f)
-    //{
-    //    position.y = 0.0f;
-    //    velocity.y = 0.0f;
-
-    //    //接地した
-    //    if (IsGround() == false)
-    //    {
-    //        OnLanding();
-    //    }
-    //    isGround = true;
-    //}
-    //else
-    //{
-    //    isGround = false;
-    //}
-
     //垂直方向の移動量
     float my = velocity.y * elapsedTime;
 

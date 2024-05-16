@@ -45,6 +45,9 @@ public:
     //衝撃を与える
     void AddImpulse(const DirectX::XMFLOAT3& impulse);
 
+    //デバッグ用GUI
+    virtual void DrawDebugGUI() {};
+
 private:
     //垂直速力処理
     void UpdateVerticalVelocity(float elapsedFrame);

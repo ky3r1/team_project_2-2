@@ -34,6 +34,9 @@ public:
     //デバッグプリミティブ描画
     void DrawDebugPrimitive();
 
+    //デバッグ用GUI
+    void DrawDebugGUI();
+
     //エネミー数取得
     int GetEnemyCount() const { return static_cast<int>(enemies.size()); }
 

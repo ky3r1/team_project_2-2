@@ -19,6 +19,9 @@ protected:
     //死亡したときに呼ばれる
     void OnDead() override;
 
+    //デバッグ用GUI
+    void DrawDebugGUI() override;
+
 private:
     Model* model = nullptr;
 };

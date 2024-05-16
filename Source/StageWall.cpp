@@ -5,7 +5,7 @@ int timer;
 StageWall::StageWall()
 {
     //position.y = 5.0f;
-    position.x = 1.0f;
+    position.z = 10.0f;
 
     scale.x = scale.y = 3.0f;
     scale.z = 0.5f;
@@ -21,14 +21,7 @@ StageWall::~StageWall()
 
 void StageWall::Update(float elapsedTime)
 {
-    if (timer% 60 == 0)
-    {
-        position.x += 1.0f;
-    }
-    if (position.x > 7.0f)
-    {
-        position.x = 7.0f;
-    }
+    position.z -= 2.0f / 60.0f;
     //行列更新
     UpdateTransform();
     //モデル行列更新
