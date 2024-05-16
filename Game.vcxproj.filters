@@ -188,6 +188,9 @@
     <ClInclude Include="Source\StageMoveFloor.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\StageWall.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -320,6 +323,9 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Source\StageMoveFloor.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StageWall.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,15 +1,11 @@
 #pragma once
-//#include"Graphics/Shader.h"
-#include"Graphics/Model.h"
-//#include "Collision.h"
 #include "Stage.h"
 
-//ステージ
-class StageMain:public Stage 
+class StageWall :public Stage
 {
 public:
-    StageMain();
-    ~StageMain()override;
+    StageWall();
+    ~StageWall()override;
 
     //更新処理
     void Update(float elapsedTime)override;
