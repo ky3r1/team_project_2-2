@@ -3,11 +3,11 @@
 
 #include "Graphics/Graphics.h"
 #include "Input/Input.h"
-#include "Framework.h"
-#include "EffectManager.h"
+#include "framework.h"
+#include "effect_manager.h"
 //#include "SceneGame.h"
-#include "SceneTitle.h"
-#include "SceneManager.h"
+#include "scene_title.h"
+#include "scene_manager.h"
 
 //static SceneGame sceneGame;
 

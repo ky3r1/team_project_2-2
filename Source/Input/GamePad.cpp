@@ -2,6 +2,7 @@
 #include <math.h>
 #include <Xinput.h>
 #include "Input/GamePad.h"
+#include <DirectXMath.h>
 
 // çXêV
 void GamePad::Update()
@@ -147,6 +148,7 @@ void GamePad::Update()
 		if (GetAsyncKeyState('X') & 0x8000) newButtonState |= BTN_B;
 		if (GetAsyncKeyState('C') & 0x8000) newButtonState |= BTN_X;
 		if (GetAsyncKeyState('V') & 0x8000) newButtonState |= BTN_Y;
+		//if (GetAsyncKeyState('Space'))
 		if (GetAsyncKeyState(VK_UP) & 0x8000)	newButtonState |= BTN_UP;
 		if (GetAsyncKeyState(VK_RIGHT) & 0x8000)	newButtonState |= BTN_RIGHT;
 		if (GetAsyncKeyState(VK_DOWN) & 0x8000)	newButtonState |= BTN_DOWN;

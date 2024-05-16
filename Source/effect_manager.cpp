@@ -1,4 +1,4 @@
-#include"EffectManager.h"
+#include"effect_manager.h"
 #include"Graphics/Graphics.h"
 
 //‰Šú‰»

@@ -1,10 +1,10 @@
 #include "Graphics/Graphics.h"
-#include "SceneGame.h"
+#include "scene_game.h"
 
-#include "Camera.h"
-#include "EnemyManager.h"
-#include "EnemySlime.h"
-#include "EffectManager.h"
+#include "camera.h"
+#include "enemy_manager.h"
+#include "enemy_slime.h"
+#include "effect_manager.h"
 #include "Input/Input.h"
 //#include "Collision.h"
 

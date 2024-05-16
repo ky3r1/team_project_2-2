@@ -1,8 +1,8 @@
 #pragma once
-#include"Stage.h"
-#include"Player.h"
-#include"CameraController.h"
-#include"Scene.h"
+#include"stage.h"
+#include"player.h"
+#include"camera_controller.h"
+#include"scene.h"
 #include "Graphics/Sprite.h"
 
 // ƒQ[ƒ€ƒV[ƒ“

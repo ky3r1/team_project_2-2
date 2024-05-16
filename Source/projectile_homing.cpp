@@ -1,4 +1,4 @@
-#include"ProjectileHoming.h"
+#include"projectile_homing.h"
 
 //コンストラクタ
 ProjectileHoming::ProjectileHoming(ProjectileManager* manager):Projectile(manager)

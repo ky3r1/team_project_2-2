@@ -1,4 +1,4 @@
-#include"ProjectileManager.h"
+#include"projectile_manager.h"
 
 //コンストラクタ
 ProjectileManager::ProjectileManager()

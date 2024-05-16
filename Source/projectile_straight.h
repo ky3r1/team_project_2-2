@@ -1,6 +1,6 @@
 #pragma once
 #include"Graphics/Model.h"
-#include"Projectile.h"
+#include"projectile.h"
 
 //íºêiíeä€
 class ProjectileStraight :public Projectile

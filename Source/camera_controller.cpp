@@ -1,6 +1,6 @@
 #include<imgui.h>
-#include "CameraController.h"
-#include"Camera.h"
+#include "camera_controller.h"
+#include"camera.h"
 #include"Input/Input.h"
 
 //デバッグ用GUI

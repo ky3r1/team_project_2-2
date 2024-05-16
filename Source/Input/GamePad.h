@@ -6,14 +6,14 @@ using GamePadButton = unsigned int;
 class GamePad
 {
 public:
-	static const GamePadButton BTN_UP				= (1 <<  0);
-	static const GamePadButton BTN_RIGHT			= (1 <<  1);
-	static const GamePadButton BTN_DOWN				= (1 <<  2);
-	static const GamePadButton BTN_LEFT				= (1 <<  3);
-	static const GamePadButton BTN_A				= (1 <<  4);
-	static const GamePadButton BTN_B				= (1 <<  5);
-	static const GamePadButton BTN_X				= (1 <<  6);
-	static const GamePadButton BTN_Y				= (1 <<  7);
+	static const GamePadButton BTN_UP				= (1 <<  0);//矢印キー ↑
+	static const GamePadButton BTN_RIGHT			= (1 <<  1);//矢印キー →
+	static const GamePadButton BTN_DOWN				= (1 <<  2);//矢印キー ↓
+	static const GamePadButton BTN_LEFT				= (1 <<  3);//矢印キー ←
+	static const GamePadButton BTN_A				= (1 <<  4);//Z
+	static const GamePadButton BTN_B				= (1 <<  5);//X
+	static const GamePadButton BTN_X				= (1 <<  6);//C
+	static const GamePadButton BTN_Y				= (1 <<  7);//V
 	static const GamePadButton BTN_START			= (1 <<  8);
 	static const GamePadButton BTN_BACK				= (1 <<  9);
 	static const GamePadButton BTN_LEFT_THUMB		= (1 << 10);
@@ -22,6 +22,7 @@ public:
 	static const GamePadButton BTN_RIGHT_SHOULDER	= (1 << 13);
 	static const GamePadButton BTN_LEFT_TRIGGER		= (1 << 14);
 	static const GamePadButton BTN_RIGHT_TRIGGER	= (1 << 15);
+	static const GamePadButton BTN_SPACE			= (1 << 16);
 
 public:
 	GamePad() {}
@@ -37,10 +38,10 @@ public:
 	GamePadButton GetButton() const { return buttonState[0]; }
 
 	// ボタン押下状態の取得
-	GamePadButton GetButtonDown() const { return buttonDown; }
+	GamePadButton GetButtonDown() const { return buttonDown; }//押した瞬間
 
 	// ボタン押上状態の取得
-	GamePadButton GetButtonUp() const { return buttonUp; }
+	GamePadButton GetButtonUp() const { return buttonUp; }//話した瞬間
 
 	// 左スティックX軸入力状態の取得
 	float GetAxisLX() const { return axisLx; }

@@ -1,4 +1,4 @@
-#include"Stage.h"
+#include"stage.h"
 
 static Stage* instance = nullptr;
 

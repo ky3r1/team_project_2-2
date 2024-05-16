@@ -1,6 +1,6 @@
-#include "Enemy.h"
+#include "enemy.h"
 #include"Graphics/Graphics.h"
-#include"EnemyManager.h"
+#include"enemy_manager.h"
 
 //”jŠü
 void Enemy::Destroy()

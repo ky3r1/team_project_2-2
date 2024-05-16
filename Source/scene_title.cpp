@@ -1,9 +1,11 @@
-#include "SceneTitle.h"
+#include "scene_title.h"
 #include "Graphics/Graphics.h"
-#include "SceneGame.h"
-#include "SceneManager.h"
+#include "scene_game.h"
+#include "scene_manager.h"
 #include "Input/Input.h"
-#include "SceneLoading.h"
+#include "scene_loading.h"
+
+#include "scene_result.h"
 
 //初期化
 void SceneTitle::Initialize()
@@ -33,7 +35,7 @@ void SceneTitle::Update(float elapsedTime)
     //何かのボタンを押すとローディングシーンへ切り替え
     if (gamePad.GetButtonDown() & anyButton)
     {
-        SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+        SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
     }
 }
 

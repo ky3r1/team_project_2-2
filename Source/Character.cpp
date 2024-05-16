@@ -1,5 +1,5 @@
-#include "Character.h"
-#include "Stage.h"
+#include "character.h"
+#include "stage.h"
 
 //XVˆ—
 void Character::UpdateTransform()

@@ -1,5 +1,5 @@
-#include"Projectile.h"
-#include"ProjectileManager.h"
+#include"projectile.h"
+#include"projectile_manager.h"
 #include"Graphics/Graphics.h"
 
 //コンストラクタ

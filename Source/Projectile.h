@@ -1,6 +1,9 @@
 #pragma once
 #include"Graphics/Shader.h"
 
+#include "all_include.h"
+
+
 //前方宣言 (相互インクルードしないように)
 class ProjectileManager;
 

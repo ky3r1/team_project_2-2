@@ -1,4 +1,4 @@
-#include"ProjectileStraight.h"
+#include"projectile_straight.h"
 
 //コンストラクタ
 ProjectileStraight::ProjectileStraight(ProjectileManager* manager):Projectile(manager)

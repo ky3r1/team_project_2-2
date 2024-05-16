@@ -1,6 +1,6 @@
 #pragma once
 #include"Graphics/Model.h"
-#include"Enemy.h"
+#include"enemy.h"
 
 //ƒXƒ‰ƒCƒ€ 
 class EnemySlime :public Enemy {

@@ -1,6 +1,6 @@
 #include<imgui.h>
-#include "EnemyManager.h"
-#include"Collision.h"
+#include "enemy_manager.h"
+#include"collision.h"
 
 //デバッグ用GUI
 void EnemyManager::DrawDebugGUI()

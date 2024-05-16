@@ -1,12 +1,12 @@
 #include<imgui.h>
-#include"Player.h"
+#include"player.h"
 #include"Input/Input.h"
-#include"Camera.h"
+#include"camera.h"
 #include"Graphics/Graphics.h"
-#include"EnemyManager.h"
-#include"Collision.h"
-#include"ProjectileStraight.h"
-#include"ProjectileHoming.h"
+#include"enemy_manager.h"
+#include"collision.h"
+#include"projectile_straight.h"
+#include"projectile_homing.h"
 
 //コンストラクタ
 Player::Player()

@@ -1,4 +1,4 @@
-#include "SceneManager.h"
+#include "scene_manager.h"
 
 //XVˆ—
 void SceneManager::Update(float elapsedTime)

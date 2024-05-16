@@ -1,6 +1,6 @@
 #pragma once
 #include "Graphics/Sprite.h"
-#include "Scene.h"
+#include "scene.h"
 #include<thread>
 
 //ローディングシーン

@@ -1,4 +1,5 @@
 #pragma once
+#include "all_include.h"
 
 //ÉVÅ[Éì
 class Scene

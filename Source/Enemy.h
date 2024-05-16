@@ -1,6 +1,8 @@
 #pragma once
 #include"Graphics/Shader.h"
-#include"Character.h"
+#include"character.h"
+
+
 
 //エネミー
 class Enemy :public Character {

@@ -1,13 +1,13 @@
 #pragma once
 #include"Graphics/Sprite.h"
-#include"Scene.h"
+#include"scene.h"
 
 //タイトルシーン
-class SceneTitle :public Scene
+class SceneResult :public Scene
 {
 public:
-    SceneTitle(){}
-    ~SceneTitle()override{}
+    SceneResult() {}
+    ~SceneResult()override {}
 
     //初期化
     void Initialize() override;

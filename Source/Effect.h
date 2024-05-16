@@ -1,5 +1,5 @@
 #pragma once
-#include<DirectXMath.h>
+#include "all_include.h"
 #include<Effekseer.h>
 
 //エフェクト

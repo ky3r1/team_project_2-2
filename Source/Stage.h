@@ -1,7 +1,9 @@
 #pragma once
 #include"Graphics/Shader.h"
 #include"Graphics/Model.h"
-#include "Collision.h"
+#include "collision.h"
+
+
 
 //ステージ
 class Stage {

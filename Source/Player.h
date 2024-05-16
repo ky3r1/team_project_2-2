@@ -2,8 +2,10 @@
 #include"Graphics/Shader.h"
 #include"Graphics/Model.h"
 #include"Character.h"
-#include"ProjectileManager.h"
+#include"projectile_manager.h"
 #include"Effect.h"
+
+
 
 //ƒvƒŒƒCƒ„[
 class Player :public Character {

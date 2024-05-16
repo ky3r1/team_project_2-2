@@ -1,7 +1,7 @@
 #pragma once
 #include<vector>
 #include<set>
-#include"Projectile.h"
+#include"projectile.h"
 
 //弾薬マネージャー
 class ProjectileManager

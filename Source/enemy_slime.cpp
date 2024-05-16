@@ -1,4 +1,4 @@
-#include "EnemySlime.h"
+#include "enemy_slime.h"
 
 //コンストラクタ
 EnemySlime::EnemySlime()

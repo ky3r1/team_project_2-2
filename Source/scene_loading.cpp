@@ -1,7 +1,7 @@
-#include "SceneLoading.h"
+#include "scene_loading.h"
 #include "Graphics/Graphics.h"
 #include "Input/Input.h"
-#include "SceneManager.h"
+#include "scene_manager.h"
 
 //‰Šú‰»
 void SceneLoading::Initialize()
