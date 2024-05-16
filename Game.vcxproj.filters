@@ -173,6 +173,12 @@
     <ClInclude Include="Source\Stage.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\All.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneResult.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -296,6 +302,9 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Source\Stage.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneResult.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>

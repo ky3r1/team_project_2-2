@@ -1,5 +1,7 @@
 #pragma once
 
+#include "All.h"
+
 //ÉVÅ[Éì
 class Scene
 {

@@ -114,6 +114,7 @@
     <ClInclude Include="External\imgui\imstb_rectpack.h" />
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
+    <ClInclude Include="Source\All.h" />
     <ClInclude Include="Source\Audio\Audio.h" />
     <ClInclude Include="Source\Audio\AudioResource.h" />
     <ClInclude Include="Source\Audio\AudioSource.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="Source\SceneGame.h" />
     <ClInclude Include="Source\SceneLoading.h" />
     <ClInclude Include="Source\SceneManager.h" />
+    <ClInclude Include="Source\SceneResult.h" />
     <ClInclude Include="Source\SceneTitle.h" />
     <ClInclude Include="Source\Stage.h" />
   </ItemGroup>
@@ -195,6 +197,7 @@
     <ClCompile Include="Source\SceneGame.cpp" />
     <ClCompile Include="Source\SceneLoading.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\SceneResult.cpp" />
     <ClCompile Include="Source\SceneTitle.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
   </ItemGroup>

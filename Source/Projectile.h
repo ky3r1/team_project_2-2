@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Graphics/Shader.h"
+#include "All.h"
 
 //‘O•ûéŒ¾
 class ProjectileManager;

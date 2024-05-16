@@ -1,18 +1,21 @@
+#include "SceneResult.h"
+
 #include "Graphics/Graphics.h"
+#include "Input/Input.h"
+
 #include "SceneTitle.h"
 #include "SceneGame.h"
 #include "SceneManager.h"
 #include "SceneLoading.h"
-#include "Input/Input.h"
-#include "SceneResult.h"
 
-void SceneTitle::Initialize()
+
+void SceneResult::Initialize()
 {
     //スプライト初期化
     sprite = new Sprite("Data/Sprite/Title.png");
 }
 
-void SceneTitle::Finalize()
+void SceneResult::Finalize()
 {
     //スプライト終了化
     if (sprite != nullptr)
@@ -22,23 +25,23 @@ void SceneTitle::Finalize()
     }
 }
 
-void SceneTitle::Update(float elapsedTime)
+void SceneResult::Update(float elapsedTime)
 {
     GamePad& gamePad = Input::Instance().GetGamePad();
 
     GamePadButton anyButton =
-          GamePad::BTN_A
+        GamePad::BTN_A
         | GamePad::BTN_B
         | GamePad::BTN_X
         | GamePad::BTN_Y
         ;
     if (gamePad.GetButtonDown() & anyButton)
     {
-        SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
+        SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
     }
 }
 
-void SceneTitle::Render()
+void SceneResult::Render()
 {
     Graphics& graphics = Graphics::Instance();
     ID3D11DeviceContext* dc = graphics.GetDeviceContext();
@@ -46,7 +49,7 @@ void SceneTitle::Render()
     ID3D11DepthStencilView* dsv = graphics.GetDepthStencilView();
 
     //画面クリア＆レンダーターゲット設定
-    FLOAT color[] = { 0.0f,0.0f,0.5f,1.0f };    //RGBA(0.0~1.0)
+    FLOAT color[] = { 0.0f,0.5f,0.0f,1.0f };    //RGBA(0.0~1.0)
     dc->ClearRenderTargetView(rtv, color);
     dc->ClearDepthStencilView(dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
     dc->OMSetRenderTargets(1, &rtv, dsv);
