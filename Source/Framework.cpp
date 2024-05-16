@@ -1,13 +1,12 @@
 #include <memory>
 #include <sstream>
 
+#include "EffectManager.h"
 #include "Graphics/Graphics.h"
 #include "Input/Input.h"
-#include "framework.h"
-#include "effect_manager.h"
-//#include "SceneGame.h"
-#include "scene_title.h"
-#include "scene_manager.h"
+#include "Framework.h"
+#include "SceneTitle.h"
+#include "SceneManager.h"
 
 //static SceneGame sceneGame;
 
@@ -24,16 +23,16 @@ Framework::Framework(HWND hWnd)
 	EffectManager::Instance().Initialize();
 
 	//シーン初期化
+	//sceneGame.Initialize();
 	SceneManager::Instance().ChangeScene(new SceneTitle);
 }
 
 // デストラクタ
 Framework::~Framework()
 {
-	//シーン終了化
+	//sceneGame.Finalize();
 	SceneManager::Instance().Clear();
 
-	//エフェクトマネージャーの終了化
 	EffectManager::Instance().Finalize();
 }
 
@@ -44,13 +43,15 @@ void Framework::Update(float elapsedTime/*Elapsed seconds from last frame*/)
 	input.Update();
 
 	// シーン更新処理
+	//sceneGame.Update(elapsedTime);
 	SceneManager::Instance().Update(elapsedTime);
 }
 
 // 描画処理
 void Framework::Render(float elapsedTime/*Elapsed seconds from last frame*/)
 {
-	//別スレッド中にデバイスコンテキストが使われた場合に同時アクセスしないように排他制御する
+	//別スレッド中にデバイスコンテキストが使われていた場合に
+	//同時アクセスしないように排他制御する
 	std::lock_guard<std::mutex> lock(graphics.GetMutex());
 
 	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
@@ -59,6 +60,7 @@ void Framework::Render(float elapsedTime/*Elapsed seconds from last frame*/)
 	graphics.GetImGuiRenderer()->NewFrame();
 
 	// シーン描画処理
+	//sceneGame.Render();
 	SceneManager::Instance().Render();
 
 	// IMGUIデモウインドウ描画（IMGUI機能テスト用）
@@ -74,8 +76,8 @@ void Framework::Render(float elapsedTime/*Elapsed seconds from last frame*/)
 // フレームレート計算
 void Framework::CalculateFrameStats()
 {
-	// Code computes the average frames per second, and also the 
-	// average time it takes to render one frame.  These stats 
+	// Code computes the average frames per second, and also the
+	// average time it takes to render one frame.  These stats
 	// are appended to the window caption bar.
 	static int frames = 0;
 	static float time_tlapsed = 0.0f;

@@ -1,12 +1,10 @@
 #pragma once
 
 #include <windows.h>
-#include "high_resolution_timer.h"
+#include "HighResolutionTimer.h"
 #include "Audio/Audio.h"
 #include "Graphics/Graphics.h"
 #include "Input/input.h"
-
-#include "all_include.h"
 
 class Framework
 {
@@ -31,3 +29,4 @@ private:
 	Graphics				graphics;
 	Input					input;
 };
+

@@ -1,19 +1,20 @@
-#include "effect.h"
-#include"Graphics/Graphics.h"
-#include"effect_manager.h"
+#include "Graphics/Graphics.h"
+#include "Effect.h"
+#include "EffectManager.h"
 
-//コンストラクタ
 Effect::Effect(const char* filename)
 {
-    //別スレッド中にデバイスコンテキストが使われた場合に同時アクセスしないように排他制御する
+    //エフェクトを読み込みする前にロックする
+    //※マルチスレッドでEffectを生成するとDeviceContextを同時アクセスして
+    // フリーズする可能性があるので排他制御する
     std::lock_guard<std::mutex> lock(Graphics::Instance().GetMutex());
 
-    //Effekseerのリソースを持ち込む
-    //EffekseerはUTF-16のファイルパス以外は対応していないため文字コード変換が必要
+    //Effekseerのリソースを読み込む
+    //EffekseerはUTF-16のファイルパス以外は対応してないため文字コード変換が必要
     char16_t utf16Filename[256];
     Effekseer::ConvertUtf8ToUtf16(utf16Filename, 256, filename);
 
-    //Effekseer::Manager取得
+    //Effekseer::Managerを取得
     Effekseer::ManagerRef effekseerManager = EffectManager::Instance().GetEffekseerManager();
 
     //Effekseerエフェクトを読み込み
@@ -24,15 +25,18 @@ Effect::Effect(const char* filename)
 Effekseer::Handle Effect::Play(const DirectX::XMFLOAT3& position, float scale)
 {
     Effekseer::ManagerRef effekseerManager = EffectManager::Instance().GetEffekseerManager();
-    Effekseer::Handle handle = effekseerManager->Play(effekseerEffect, position.x, position.y, position.z);
+
+    Effekseer::Handle handle  = effekseerManager->Play(effekseerEffect, position.x, position.y,
+        position.z);
     effekseerManager->SetScale(handle, scale, scale, scale);
     return handle;
 }
 
-//終了
+//停止
 void Effect::Stop(Effekseer::Handle handle)
 {
     Effekseer::ManagerRef effekseerManager = EffectManager::Instance().GetEffekseerManager();
+
     effekseerManager->StopEffect(handle);
 }
 
@@ -40,6 +44,7 @@ void Effect::Stop(Effekseer::Handle handle)
 void Effect::SetPosition(Effekseer::Handle handle, const DirectX::XMFLOAT3& position)
 {
     Effekseer::ManagerRef effekseerManager = EffectManager::Instance().GetEffekseerManager();
+
     effekseerManager->SetLocation(handle, position.x, position.y, position.z);
 }
 
@@ -47,5 +52,6 @@ void Effect::SetPosition(Effekseer::Handle handle, const DirectX::XMFLOAT3& posi
 void Effect::SetScale(Effekseer::Handle handle, const DirectX::XMFLOAT3& scale)
 {
     Effekseer::ManagerRef effekseerManager = EffectManager::Instance().GetEffekseerManager();
+
     effekseerManager->SetScale(handle, scale.x, scale.y, scale.z);
 }

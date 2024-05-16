@@ -1,9 +1,10 @@
 #pragma once
-#include<vector>
-#include<set>
-#include"projectile.h"
 
-//弾薬マネージャー
+#include <vector>
+#include "Projectile.h"
+#include <set>
+
+//弾丸マネージャー
 class ProjectileManager
 {
 public:
@@ -12,18 +13,22 @@ public:
 
     //更新処理
     void Update(float elapsedTime);
+
     //描画処理
-    void Render(ID3D11DeviceContext* context, Shader* shader);
-    //デバックプリミティブ描画
+    void Render(ID3D11DeviceContext* dc, Shader* shader);
+
+    //デバッグプリミティブ描画
     void DrawDebugPrimitive();
 
     //弾丸登録
     void Register(Projectile* projectile);
+
     //弾丸全削除
     void Clear();
 
     //弾丸数取得
-    int GetProjectileCount()const { return static_cast<int>(projectiles.size()); }
+    int GetProjectileCount() const { return static_cast<int>(projectiles.size()); }
+
     //弾丸取得
     Projectile* GetProjectile(int index) { return projectiles.at(index); }
 
@@ -31,6 +36,7 @@ public:
     void Remove(Projectile* projectile);
 
 private:
-    std::vector<Projectile*> projectiles;
-    std::set<Projectile*> removes;
+    std::vector<Projectile*>        projectiles;
+
+    std::set<Projectile*>       removes;
 };

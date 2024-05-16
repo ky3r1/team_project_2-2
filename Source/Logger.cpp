@@ -1,7 +1,7 @@
 #include <windows.h>
 #include <stdio.h>
 
-#include "logger.h"
+#include "Logger.h"
 
 // ƒƒOo—Í
 void Logger::Print(const char* format, ...)

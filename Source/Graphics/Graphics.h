@@ -3,11 +3,11 @@
 #include <memory>
 #include <d3d11.h>
 #include <wrl.h>
+#include <mutex>
 #include "Graphics/Shader.h"
 #include "Graphics/DebugRenderer.h"
 #include "Graphics/LineRenderer.h"
 #include "Graphics/ImGuiRenderer.h"
-#include <mutex>
 
 // グラフィックス
 class Graphics
@@ -72,6 +72,6 @@ private:
 
 	float	screenWidth;
 	float	screenHeight;
-	std::mutex mutex;
+	std::mutex	mutex;
 };
 
