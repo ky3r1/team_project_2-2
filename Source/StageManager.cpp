@@ -7,18 +7,6 @@ void StageManager::Update(float elapsedTime)
 	{
 		stage->Update(elapsedTime);
 	}
-	//// 破棄処理
-	//for (Stage* stage : removes)
-	//{
-	//	std::vector<Stage*>::iterator it = std::find(enemies.begin(), enemies.end(), enemy);
-
-	//	if (it != enemies.end())
-	//	{
-	//		enemies.erase(it);
-	//	}
-
-	//	delete enemy;
-	//}
 }
 //描画処理
 void StageManager::Render(ID3D11DeviceContext* dc, Shader* shader)
@@ -33,9 +21,30 @@ void StageManager::Register(Stage* stage)
 {
     stages.emplace_back(stage);
 }
+void StageManager::Remove(Stage* stage)
+{
+	//破棄リストに追加
+	removes.insert(stage);
+}
+
+void StageManager::DrawDebugGUI()
+{
+	ImGui::Begin("Stage");
+	ImGui::SetNextTreeNodeOpen(true);
+	for (Stage* stage : stages)
+	{
+		stage->DrawDebugGUI();
+	}
+	ImGui::End();
+}
+
 //ステージ全削除
 void StageManager::Clear()
 {
+	for (Stage* enemy : stages)
+	{
+		delete enemy;
+	}
 	stages.clear();
 }
 

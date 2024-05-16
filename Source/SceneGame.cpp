@@ -8,7 +8,7 @@
 #include "StageManager.h"
 #include "StageMain.h"
 #include "StageMoveFloor.h"
-
+#include "StageWall.h"
 
 // 初期化
 void SceneGame::Initialize()
@@ -17,14 +17,16 @@ void SceneGame::Initialize()
 	//Main
 	StageManager& stageManager = StageManager::Instance();
 	StageMain* stageMain = new StageMain();
-	//Movefloor
+	stageManager.Register(stageMain);
+#ifdef MovingStage
 	StageMoveFloor* stageMoveFloor = new StageMoveFloor();
 	stageMoveFloor->SetStartPoint(DirectX::XMFLOAT3(0, 1, 3));
 	stageMoveFloor->SetGoalPoint(DirectX::XMFLOAT3(10, 2, 3));
 	stageMoveFloor->SetTrque(DirectX::XMFLOAT3(0, 1.0f, 0));
-	//StageSet
-	stageManager.Register(stageMain);
 	stageManager.Register(stageMoveFloor);
+#endif // MovingStage
+	StageWall* stageWall = new StageWall();
+	stageManager.Register(stageWall);
 
 	player = new Player();
 
@@ -161,10 +163,11 @@ void SceneGame::Render()
 
 	}
 
-	// 2DデバッグGUI描画
-	{
-		//プレイヤーデバッグ描画
-		player->DrawDebugGUI();
-		cameraController->DrawDebugGUI();
-	}
+#ifdef DebugImGui
+	//プレイヤーデバッグ描画
+	player->DrawDebugGUI();
+	cameraController->DrawDebugGUI();
+	StageManager::Instance().DrawDebugGUI();
+#endif // DebugImGui
 }
+

@@ -24,6 +24,12 @@ public:
     //ステージ登録
     void Register(Stage* stage);
 
+    //ステージ削除
+    void Remove(Stage* stage);
+
+    //デバッグ用GUI
+    void DrawDebugGUI();
+
     //ステージ全削除
     void Clear();
     
@@ -33,4 +39,5 @@ public:
 
 private:
     std::vector<Stage*> stages;
+    std::set<Stage*> removes;
 };

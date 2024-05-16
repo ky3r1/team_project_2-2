@@ -3,6 +3,14 @@
 //インクルード
 #include<DirectXMath.h>
 #include "Graphics/Model.h"
+#include <vector>
+#include <set>
+#include <imgui.h>
 
-//デバッグ用define
-#define UNCHI
+///////////////////デバッグ用define////////////////////////
+
+//動く床
+//#define MovingStage
+
+//ImGui
+#define DebugImGui

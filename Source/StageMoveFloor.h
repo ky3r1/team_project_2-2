@@ -17,6 +17,8 @@ public:
 
     //レイキャスト
     bool RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, HitResult& hit)override;
+    //デバッグ用GUI
+    void DrawDebugGUI()override;
 
     //スタート位置
     void SetStartPoint(const DirectX::XMFLOAT3& start) { this->start = start; }
@@ -24,8 +26,7 @@ public:
     void SetGoalPoint(const DirectX::XMFLOAT3& end) { this->goal = end; }
     //トルク設定
     void SetTrque(const DirectX::XMFLOAT3& torque) { this->torque = torque; }
-private:
-    void UpdateTransform();
+
 private:
     DirectX::XMFLOAT4X4 oldTransform =
     {

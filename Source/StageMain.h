@@ -19,4 +19,6 @@ public:
     //レイキャスト
     bool RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, HitResult& hit)override;
 
+    //デバッグ用GUI
+    void DrawDebugGUI()override;
 };

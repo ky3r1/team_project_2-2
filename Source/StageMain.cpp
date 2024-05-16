@@ -34,3 +34,7 @@ bool StageMain::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3&
 {
     return Collision::IntersectRayVsModel(start, end, model, hit);
 }
+
+void StageMain::DrawDebugGUI()
+{
+}

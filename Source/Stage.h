@@ -18,6 +18,9 @@ public:
     //レイキャスト
     virtual bool RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, HitResult& hit) = 0;
 
+    //デバッグ用GUI
+    virtual void DrawDebugGUI()=0;
+
     //position
     void SetPosition(DirectX::XMFLOAT3 p) { position = p; }
     const DirectX::XMFLOAT3 GetPosition() const { return position; }
@@ -33,6 +36,9 @@ public:
     //tarnsform
     void SetTransform(DirectX::XMFLOAT4X4 t) { transform = t; }
     const DirectX::XMFLOAT4X4 GetTransform() const { return transform; }
+
+    //行列更新処理
+    void UpdateTransform();
 protected:
     DirectX::XMFLOAT3 position = { 0,0,0 };
     DirectX::XMFLOAT3 angle = { 0, 0, 0 };
