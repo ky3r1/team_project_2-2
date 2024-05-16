@@ -5,11 +5,26 @@
 #include "EnemySlime.h"
 #include "EffectManager.h"
 
+#include "StageManager.h"
+#include "StageMain.h"
+#include "StageMoveFloor.h"
+
 
 // 初期化
 void SceneGame::Initialize()
 {
-	stage = new Stage();
+	//ステージ初期化
+	//Main
+	StageManager& stageManager = StageManager::Instance();
+	StageMain* stageMain = new StageMain();
+	//Movefloor
+	StageMoveFloor* stageMoveFloor = new StageMoveFloor();
+	stageMoveFloor->SetStartPoint(DirectX::XMFLOAT3(0, 1, 3));
+	stageMoveFloor->SetGoalPoint(DirectX::XMFLOAT3(10, 2, 3));
+	stageMoveFloor->SetTrque(DirectX::XMFLOAT3(0, 1.0f, 0));
+	//StageSet
+	stageManager.Register(stageMain);
+	stageManager.Register(stageMoveFloor);
 
 	player = new Player();
 
@@ -54,17 +69,13 @@ void SceneGame::Finalize()
 		cameraController = nullptr;
 	}
 
-	if (stage != nullptr)
-	{
-		delete stage;
-		stage = nullptr;
-	}
-
 	if (player != nullptr)
 	{
 		delete player;
 		player = nullptr;
 	}
+
+	StageManager::Instance().Clear();
 }
 
 // 更新処理
@@ -76,7 +87,7 @@ void SceneGame::Update(float elapsedTime)
 	cameraController->SetTarget(target);
 	cameraController->Update(elapsedTime);
 
-	stage->Update(elapsedTime);
+	StageManager::Instance().Update(elapsedTime);
 	player->Update(elapsedTime);
 
 	//エネミー更新処理
@@ -109,34 +120,12 @@ void SceneGame::Render()
 	rc.view = camera.GetView();
 	rc.projection = camera.GetProjection();
 
-	//// ビュー行列
-	//{
-	//	DirectX::XMFLOAT3 eye = { 0, 10, -10 };	// カメラの視点（位置）
-	//	DirectX::XMFLOAT3 focus = { 0, 0, 0 };	// カメラの注視点（ターゲット）
-	//	DirectX::XMFLOAT3 up = { 0, 1, 0 };		// カメラの上方向
-	//
-	//	DirectX::XMVECTOR Eye = DirectX::XMLoadFloat3(&eye);
-	//	DirectX::XMVECTOR Focus = DirectX::XMLoadFloat3(&focus);
-	//	DirectX::XMVECTOR Up = DirectX::XMLoadFloat3(&up);
-	//	DirectX::XMMATRIX View = DirectX::XMMatrixLookAtLH(Eye, Focus, Up);
-	//	DirectX::XMStoreFloat4x4(&rc.view, View);
-	//}
-	//// プロジェクション行列
-	//{
-	//	float fovY = DirectX::XMConvertToRadians(45);	// 視野角
-	//	float aspectRatio = graphics.GetScreenWidth() / graphics.GetScreenHeight();	// 画面縦横比率
-	//	float nearZ = 0.1f;	// カメラが映し出すの最近距離
-	//	float farZ = 1000.0f;	// カメラが映し出すの最遠距離
-	//	DirectX::XMMATRIX Projection = DirectX::XMMatrixPerspectiveFovLH(fovY, aspectRatio, nearZ, farZ);
-	//	DirectX::XMStoreFloat4x4(&rc.projection, Projection);
-	//}
-
 	// 3Dモデル描画
 	{
 		Shader* shader = graphics.GetShader();
 		shader->Begin(dc, rc);
 		//ステージ描画
-		stage->Render(dc, shader);
+		StageManager::Instance().Render(dc, shader);
 
 		//エネミー描画
 		EnemyManager::instance().Render(dc, shader);

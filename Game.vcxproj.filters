@@ -170,13 +170,22 @@
     <ClInclude Include="Source\SceneTitle.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Stage.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Source\All.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneResult.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Stage.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StageMain.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StageManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StageMoveFloor.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -301,10 +310,16 @@
     <ClCompile Include="Source\SceneTitle.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Stage.cpp">
+    <ClCompile Include="Source\SceneResult.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneResult.cpp">
+    <ClCompile Include="Source\StageMain.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StageManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StageMoveFloor.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,5 @@
 #include "Character.h"
-#include "Stage.h"
+#include "StageManager.h"
 
 //行列更新処理
 void Character::UpdateTransform()
@@ -212,7 +212,7 @@ void Character::UpdateVerticalMove(float elapsedTime)
 
         //レイキャストによる地面判定
         HitResult hit;
-        if (Stage::Instance().RayCast(start, end, hit))
+        if (StageManager::Instance().RayCast(start, end, hit))
         {
             //地面に接地している
             position.y = hit.position.y;
@@ -340,7 +340,7 @@ void Character::UpdateHorizontalMove(float elapsedTime)
 
         //レイキャストによる壁判定
         HitResult hit;
-        if (Stage::Instance().RayCast(start, end, hit))
+        if (StageManager::Instance().RayCast(start, end, hit))
         {
             //壁までのベクトル
             DirectX::XMVECTOR Start = DirectX::XMLoadFloat3(&start);

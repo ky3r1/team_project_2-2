@@ -37,7 +37,7 @@ void SceneResult::Update(float elapsedTime)
         ;
     if (gamePad.GetButtonDown() & anyButton)
     {
-        SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+        SceneManager::Instance().ChangeScene(new SceneLoading(new SceneTitle));
     }
 }
 
@@ -65,6 +65,6 @@ void SceneResult::Render()
             0, 0, screenWidth, screenHeight,
             0, 0, textureWidth, textureHeight,
             0,
-            1, 1, 1, 1);
+            1, 1, 0, 1);
     }
 }

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Stage.h"
 #include "Player.h"
 #include "CameraController.h"
 #include "Scene.h"
@@ -23,7 +22,6 @@ public:
 	// •`‰æˆ—
 	void Render() override;
 private:
-	Stage* stage = nullptr;
 	Player* player = nullptr;
 	CameraController* cameraController = nullptr;
 
