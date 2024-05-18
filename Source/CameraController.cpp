@@ -64,19 +64,11 @@ void CameraController::DrawDebugGUI()
 
     if (ImGui::Begin("Player", nullptr, ImGuiWindowFlags_None))
     {
-        if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
+        if (ImGui::TreeNode("Camera"))
         {
-            //ˆÊ’u
-            ImGui::InputFloat3("target", &target.x);
-            //‰ñ“]
-            DirectX::XMFLOAT3 a;
-            a.x = DirectX::XMConvertToDegrees(angle.x);
-            a.y = DirectX::XMConvertToDegrees(angle.y);
-            a.z = DirectX::XMConvertToDegrees(angle.z);
-            ImGui::InputFloat3("Angle", &a.x);
-            angle.x = DirectX::XMConvertToRadians(a.x);
-            angle.y = DirectX::XMConvertToRadians(a.y);
-            angle.z = DirectX::XMConvertToRadians(a.z);
+            ImGui::SliderFloat3("target", &target.x, -5, 5);
+            ImGui::SliderFloat3("angle", &angle.x, -3.14f, 3.14f);
+            ImGui::TreePop();
         }
     }
     ImGui::End();

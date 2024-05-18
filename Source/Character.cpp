@@ -107,29 +107,29 @@ void Character::UpdateInvincibleTime(float elapsedTime)
 
 bool Character::ApplyDamage(int damage, float invincibleTime)
 {
-        //　ダメージが０の場合は健康状態を変更する必要がない
-        if (damage == 0) return false;
+    //　ダメージが０の場合は健康状態を変更する必要がない
+    if (damage == 0) return false;
 
-        //死亡している場合は健康状態を変更しない
-        if (health <= 0) return false;
-        if (invincibleTimer <= 0)
+    //死亡している場合は健康状態を変更しない
+    if (health <= 0) return false;
+    if (invincibleTimer <= 0)
+    {
+        //ダメージ処理
+        health -= damage;
+        invincibleTimer = invincibleTime;
+        //死亡通知
+        if (health <= 0)
         {
-            //ダメージ処理
-            health -= damage;
-            invincibleTimer = invincibleTime;
-            //死亡通知
-            if (health <= 0)
-            {
-                OnDead();
-            }
-            else
-            {
-                OnDamaged();
-            }
-
-            //健康状態が変更した場合はtrueを返す
-            return true;
+            OnDead();
         }
+        else
+        {
+            OnDamaged();
+        }
+
+        //健康状態が変更した場合はtrueを返す
+        return true;
+    }
 }
 
 void Character::AddImpulse(const DirectX::XMFLOAT3& impulse)
@@ -140,12 +140,14 @@ void Character::AddImpulse(const DirectX::XMFLOAT3& impulse)
     velocity.z += impulse.z;
 }
 
+//垂直速力処理
 void Character::UpdateVerticalVelocity(float elapsedFrame)
 {
     //重力処理
     velocity.y += gravity * elapsedFrame;
 }
 
+//垂直移動更新処理
 void Character::UpdateVerticalMove(float elapsedTime)
 {
     //垂直方向の移動量
@@ -166,7 +168,12 @@ void Character::UpdateVerticalMove(float elapsedTime)
         if (StageManager::Instance().RayCast(start, end, hit))
         {
             //地面に接地している
+
+            position = hit.position;
+            if (position.y > 0.5)angle = hit.rotation;
+
             position.y = hit.position.y;
+
 
             //傾斜率の計算
             float normalLengthXZ = sqrtf(hit.normal.x + hit.normal.z * hit.normal.z);
@@ -195,6 +202,7 @@ void Character::UpdateVerticalMove(float elapsedTime)
     }
 }
 
+//水平速力更新処理
 void Character::UpdateHorizontalVelocity(float elapsedFrame)
 {
     //　XZ平面の速力を減速する
@@ -249,7 +257,7 @@ void Character::UpdateHorizontalVelocity(float elapsedFrame)
             velocity.x += moveVecX * acceleration;
             velocity.z += moveVecZ * acceleration;
 
-            
+
 
             //最大速度制限
             if (length > maxMoveSpeed)
@@ -273,12 +281,10 @@ void Character::UpdateHorizontalVelocity(float elapsedFrame)
     moveVecZ = 0.0f;
 }
 
+//水平移動更新処理
 void Character::UpdateHorizontalMove(float elapsedTime)
 {
-   /* position.x += velocity.x * elapsedTime;
-    position.z += velocity.z * elapsedTime;*/
-
-    float velocityLengthXZ = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&velocity)));
+    float velocityLengthXZ = sqrtf(velocity.z * velocity.z + velocity.x * velocity.x);
     if (velocityLengthXZ > 0.0f)
     {
         //水平移動値
@@ -313,8 +319,15 @@ void Character::UpdateHorizontalMove(float elapsedTime)
             DirectX::XMFLOAT3 o;
             DirectX::XMStoreFloat3(&o, O);
 
-            position.x = o.x;
-            position.z = o.z;
+            DirectX::XMFLOAT3 collectPosition = position;
+            collectPosition.x = o.x;
+            collectPosition.z = o.z;
+            HitResult hit2;
+            if (!StageManager::Instance().RayCast(hit.position, collectPosition, hit2))
+            {
+                position.x = o.x;
+                position.z = o.z;
+            }
         }
         else
         {

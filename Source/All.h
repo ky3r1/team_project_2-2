@@ -9,11 +9,28 @@
 
 ///////////////////デバッグ用define////////////////////////
 
-//動く床
-#define MovingStage
-
-//壁
-//#define WallStage
-
 //ImGui
-#define DebugImGui
+#define DEBUGIMGUI
+
+///////////////////Stage////////////////////////
+
+//全ステージ
+#define ALLSTAGE
+//動く床
+#define STAGEMOVE
+//壁
+//#define STAGEWALL
+
+///////////////////Character////////////////////////
+
+//プレイヤー
+#define ALLPLAYER
+//エネミー
+//#define ALLENEMY
+//スライム
+#define ENEMYSLIME
+
+///////////////////UI////////////////////////
+
+//HPゲージ
+//#define HPGAUGE

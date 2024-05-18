@@ -89,21 +89,13 @@ void Player::DrawDebugGUI()
 
     if (ImGui::Begin("Player", nullptr, ImGuiWindowFlags_None))
     {
-        if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+        if (ImGui::TreeNode("Transform"))
         {
-            //位置
-            ImGui::InputFloat3("Position", &position.x);
-            //回転
-            DirectX::XMFLOAT3 a;
-            a.x = DirectX::XMConvertToDegrees(angle.x);
-            a.y = DirectX::XMConvertToDegrees(angle.y);
-            a.z = DirectX::XMConvertToDegrees(angle.z);
-            ImGui::InputFloat3("Angle", &a.x);
-            angle.x = DirectX::XMConvertToRadians(a.x);
-            angle.y = DirectX::XMConvertToRadians(a.y);
-            angle.z = DirectX::XMConvertToRadians(a.z);
-            //スケール
-            ImGui::InputFloat3("Scale", &scale.x);
+            ImGui::SliderFloat3("position", &position.x, -5, 5);
+            ImGui::SliderFloat3("scale", &scale.x, 0.01f, 4.0f);
+            ImGui::SliderFloat3("angle", &angle.x, -3.14f, 3.14f);
+            ImGui::SliderFloat("movespeed", &moveSpeed, 0.0f, 10.0f);
+            ImGui::TreePop();
         }
     }
     ImGui::End();

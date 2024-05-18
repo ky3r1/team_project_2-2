@@ -54,7 +54,7 @@ void StageMoveFloor::Update(float elapsedTime)
 
     //行列更新
     UpdateTransform();
-#ifdef Unit16_OnCharacter
+
     //レイキャスト用にモデル空間行列にするための単位行列を渡す
     const DirectX::XMFLOAT4X4 transformIdentity =
     {
@@ -64,10 +64,6 @@ void StageMoveFloor::Update(float elapsedTime)
         0,0,0,1
     };
     model->UpdateTransform(transformIdentity);
-#else
-    //モデル行列更新
-    model->UpdateTransform(transform);
-#endif
 }
 
 //描画処理
@@ -81,53 +77,49 @@ void StageMoveFloor::Render(ID3D11DeviceContext* dc, Shader* shader)
 //レイキャスト
 bool StageMoveFloor::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, HitResult& hit)
 {
-#ifdef Unit16_OnCharacter
+    //return Collision::IntersectRayVsModel(start, end, model, hit);
+
     //前回のワールド行列の逆行列を求める
-    DirectX::XMMATRIX oldTransform_inverse_m;
-    oldTransform_inverse_m = DirectX::XMMatrixInverse(nullptr, DirectX::XMLoadFloat4x4(&oldTransform));
+    DirectX::XMMATRIX OldTransform;
+    OldTransform = DirectX::XMMatrixInverse(nullptr, DirectX::XMLoadFloat4x4(&oldTransform));
 
     //前回のローカル空間でのレイに変換
-    
     //ワールド空間
-    DirectX::XMVECTOR world_start_v = DirectX::XMLoadFloat3(&start);//始点
-    DirectX::XMVECTOR world_end_v = DirectX::XMLoadFloat3(&end);//終点
+    DirectX::XMVECTOR WorldStart = DirectX::XMLoadFloat3(&start);//始点
+    DirectX::XMVECTOR WorldEnd = DirectX::XMLoadFloat3(&end);//終点
 
     //レイの始点
-    DirectX::XMVECTOR local_start_v = DirectX::XMVector3TransformCoord(world_start_v, oldTransform_inverse_m);
+    DirectX::XMVECTOR LocalStart = DirectX::XMVector3TransformCoord(WorldStart, OldTransform);
     //レイの終点
-    DirectX::XMVECTOR local_end_v = DirectX::XMVector3TransformCoord(world_end_v, oldTransform_inverse_m);
+    DirectX::XMVECTOR LocalEnd = DirectX::XMVector3TransformCoord(WorldEnd, OldTransform);
 
     //ローカル空間でのレイとの交点を求める
     DirectX::XMFLOAT3 localStart, localEnd;
-    DirectX::XMStoreFloat3(&localStart, local_start_v);
-    DirectX::XMStoreFloat3(&localEnd, local_end_v);
-
-    
+    DirectX::XMStoreFloat3(&localStart, LocalStart);
+    DirectX::XMStoreFloat3(&localEnd, LocalEnd);
 
     HitResult localHit;
     if (Collision::IntersectRayVsModel(localStart, localEnd, model, localHit))
-    //if(Collision::IntersectRayVsModel(start, end, model, hit))
     {
         //前回のローカル空間から今回のワールド空間への変換
         //前回から今回にかけて変更された内容が乗っているオブジェクトに反映される。
-        DirectX::XMMATRIX transform_m = DirectX::XMLoadFloat4x4(&transform);
-
-        DirectX::XMVECTOR local_character_position_v = DirectX::XMVector3TransformCoord(local_start_v, transform_m);
-
-        //world_character_position_v = DirectX::XMVector3TransformCoord(local_character_position_v, transform_m);
-
-        //DirectX::XMStoreFloat3(&hit.position, world_character_position_v);
-
-
+        DirectX::XMMATRIX Transform = DirectX::XMLoadFloat4x4(&transform);
+        DirectX::XMVECTOR LocalCharacterPosition = DirectX::XMLoadFloat3(&localHit.position);
+        DirectX::XMVECTOR WorldCharacterPosition = DirectX::XMVector3TransformCoord(LocalCharacterPosition, Transform);
+        DirectX::XMStoreFloat3(&hit.position, WorldCharacterPosition);
 
         //回転差分を算出
-        //hit.rotation.x = oldAngle.x;
+        hit.rotation.x = angle.x;
+        hit.rotation.y = angle.y;
+        hit.rotation.z = angle.z;
+
+        DirectX::XMVECTOR V = DirectX::XMVectorSubtract(WorldCharacterPosition, WorldStart);
+        DirectX::XMVECTOR WorldLength = DirectX::XMVector3Length(V);
+        DirectX::XMStoreFloat(&hit.distance, WorldLength);
+
         return true;
     }
     return false;
-#else
-    return Collision::IntersectRayVsModel(start, end, model, hit);
-#endif
 }
 
 void StageMoveFloor::DrawDebugGUI()

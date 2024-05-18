@@ -11,6 +11,8 @@ EnemySlime::EnemySlime()
     //幅、高さ設定
     radius = 0.5f;
     height = 1.0f;
+
+
 }
 
 //デストラクタ

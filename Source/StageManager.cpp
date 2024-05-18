@@ -52,16 +52,15 @@ void StageManager::Clear()
 bool StageManager::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, HitResult& hit)
 {
 	bool result = false;
-	float distance=hit.distance+100;
+	float distance = FLT_MAX;
 	for (Stage* stage : stages)
 	{
-		stage->RayCast(start, end, hit);
+		if (!stage->RayCast(start, end, hit)) continue;
 
-		//ƒqƒbƒgî•ñ•Û‘¶
 		if (hit.distance < distance)
 		{
 			distance = hit.distance;
-			result = stage->RayCast(start, end, hit);
+			result = true;
 		}
 	}
 	return result;

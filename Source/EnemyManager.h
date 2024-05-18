@@ -43,6 +43,8 @@ public:
     //エネミー取得
     Enemy* GetEnemy(int index) { return enemies.at(index); }
 
+    DirectX::XMFLOAT3 GetPosition();
+
     //エネミー全削除
     void clear();
 

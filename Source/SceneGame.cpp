@@ -10,29 +10,43 @@
 #include "StageMoveFloor.h"
 #include "StageWall.h"
 
+
 // 初期化
 void SceneGame::Initialize()
 {
 	//ステージ初期化
+#ifdef ALLSTAGE
 	//Main
 	StageManager& stageManager = StageManager::Instance();
 	StageMain* stageMain = new StageMain();
 	stageManager.Register(stageMain);
-#ifdef MovingStage
+
+#ifdef STAGEMOVE
 	StageMoveFloor* stageMoveFloor = new StageMoveFloor();
-	stageMoveFloor->SetStartPoint(DirectX::XMFLOAT3(0, 1, 3));
+	stageMoveFloor->SetPosition(DirectX::XMFLOAT3(0, 1, 3));
+	stageMoveFloor->UpdateTransform();
+	stageMoveFloor->SetStartPoint(stageMoveFloor->GetPosition());
 	stageMoveFloor->SetGoalPoint(DirectX::XMFLOAT3(10, 2, 3));
 	stageMoveFloor->SetTrque(DirectX::XMFLOAT3(0, 1.0f, 0));
 	stageManager.Register(stageMoveFloor);
-#endif // MovingStage
+#endif // STAGEMOVE
 
-#ifdef WallStage
+#ifdef STAGEWALL
 	StageWall* stageWall = new StageWall();
 	stageManager.Register(stageWall);
-#endif // WallStage
-	gauge = new Sprite;
+#endif // STAGEWALL
 
+#endif // ALLSTAGE
+
+#ifdef HPGAUGE
+	gauge = new Sprite;
+#endif // HPGAUGE
+
+#ifdef  ALLPLAYER
 	player = new Player();
+#endif //  ALLPLAYER
+
+
 
 	//カメラ初期設定
 	Graphics& graphics = Graphics::Instance();
@@ -50,22 +64,26 @@ void SceneGame::Initialize()
 	);
 	//カメラコントローラー初期化
 	cameraController = new CameraController();
-
-	for (int i = 0; i < 2; i++)
+#ifdef ALLENEMY
+#ifdef ENEMYSLIME
+	for (int index = 0; index < 2; index++)
 	{
 		EnemySlime* slime = new EnemySlime();
-		switch (i)
+		switch (index)
 		{
 		case 0:
-			slime->SetPosition(DirectX::XMFLOAT3( 2.0f, 0, 5));
+			slime->SetPosition(DirectX::XMFLOAT3(2.0f, 0, 5));
 			break;
 		case 1:
-			slime->SetPosition(DirectX::XMFLOAT3( 4.0f, 0, 5));
+			slime->SetPosition(DirectX::XMFLOAT3(4.0f, 0, 5));
 			break;
 		}
 		EnemyManager::Instance().Register(slime);
 	}
+#endif // ENEMYSLIME
 
+
+#endif // ALLENEMY
 }
 
 // 終了化
@@ -73,13 +91,12 @@ void SceneGame::Finalize()
 {
 	//エネミー終了化
 	EnemyManager::Instance().clear();
+
 	if (cameraController != nullptr)
 	{
 		delete cameraController;
 		cameraController = nullptr;
 	}
-
-
 	if (player != nullptr)
 	{
 		delete player;
@@ -99,13 +116,19 @@ void SceneGame::Finalize()
 void SceneGame::Update(float elapsedTime)
 {
 	//カメラコントローラー更新処理
+#ifdef  ALLPLAYER
 	DirectX::XMFLOAT3 target = player->GetPosition();
 	target.y += 0.5f;
 	cameraController->SetTarget(target);
+#endif //  ALLPLAYER
 	cameraController->Update(elapsedTime);
 
 	StageManager::Instance().Update(elapsedTime);
+
+#ifdef  ALLPLAYER
 	player->Update(elapsedTime);
+#endif //  ALLPLAYER
+
 
 	//エネミー更新処理
 	EnemyManager::Instance().Update(elapsedTime);
@@ -148,7 +171,9 @@ void SceneGame::Render()
 		EnemyManager::Instance().Render(dc, shader);
 
 		//プレイヤー描画
+#ifdef  ALLPLAYER
 		player->Render(dc, shader);
+#endif //  ALLPLAYER
 		shader->End(dc);
 
 	}
@@ -161,7 +186,9 @@ void SceneGame::Render()
 	// 3Dデバッグ描画
 	{
 		//プレイヤーデバッグプリミティブ描画
+#ifdef  ALLPLAYER
 		player->DrawDebugPrimitive();
+#endif //  ALLPLAYER
 
 		//エネミーデバッグプリミティブ描画
 		EnemyManager::Instance().DrawDebugPrimitive();
@@ -174,12 +201,14 @@ void SceneGame::Render()
 	}
 
 	// 2Dスプライト描画
-	{
+	{		
+#ifdef HPGAUGE
 		RenderEnemyGauge(dc, rc.view, rc.projection);
+#endif // HPGAUGE
 	}
 
-#ifdef DebugImGui
-	//player->DrawDebugGUI();
+#ifdef DEBUGIMGUI
+	player->DrawDebugGUI();
 	cameraController->DrawDebugGUI();
 	EnemyManager::Instance().DrawDebugGUI();
 	StageManager::Instance().DrawDebugGUI();

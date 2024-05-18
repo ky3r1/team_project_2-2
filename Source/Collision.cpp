@@ -309,3 +309,20 @@ bool Collision::IntersectRayVsModel(
     }
     return hit;
 }
+
+bool Collision::HPbarPoint(DirectX::XMFLOAT3 player_position, DirectX::XMFLOAT3 enemy_position)
+{
+    bool HPpoint;
+    if (player_position.x > enemy_position.x - 10.0f || player_position.x < enemy_position.x + 10.0f)//XŽ²
+    {
+        if (player_position.y > enemy_position.y - 10.0f || player_position.y < enemy_position.y + 10.0f)//YŽ²
+        {
+            if (player_position.z > enemy_position.z - 10.0f || player_position.z < enemy_position.z + 10.0f)//ZŽ²
+            {
+                HPpoint = true;
+            }
+        }
+    }
+    HPpoint = false;
+    return HPpoint;
+}
