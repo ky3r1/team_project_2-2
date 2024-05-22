@@ -25,6 +25,9 @@
 
 //プレイヤー
 #define ALLPLAYER
+//壁当たり判定
+#define WallCollision
+
 //エネミー
 //#define ALLENEMY
 //スライム
@@ -34,3 +37,5 @@
 
 //HPゲージ
 //#define HPGAUGE
+//EnemyAdd
+#define EnemyAdd

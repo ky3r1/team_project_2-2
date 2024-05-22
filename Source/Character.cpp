@@ -170,7 +170,7 @@ void Character::UpdateVerticalMove(float elapsedTime)
             //’n–Ê‚ÉÚ’n‚µ‚Ä‚¢‚é
 
             position = hit.position;
-            if (position.y > 0.5)angle = hit.rotation;
+            //if (position.y > 0.5)angle = hit.rotation;
 
             position.y = hit.position.y;
 
@@ -323,11 +323,16 @@ void Character::UpdateHorizontalMove(float elapsedTime)
             collectPosition.x = o.x;
             collectPosition.z = o.z;
             HitResult hit2;
+#ifdef WallCollision
             if (!StageManager::Instance().RayCast(hit.position, collectPosition, hit2))
             {
                 position.x = o.x;
                 position.z = o.z;
             }
+#else
+            position.x = o.x;
+            position.z = o.z;
+#endif // WallCollision
         }
         else
         {
