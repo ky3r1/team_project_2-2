@@ -4,7 +4,7 @@
 class StageWall :public Stage
 {
 public:
-    StageWall();
+    StageWall(int category);
     ~StageWall()override;
 
     //XVˆ—

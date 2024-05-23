@@ -2,14 +2,23 @@
 
 int timer;
 
-StageWall::StageWall()
+StageWall::StageWall(int category)
 {
     //position.y = 5.0f;
-    position.z = 10.0f;
-
-    scale.x = scale.y = 3.0f;
-    scale.z = 0.5f;
-
+    switch (category)
+    {
+    case 0:
+        position.z = 10.0f;
+        scale.x = scale.y = 3.0f;
+        scale.z = 0.5f;
+        break;
+    case 1:
+        position.z = 10.0f;
+        position.x = 10.0f;
+        scale.x = scale.y = 3.0f;
+        scale.z = 0.5f;
+        break;
+    }
     //ステージモデルを読み込み
     model = new Model("Data/Model/Cube/Cube.mdl");
 }

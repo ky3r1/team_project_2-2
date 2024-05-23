@@ -1,8 +1,20 @@
 #include "StageMoveFloor.h"
 
 //コンストラクタ
-StageMoveFloor::StageMoveFloor()
+StageMoveFloor::StageMoveFloor(int category)
 {
+    switch (category)
+    {
+    case 0:
+        scale.x = scale.z = 3.0f;
+        scale.y = 0.5f;
+        position = { 0, 1, 3 };
+        UpdateTransform();
+        start = position;
+        goal = { 10, 2, 3 };
+        torque = { 0, 1.0f, 0 };
+        break;
+    }
     scale.x = scale.z = 3.0f;
     scale.y = 0.5f;
 

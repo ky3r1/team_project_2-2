@@ -24,18 +24,19 @@ void SceneGame::Initialize()
 	stageManager.Register(stageMain);
 
 #ifdef STAGEMOVE
-	StageMoveFloor* stageMoveFloor = new StageMoveFloor();
-	stageMoveFloor->SetPosition(DirectX::XMFLOAT3(0, 1, 3));
-	stageMoveFloor->UpdateTransform();
-	stageMoveFloor->SetStartPoint(stageMoveFloor->GetPosition());
-	stageMoveFloor->SetGoalPoint(DirectX::XMFLOAT3(10, 2, 3));
-	stageMoveFloor->SetTrque(DirectX::XMFLOAT3(0, 1.0f, 0));
-	stageManager.Register(stageMoveFloor);
+	for (int index = 0; index < 1; ++index)
+	{
+		StageMoveFloor* stageMoveFloor = new StageMoveFloor(index);
+		stageManager.Register(stageMoveFloor);
+	}
 #endif // STAGEMOVE
 
 #ifdef STAGEWALL
-	StageWall* stageWall = new StageWall();
-	stageManager.Register(stageWall);
+	for (int index = 0; index < 2; ++index)
+	{
+		StageWall* stageWall = new StageWall(index);
+		stageManager.Register(stageWall);
+	}
 #endif // STAGEWALL
 
 #endif // ALLSTAGE

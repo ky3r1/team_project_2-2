@@ -7,7 +7,7 @@
 class StageMoveFloor :public Stage
 {
 public:
-    StageMoveFloor();
+    StageMoveFloor(int category);
     ~StageMoveFloor();
 
     //XVˆ—
