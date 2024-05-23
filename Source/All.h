@@ -17,9 +17,9 @@
 //全ステージ
 #define ALLSTAGE
 //動く床
-#define STAGEMOVE
+//#define STAGEMOVE
 //壁
-//#define STAGEWALL
+#define STAGEWALL
 
 ///////////////////Character////////////////////////
 
@@ -36,6 +36,6 @@
 ///////////////////UI////////////////////////
 
 //HPゲージ
-//#define HPGAUGE
+#define HPGAUGE
 //EnemyAdd
-#define EnemyAdd
+//#define EnemyAdd
