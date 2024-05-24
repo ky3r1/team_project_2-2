@@ -7,35 +7,35 @@
 void CameraController::Update(float elapsedTime)
 {
     GamePad& gamePad = Input::Instance().GetGamePad();
-    float ax = gamePad.GetAxisRX();
-    float ay = gamePad.GetAxisRY();
+    //float ax = gamePad.GetAxisRX();
+    //float ay = gamePad.GetAxisRY();
     //カメラの回転速度
     float speed = rollSpeed * elapsedTime;
 
     //スティックの入力値に合わせてX軸とY軸を回転
-    angle.x += speed * ay;
-    angle.y += speed * ax;
+    //angle.x += speed * ay;
+    //angle.y += speed * ax;
 
 
-    //X軸のカメラの回転制御
-    if (angle.x > maxAngleX)
-    {
-        angle.x = maxAngleX;
-    }
-    if (angle.x < minAngleX)
-    {
-        angle.x = minAngleX;
-    }
+    ////X軸のカメラの回転制御
+    //if (angle.x > maxAngleX)
+    //{
+    //    angle.x = maxAngleX;
+    //}
+    //if (angle.x < minAngleX)
+    //{
+    //    angle.x = minAngleX;
+    //}
 
-    //Y軸の回転値を-3.14~3.14
-    if (angle.y < -DirectX::XM_PI)
-    {
-        angle.y += DirectX::XM_2PI;
-    }
-    if (angle.y > DirectX::XM_PI)
-    {
-        angle.y -= DirectX::XM_2PI;
-    }
+    ////Y軸の回転値を-3.14~3.14
+    //if (angle.y < -DirectX::XM_PI)
+    //{
+    //    angle.y += DirectX::XM_2PI;
+    //}
+    //if (angle.y > DirectX::XM_PI)
+    //{
+    //    angle.y -= DirectX::XM_2PI;
+    //}
 
     //カメラ回転値を回転行列に変換
     DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle.x, angle.y, angle.z);
