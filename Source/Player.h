@@ -67,6 +67,8 @@ private:
     int         jumpCount = 0;
     int         jumpLimit = 2;
 
+    int         delay_time;
+
     ProjectileManager projectileManager;
 
     Effect*     hitEffect = nullptr;

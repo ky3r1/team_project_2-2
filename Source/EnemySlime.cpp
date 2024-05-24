@@ -48,8 +48,18 @@ void EnemySlime::MoveEnemy(Player* player)
 {
     float enemy_movespeed = 0.05f;
     DirectX::XMFLOAT3 player_position = player->GetPosition();
+
+    //if (position.x < 0)
+    //{
+    //    position.x += 0.1f;
+    //}
+    //else
+    //{
+    //    position.x -= 0.1f;
+    //}
     if (position.x > player_position.x)
     {
+        //position.x -= 0.1f;
         position.x -= enemy_movespeed;
         if (position.x < player_position.x)
         {
@@ -58,6 +68,7 @@ void EnemySlime::MoveEnemy(Player* player)
     }
     if (position.x < player_position.x)
     {
+        //position.x += 0.1f;
         position.x += enemy_movespeed;
         if (position.x > player_position.x)
         {

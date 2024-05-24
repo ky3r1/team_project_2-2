@@ -38,4 +38,4 @@
 //HPÉQÅ[ÉW
 #define HPGAUGE
 //EnemyAdd
-//#define EnemyAdd
+#define EnemyAdd

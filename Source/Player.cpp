@@ -8,11 +8,15 @@
 #include "ProjectileStraight.h"
 #include "ProjectileHoming.h"
 
+#define DELAYTIME 20
+
 Player::Player()
 {
     model = new Model("Data/Model/Mr.Incredible/Mr.Incredible.mdl");
 
     scale.x = scale.y = scale.z = 0.01f;
+
+    delay_time = DELAYTIME;
 
     //ヒットエフェクト読み込み
     hitEffect = new Effect("Data/Effect/Hit.efk");
@@ -53,6 +57,12 @@ void Player::Update(float elapsedTime)
 
     //モデル行列更新
     model->UpdateTransform(transform);
+
+    delay_time--;
+    if (delay_time <= 0)
+    {
+        delay_time = DELAYTIME;
+    }
 }
 
 void Player::InputMove(float elapsedTime)
@@ -88,6 +98,7 @@ void Player::DrawDebugGUI()
             ImGui::SliderFloat3("scale", &scale.x, 0.01f, 4.0f);
             ImGui::SliderFloat3("angle", &angle.x, -3.14f, 3.14f);
             ImGui::SliderFloat("movespeed", &moveSpeed, 0.0f, 10.0f);
+            ImGui::SliderInt("int", &delay_time, 0.0f, 10.0f);
             ImGui::TreePop();
         }
     }
@@ -257,32 +268,6 @@ DirectX::XMFLOAT3 Player::GetMoveVec() const
     return vec;
 }
 
-////ジャンプ処理
-//void Player::Jump(float speed)
-//{
-//    velocity.y = speed;
-//}
-//
-////速力処理更新
-//void Player::UpdateVelocity(float elapsedTime)
-//{
-//    //経過フレーム
-//    float elapsedFrame = 60.0f * elapsedTime;
-//
-//    //重力処理
-//    velocity.y += gravity * elapsedFrame;
-//
-//    //移動処理
-//    position.y += velocity.y * elapsedTime;
-//
-//    //地面判定
-//    if (position.y < 0.0f)
-//    {
-//        position.y = 0.0f;
-//        velocity.y = 0.0f;
-//    }
-//}
-
 void Player::InputJump()
 {
     GamePad& gamePad = Input::Instance().GetGamePad();
@@ -307,7 +292,7 @@ void Player::InputProjectile()
     GamePad& gamePad = Input::Instance().GetGamePad();
 
     //直進弾丸発射
-    if (gamePad.GetButtonDown() & GamePad::BTN_X)
+    if (gamePad.GetButton() & GamePad::BTN_X)
     {
         //前方向
         DirectX::XMFLOAT3 dir;
@@ -370,5 +355,25 @@ void Player::InputProjectile()
         //発射
         ProjectileHoming* projectile = new ProjectileHoming(&projectileManager);
         projectile->Launch(dir, pos, target);
+    }
+    if (delay_time == 10)
+    {
+        for (int index = 3; index > 0; index--)
+        {
+            //前方向
+            DirectX::XMFLOAT3 dir;
+            dir.x = transform._31 * 100.0f + index * 10;
+            dir.y = 0.0f;
+            dir.z = transform._33 * 100.0f + index * 10;
+            //発射位置（プレイヤーの腰当たり）
+            DirectX::XMFLOAT3 pos;
+            pos.x = position.x;
+            pos.y = position.y + height * 0.5f;
+            pos.z = position.z;
+            //発射
+            ProjectileStraight* projectile = new ProjectileStraight(&projectileManager);
+            projectile->Launch(dir, pos);
+            //projectileManager.Register(projectile);
+        }
     }
 }
