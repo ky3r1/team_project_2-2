@@ -8,6 +8,7 @@ ProjectileHoming::ProjectileHoming(ProjectileManager* manager)
 
     //モデルが小さいのでスケーリング
     scale.x = scale.y = scale.z = 0.5f; //sword is 3.0
+    projectile_category = 0;
 }
 
 ProjectileHoming::~ProjectileHoming()
@@ -112,4 +113,12 @@ void ProjectileHoming::Launch(const DirectX::XMFLOAT3& direction,
     this->target = target;
 
     UpdateTransform();
+}
+
+void ProjectileHoming::DrawDebugPrimitive()
+{
+    DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
+
+
+    debugRenderer->DrawSphere(position, radius, DirectX::XMFLOAT4(0, 1, 0, 1));
 }

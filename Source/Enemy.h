@@ -19,4 +19,9 @@ public:
 
     //破棄
     void Destroy();
+
+    //エネミーの種類
+    int GetEnemyCategory() { return enemy_category; }
+protected:
+    int enemy_category;
 };

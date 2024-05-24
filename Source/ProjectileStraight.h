@@ -19,6 +19,8 @@ public:
     //発射
     void Launch(const DirectX::XMFLOAT3& direction, const DirectX::XMFLOAT3& position);
 
+    //デバッグプリミティブ描画
+    void DrawDebugPrimitive()override;
 private:
     Model* model = nullptr;
     float speed = 10.0f;

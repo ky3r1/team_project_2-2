@@ -12,7 +12,7 @@ EnemySlime::EnemySlime()
     radius = 0.5f;
     height = 1.0f;
 
-
+    enemy_category = 0;
 }
 
 //デストラクタ

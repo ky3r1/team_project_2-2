@@ -9,6 +9,8 @@ ProjectileStraight::ProjectileStraight(ProjectileManager* manager)
     //表示サイズを調整
     //scale.x = scale.y = scale.z = 0.5f;
     scale.x = scale.y = scale.z = 3.0f;
+
+    projectile_category = 1;
 }
 
 ProjectileStraight::~ProjectileStraight()
@@ -48,4 +50,12 @@ void ProjectileStraight::Launch(const DirectX::XMFLOAT3& direction,
 {
     this->direction = direction;
     this->position = position;
+}
+
+void ProjectileStraight::DrawDebugPrimitive()
+{
+    DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
+
+
+    debugRenderer->DrawSphere(position, radius, DirectX::XMFLOAT4(1, 1, 0, 1));
 }

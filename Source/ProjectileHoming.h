@@ -21,6 +21,9 @@ public:
         const DirectX::XMFLOAT3& position,
         const DirectX::XMFLOAT3& target);
 
+    //デバッグプリミティブ描画
+    void DrawDebugPrimitive()override;
+
 private:
     Model*      model = nullptr;
     DirectX::XMFLOAT3 target = { 0,0,0 };

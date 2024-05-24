@@ -1,6 +1,6 @@
 #include "Projectile.h"
 #include "ProjectileManager.h"
-#include "Graphics/Graphics.h"
+
 
 Projectile::Projectile(ProjectileManager* manager) : manager(manager)
 {

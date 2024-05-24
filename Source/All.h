@@ -19,17 +19,17 @@
 //動く床
 //#define STAGEMOVE
 //壁
-#define STAGEWALL
+//#define STAGEWALL
 
 ///////////////////Character////////////////////////
 
 //プレイヤー
 #define ALLPLAYER
 //壁当たり判定
-#define WallCollision
+//#define WallCollision
 
 //エネミー
-//#define ALLENEMY
+#define ALLENEMY
 //スライム
 #define ENEMYSLIME
 
