@@ -55,13 +55,6 @@ void Player::Update(float elapsedTime)
     model->UpdateTransform(transform);
 }
 
-//void Player::Move(float elapsedTime, float vx, float vz, float speed)
-//{
-//    speed *= elapsedTime;
-//    position.x += vx * speed;
-//    position.z += vz * speed;
-//}
-
 void Player::InputMove(float elapsedTime)
 {
     //isƒxƒNƒgƒ‹Žæ“¾
@@ -153,40 +146,48 @@ void Player::CollisionProjectilesVsEnemies()
                 enemy->GetHeight(),
                 outPosition))
             {
-                //ƒ_ƒ[ƒW‚ð—^‚¦‚é
-                if (enemy->ApplyDamage(1, 0.5f))
+                if (projectile->GetProectileCategory() == enemy->GetEnemyCategory())
                 {
-                    //‚«”ò‚Î‚·
+                    //ƒ_ƒ[ƒW‚ð—^‚¦‚é
+                    if (enemy->ApplyDamage(1, 0.5f))
                     {
-                        DirectX::XMFLOAT3 impulse;
-                        //‚«”ò‚Î‚·—Í
-                        const float power = 10.0f;
+                        //‚«”ò‚Î‚·
+                        {
+                            DirectX::XMFLOAT3 impulse;
+                            //‚«”ò‚Î‚·—Í
+                            const float power = 10.0f;
 
-                        //“G‚ÌˆÊ’u
-                        DirectX::XMVECTOR eVec = DirectX::XMLoadFloat3(&enemy->GetPosition());
-                        //’e‚ÌˆÊ’u
-                        DirectX::XMVECTOR pVec = DirectX::XMLoadFloat3(&projectile->GetPosition());
-                        //’e‚©‚ç“G‚Ö‚Ì•ûŒüƒxƒNƒgƒ‹‚ðŒvŽZi“G - ’ej
-                        auto v = DirectX::XMVectorSubtract(eVec, pVec);
-                        //•ûŒüƒxƒNƒgƒ‹‚ð³‹K‰»
-                        v = DirectX::XMVector3Normalize(v);
+                            //“G‚ÌˆÊ’u
+                            DirectX::XMVECTOR eVec = DirectX::XMLoadFloat3(&enemy->GetPosition());
+                            //’e‚ÌˆÊ’u
+                            DirectX::XMVECTOR pVec = DirectX::XMLoadFloat3(&projectile->GetPosition());
+                            //’e‚©‚ç“G‚Ö‚Ì•ûŒüƒxƒNƒgƒ‹‚ðŒvŽZi“G - ’ej
+                            auto v = DirectX::XMVectorSubtract(eVec, pVec);
+                            //•ûŒüƒxƒNƒgƒ‹‚ð³‹K‰»
+                            v = DirectX::XMVector3Normalize(v);
 
-                        DirectX::XMFLOAT3 vec;
-                        DirectX::XMStoreFloat3(&vec, v);
+                            DirectX::XMFLOAT3 vec;
+                            DirectX::XMStoreFloat3(&vec, v);
 
-                        impulse.x = power * vec.x;
-                        impulse.y = power * 0.5f;
-                        impulse.z = power * vec.z;
+                            impulse.x = power * vec.x;
+                            impulse.y = power * 0.5f;
+                            impulse.z = power * vec.z;
 
-                        enemy->AddImpulse(impulse);
+                            enemy->AddImpulse(impulse);
+                        }
+
+                        //ƒqƒbƒgƒGƒtƒFƒNƒgÄ¶
+                        {
+                            DirectX::XMFLOAT3 e = enemy->GetPosition();
+                            e.y += enemy->GetHeight() * 0.5f;
+                            hitEffect->Play(e);
+                        }
+                        //’eŠÛ”jŠü
+                        projectile->Destroy();
                     }
-
-                    //ƒqƒbƒgƒGƒtƒFƒNƒgÄ¶
-                    {
-                        DirectX::XMFLOAT3 e = enemy->GetPosition();
-                        e.y += enemy->GetHeight() * 0.5f;
-                        hitEffect->Play(e);
-                    }
+                }
+                else
+                {
                     //’eŠÛ”jŠü
                     projectile->Destroy();
                 }

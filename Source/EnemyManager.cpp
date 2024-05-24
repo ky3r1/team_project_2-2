@@ -75,6 +75,14 @@ void EnemyManager::DrawDebugGUI()
     ImGui::End();
 }
 
+void EnemyManager::EnemyMove(Player* player)
+{
+    for (Enemy* enemy : enemies)
+    {
+        enemy->MoveEnemy(player);
+    }
+}
+
 DirectX::XMFLOAT3 EnemyManager::GetPosition()
 {
     DirectX::XMFLOAT3 reposition;

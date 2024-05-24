@@ -37,6 +37,8 @@ public:
     //デバッグ用GUI
     void DrawDebugGUI();
 
+    void EnemyMove(Player* player);
+
     //エネミー数取得
     int GetEnemyCount() const { return static_cast<int>(enemies.size()); }
 
