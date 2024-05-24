@@ -16,7 +16,7 @@ public:
     //•`‰æˆ—
     void Render(ID3D11DeviceContext* dc, Shader* shader) override;
 
-    void MoveEnemy()override;
+    void MoveEnemy(Player* player)override;
 protected:
     //€–S‚µ‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚é
     void OnDead() override;

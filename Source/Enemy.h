@@ -1,6 +1,7 @@
 #pragma once
 #include "Graphics/Shader.h"
 #include "Character.h"
+#include "Player.h"
 
 //エネミー
 class Enemy : public Character
@@ -14,6 +15,8 @@ public:
 
     //描画処理
     virtual void Render(ID3D11DeviceContext* dc, Shader* shader) = 0;
+
+    virtual void MoveEnemy(Player* player) = 0;
 
     void DrewDebugPrimitive();
 

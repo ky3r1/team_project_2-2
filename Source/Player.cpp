@@ -55,13 +55,6 @@ void Player::Update(float elapsedTime)
     model->UpdateTransform(transform);
 }
 
-//void Player::Move(float elapsedTime, float vx, float vz, float speed)
-//{
-//    speed *= elapsedTime;
-//    position.x += vx * speed;
-//    position.z += vz * speed;
-//}
-
 void Player::InputMove(float elapsedTime)
 {
     //進行ベクトル取得

@@ -44,6 +44,44 @@ void EnemySlime::Render(ID3D11DeviceContext* dc, Shader* shader)
     shader->Draw(dc, model);
 }
 
+void EnemySlime::MoveEnemy(Player* player)
+{
+    float enemy_movespeed = 0.05f;
+    DirectX::XMFLOAT3 player_position = player->GetPosition();
+    if (position.x > player_position.x)
+    {
+        position.x -= enemy_movespeed;
+        if (position.x < player_position.x)
+        {
+            position.x = player_position.x;
+        }
+    }
+    if (position.x < player_position.x)
+    {
+        position.x += enemy_movespeed;
+        if (position.x > player_position.x)
+        {
+            position.x = player_position.x;
+        }
+    }
+    if (position.z > player_position.z)
+    {
+        position.z -= enemy_movespeed;
+        if (position.z < player_position.z)
+        {
+            position.z = player_position.z;
+        }
+    }
+    if (position.z < player_position.z)
+    {
+        position.z += enemy_movespeed;
+        if (position.z > player_position.z)
+        {
+            position.z = player_position.z;
+        }
+    }
+}
+
 //Ž€–S‚µ‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚é
 void EnemySlime::OnDead()
 {

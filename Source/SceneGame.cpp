@@ -135,6 +135,7 @@ void SceneGame::Update(float elapsedTime)
 
 	//エネミー更新処理
 	EnemyManager::Instance().Update(elapsedTime);
+	EnemyManager::Instance().EnemyMove(player);
 
 	//エフェクト更新処理
 	EffectManager::Instance().Update(elapsedTime);
