@@ -56,6 +56,8 @@ protected:
 
     //ƒWƒƒƒ“ƒv“ü—Íˆ—
     void InputJump();
+
+    void ProjectileWay(int category,float angle);
 private:
     Model* model = nullptr;
     float       moveSpeed = 5.0f;

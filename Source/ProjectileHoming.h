@@ -7,7 +7,7 @@
 class ProjectileHoming : public Projectile
 {
 public:
-    ProjectileHoming(ProjectileManager* manager);
+    ProjectileHoming(ProjectileManager* manager,int category);
     ~ProjectileHoming() override;
 
     //更新処理
@@ -23,6 +23,9 @@ public:
 
     //デバッグプリミティブ描画
     void DrawDebugPrimitive()override;
+
+    //デバッグプリミティブ描画
+    void DrawDebugGUI()override;
 
 private:
     Model*      model = nullptr;

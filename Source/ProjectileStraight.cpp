@@ -1,6 +1,6 @@
 #include "ProjectileStraight.h"
 
-ProjectileStraight::ProjectileStraight(ProjectileManager* manager)
+ProjectileStraight::ProjectileStraight(ProjectileManager* manager, int category)
     : Projectile(manager)
 {
     //model = new Model("Data/Model/SpikeBall/SpikeBall.mdl");
@@ -10,7 +10,7 @@ ProjectileStraight::ProjectileStraight(ProjectileManager* manager)
     //scale.x = scale.y = scale.z = 0.5f;
     scale.x = scale.y = scale.z = 3.0f;
 
-    projectile_category = 1;
+    projectile_category = category;
 }
 
 ProjectileStraight::~ProjectileStraight()
@@ -58,4 +58,15 @@ void ProjectileStraight::DrawDebugPrimitive()
 
 
     debugRenderer->DrawSphere(position, radius, DirectX::XMFLOAT4(1, 1, 0, 1));
+}
+
+void ProjectileStraight::DrawDebugGUI()
+{
+    if (ImGui::TreeNode("ProjectileStraight"))
+    {
+        ImGui::SliderFloat3("position", &position.x, -5, 5);
+        ImGui::SliderFloat3("scale", &scale.x, 0.001f, 4.0f);
+        ImGui::SliderFloat3("direction", &direction.x, -3.14f, 3.14f);
+        ImGui::TreePop();
+    }
 }

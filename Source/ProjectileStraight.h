@@ -7,22 +7,25 @@ class ProjectileStraight : public Projectile
 {
 public:
     //ProjectileStraight();
-    ProjectileStraight(ProjectileManager* manager);
+    ProjectileStraight(ProjectileManager* manager,int category);
     ~ProjectileStraight() override;
 
     //更新処理
-    void Update(float elapsedTime) override;
+    virtual void Update(float elapsedTime) override;
 
     //描画処理
-    void Render(ID3D11DeviceContext* dc, Shader* shader) override;
+    virtual void Render(ID3D11DeviceContext* dc, Shader* shader) override;
 
     //発射
-    void Launch(const DirectX::XMFLOAT3& direction, const DirectX::XMFLOAT3& position);
+    virtual void Launch(const DirectX::XMFLOAT3& direction, const DirectX::XMFLOAT3& position);
 
     //デバッグプリミティブ描画
-    void DrawDebugPrimitive()override;
+    virtual void DrawDebugPrimitive()override;
+    //デバッグプリミティブ描画
+    virtual void DrawDebugGUI()override;
 private:
     Model* model = nullptr;
     float speed = 10.0f;
     float lifeTimer = 3.0f;
+    DirectX::XMFLOAT3 rotate{};
 };

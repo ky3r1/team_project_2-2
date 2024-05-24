@@ -87,6 +87,7 @@ void Player::Render(ID3D11DeviceContext* dc, Shader* shader)
 
 void Player::DrawDebugGUI()
 {
+
     ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
     ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
 
@@ -103,6 +104,8 @@ void Player::DrawDebugGUI()
         }
     }
     ImGui::End();
+
+    projectileManager.DrawDebugGUI();
 }
 
 void Player::CollisionPlayerVsEnemies()
@@ -219,6 +222,7 @@ void Player::DrawDebugPrimitive()
 
     //弾丸デバッグプリミティブ描画
     projectileManager.DrawDebugPrimitive();
+
 }
 
 DirectX::XMFLOAT3 Player::GetMoveVec() const
@@ -297,7 +301,7 @@ void Player::InputProjectile()
         //前方向
         DirectX::XMFLOAT3 dir;
         dir.x = transform._31 * 100.0f;
-        dir.y = 0.0f;
+        dir.y = transform._32 * 000.0f;
         dir.z = transform._33 * 100.0f;
         //発射位置（プレイヤーの腰当たり）
         DirectX::XMFLOAT3 pos;
@@ -305,9 +309,8 @@ void Player::InputProjectile()
         pos.y = position.y + height * 0.5f;
         pos.z = position.z;
         //発射
-        ProjectileStraight* projectile = new ProjectileStraight(&projectileManager);
+        ProjectileStraight* projectile = new ProjectileStraight(&projectileManager, 0);
         projectile->Launch(dir, pos);
-        //projectileManager.Register(projectile);
     }
     //追尾弾丸発射
     if (gamePad.GetButtonDown() & GamePad::BTN_Y)
@@ -348,32 +351,65 @@ void Player::InputProjectile()
                 dist = d;
                 target = enemy->GetPosition();
                 target.y += enemy->GetHeight() * 0.5f;
-
             }
         }
 
         //発射
-        ProjectileHoming* projectile = new ProjectileHoming(&projectileManager);
+        ProjectileHoming* projectile = new ProjectileHoming(&projectileManager, 1);
         projectile->Launch(dir, pos, target);
     }
     if (delay_time == 10)
     {
-        for (int index = 3; index > 0; index--)
+        for (int index = 0; index < 3; index++)
         {
-            //前方向
-            DirectX::XMFLOAT3 dir;
-            dir.x = transform._31 * 100.0f + index * 10;
-            dir.y = 0.0f;
-            dir.z = transform._33 * 100.0f + index * 10;
-            //発射位置（プレイヤーの腰当たり）
-            DirectX::XMFLOAT3 pos;
-            pos.x = position.x;
-            pos.y = position.y + height * 0.5f;
-            pos.z = position.z;
-            //発射
-            ProjectileStraight* projectile = new ProjectileStraight(&projectileManager);
-            projectile->Launch(dir, pos);
-            //projectileManager.Register(projectile);
+            switch (index)
+            {
+            case 0:
+                ProjectileWay(0,0.0f);
+                break;
+            case 1:
+                ProjectileWay(0,0.3f);
+                break;
+            case 2:
+                ProjectileWay(0,-0.3f);
+                break;
+            default:
+                break;
+            }
         }
     }
+}
+
+void Player::ProjectileWay(int category,float angle)
+{
+    //発射
+    ProjectileStraight* projectile{};
+    //前方向
+    DirectX::XMFLOAT3 dir;
+    dir.x = transform._31 * 100.0f;
+    dir.y = 0.0f;
+    dir.z = transform._33 * 100.0f;
+    DirectX::XMFLOAT3 right;
+    right.x = transform._11 * 100.0f;
+    right.y = 0.0f;
+    right.z = transform._13 * 100.0f;
+    //発射位置（プレイヤーの腰当たり）
+    DirectX::XMFLOAT3 pos;
+    pos.x = position.x;
+    pos.y = position.y + height * 0.5f;
+    pos.z = position.z;
+    DirectX::XMVECTOR Right = DirectX::XMLoadFloat3(&right);
+    Right = DirectX::XMVectorScale(Right, angle);
+    DirectX::XMVECTOR Dir = DirectX::XMLoadFloat3(&dir);
+    DirectX::XMVECTOR Pos = DirectX::XMLoadFloat3(&pos);
+    DirectX::XMVECTOR Ev = DirectX::XMVectorAdd(Dir, Right);
+    DirectX::XMVECTOR Ep = DirectX::XMVectorAdd(Pos, Ev);
+    Ep = DirectX::XMVectorSubtract(Ep, Pos);
+    DirectX::XMFLOAT3 ep;
+    DirectX::XMStoreFloat3(&ep, Ep);
+    dir.x = ep.x;
+    dir.y = 0.0f;
+    dir.z = ep.z;
+    projectile = new ProjectileStraight(&projectileManager, category);
+    projectile->Launch(dir, pos);
 }

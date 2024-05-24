@@ -15,7 +15,7 @@
 ///////////////////Stage////////////////////////
 
 //全ステージ
-#define ALLSTAGE
+//#define ALLSTAGE
 //動く床
 //#define STAGEMOVE
 //壁
@@ -29,7 +29,7 @@
 //#define WallCollision
 
 //エネミー
-#define ALLENEMY
+//#define ALLENEMY
 //スライム
 #define ENEMYSLIME
 

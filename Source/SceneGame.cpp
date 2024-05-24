@@ -190,9 +190,8 @@ void SceneGame::Render()
 	// 3Dデバッグ描画
 	{
 		//プレイヤーデバッグプリミティブ描画
-#ifdef  ALLPLAYER
+#ifdef  DEBUGIMGUI
 		player->DrawDebugPrimitive();
-#endif //  ALLPLAYER
 
 		//エネミーデバッグプリミティブ描画
 		EnemyManager::Instance().DrawDebugPrimitive();
@@ -202,6 +201,7 @@ void SceneGame::Render()
 
 		// デバッグレンダラ描画実行
 		graphics.GetDebugRenderer()->Render(dc, rc.view, rc.projection);
+#endif
 	}
 
 	// 2Dスプライト描画

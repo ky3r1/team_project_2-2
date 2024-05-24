@@ -20,6 +20,9 @@ public:
     //デバッグプリミティブ描画
     void DrawDebugPrimitive();
 
+    //デバッグプリミティブ描画
+    void DrawDebugGUI();
+
     //弾丸登録
     void Register(Projectile* projectile);
 

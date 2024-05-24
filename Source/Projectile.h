@@ -41,6 +41,8 @@ public:
 
     //エネミーの種類
     int GetProectileCategory() { return projectile_category; }
+
+    virtual void DrawDebugGUI() = 0;
 protected:
     //行列更新処理
     void UpdateTransform();

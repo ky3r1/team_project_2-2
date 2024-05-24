@@ -47,9 +47,21 @@ void ProjectileManager::Render(ID3D11DeviceContext* dc, Shader* shader)
 
 void ProjectileManager::DrawDebugPrimitive()
 {
+    ImGui::Begin("Enemy");
+    ImGui::SetNextTreeNodeOpen(true);
     for (Projectile* projectile : projectiles)
     {
         projectile->DrawDebugPrimitive();
+    }
+    ImGui::End();
+
+}
+
+void ProjectileManager::DrawDebugGUI()
+{
+    for (Projectile* projectile : projectiles)
+    {
+        projectile->DrawDebugGUI();
     }
 }
 

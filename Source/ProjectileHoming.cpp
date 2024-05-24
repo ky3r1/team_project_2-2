@@ -1,6 +1,6 @@
 #include "ProjectileHoming.h"
 
-ProjectileHoming::ProjectileHoming(ProjectileManager* manager)
+ProjectileHoming::ProjectileHoming(ProjectileManager* manager,int category)
     : Projectile(manager)
 {
     model = new Model("Data/Model/SpikeBall/SpikeBall.mdl");
@@ -8,7 +8,7 @@ ProjectileHoming::ProjectileHoming(ProjectileManager* manager)
 
     //モデルが小さいのでスケーリング
     scale.x = scale.y = scale.z = 0.5f; //sword is 3.0
-    projectile_category = 0;
+    projectile_category = category;
 }
 
 ProjectileHoming::~ProjectileHoming()
@@ -121,4 +121,15 @@ void ProjectileHoming::DrawDebugPrimitive()
 
 
     debugRenderer->DrawSphere(position, radius, DirectX::XMFLOAT4(0, 1, 0, 1));
+}
+
+void ProjectileHoming::DrawDebugGUI()
+{
+    if (ImGui::TreeNode("ProjectileHoming"))
+    {
+        ImGui::SliderFloat3("position", &position.x, -5, 5);
+        ImGui::SliderFloat3("scale", &scale.x, 0.001f, 4.0f);
+        ImGui::SliderFloat3("direction", &direction.x, -3.14f, 3.14f);
+        ImGui::TreePop();
+    }
 }

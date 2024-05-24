@@ -75,7 +75,14 @@ void Character::Turn(float elapsedTime, float vx, float vz, float speed)
     {
         angle.y -= rot;
     }
-
+    //if (angle.y > 3.14f)
+    //{
+    //    angle.y = -3.14f;
+    //}
+    //if (angle.y < -3.14f)
+    //{
+    //    angle.y = 3.139f;
+    //}
 }
 
 //速力処理更新
@@ -143,7 +150,7 @@ void Character::AddImpulse(const DirectX::XMFLOAT3& impulse)
 //垂直速力処理
 void Character::UpdateVerticalVelocity(float elapsedFrame)
 {
-    //重力処理
+    ////重力処理
     velocity.y += gravity * elapsedFrame;
 }
 
@@ -199,6 +206,10 @@ void Character::UpdateVerticalMove(float elapsedTime)
     {
         position.y += my;
         isGround = false;
+    }
+    if (position.y < 0)
+    {
+        position.y = 0;
     }
 }
 

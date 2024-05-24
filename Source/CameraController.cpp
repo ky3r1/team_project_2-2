@@ -55,8 +55,6 @@ void CameraController::Update(float elapsedTime)
     Camera::Instance().SetLookAt(eye, target, DirectX::XMFLOAT3(0, 1, 0));
 }
 
-
-
 void CameraController::DrawDebugGUI()
 {
     ImGui::SetNextWindowPos(ImVec2(310, 10), ImGuiCond_FirstUseEver);
