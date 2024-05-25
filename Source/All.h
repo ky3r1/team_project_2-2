@@ -47,7 +47,7 @@
 //HPÉQÅ[ÉW
 #define HPGAUGE
 //EnemyAdd
-#define ENEMYADD
+//#define ENEMYADD
 
 ///////////////////CATEGORY////////////////////////
 #define RED 0

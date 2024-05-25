@@ -170,6 +170,7 @@ void Player::CollisionPlayerVsEnemies()
             outPosition))
         {
             enemy->SetPosition(outPosition);
+#ifdef ENEMYHITTINGDAMAGE
             if (hit_delay.checker)
             {
                 health--;
@@ -179,6 +180,7 @@ void Player::CollisionPlayerVsEnemies()
                     hitEffect->Play(position);
                 }
             }
+#endif // ENEMYHITTINGDAMAGE
             if (position.y >= (enemy->GetPosition().y + enemy->GetHeight())-0.1f)
             {
                 Jump(jumpSpeed);
