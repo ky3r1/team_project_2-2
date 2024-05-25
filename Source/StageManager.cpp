@@ -41,9 +41,10 @@ void StageManager::DrawDebugGUI()
 //ステージ全削除
 void StageManager::Clear()
 {
-	for (Stage* enemy : stages)
+	for (Stage* stage : stages)
 	{
-		delete enemy;
+		delete stage;
+		stage = nullptr;
 	}
 	stages.clear();
 }

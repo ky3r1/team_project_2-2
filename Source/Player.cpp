@@ -8,15 +8,21 @@
 #include "ProjectileStraight.h"
 #include "ProjectileHoming.h"
 
-#define DELAYTIME 20
+#define DELAYAUTOTIME 40
+#define DELAYALLANGLETIME 60
+
+#define DELAYPLAYERVSENEMY 60
 
 Player::Player()
 {
+    //TODO:プレイヤーのステータス設定
     model = new Model("Data/Model/Mr.Incredible/Mr.Incredible.mdl");
 
     scale.x = scale.y = scale.z = 0.01f;
 
-    delay_time = DELAYTIME;
+    projectile_auto.time = DELAYAUTOTIME;
+    projectile_allangle.time = DELAYALLANGLETIME;
+    hit_delay.time = DELAYPLAYERVSENEMY;
 
     //ヒットエフェクト読み込み
     hitEffect = new Effect("Data/Effect/Hit.efk");
@@ -25,8 +31,9 @@ Player::Player()
 Player::~Player()
 {
     delete hitEffect;
-
+    hitEffect = nullptr;
     delete model;
+    model = nullptr;
 }
 
 void Player::Update(float elapsedTime)
@@ -58,10 +65,37 @@ void Player::Update(float elapsedTime)
     //モデル行列更新
     model->UpdateTransform(transform);
 
-    delay_time--;
-    if (delay_time <= 0)
+    //当たり判定のdelay
+    if (!hit_delay.checker)
     {
-        delay_time = DELAYTIME;
+        hit_delay.time--;
+    }
+    if (hit_delay.time < 0)
+    {
+        hit_delay.checker = true;
+        hit_delay.time = DELAYAUTOTIME;
+    }
+
+    //オートで出てる弾のdelay
+    if (!projectile_auto.checker)
+    {
+        projectile_auto.time--;
+    }
+    if (projectile_auto.time < 0)
+    {
+        projectile_auto.checker = true;
+        projectile_auto.time = DELAYAUTOTIME;
+    }
+
+    //周囲に出す弾のdelay
+    if (!projectile_allangle.checker)
+    {
+        projectile_allangle.time--;
+    }
+    if (projectile_allangle.time < 0)
+    {
+        projectile_allangle.checker = true;
+        projectile_allangle.time = DELAYALLANGLETIME;
     }
 }
 
@@ -98,14 +132,24 @@ void Player::DrawDebugGUI()
             ImGui::SliderFloat3("position", &position.x, -5, 5);
             ImGui::SliderFloat3("scale", &scale.x, 0.01f, 4.0f);
             ImGui::SliderFloat3("angle", &angle.x, -3.14f, 3.14f);
+            ImGui::SliderInt("health", &health, 0.0f, 10.0f);
             ImGui::SliderFloat("movespeed", &moveSpeed, 0.0f, 10.0f);
-            ImGui::SliderInt("int", &delay_time, 0.0f, 10.0f);
+
+            ImGui::SliderInt("delay_auto_time", &projectile_auto.time, 0.0f, DELAYAUTOTIME);
+            ImGui::SliderInt("delay_allangle_time", &projectile_allangle.time, 0.0f, DELAYALLANGLETIME);
+
             ImGui::TreePop();
         }
     }
     ImGui::End();
 
     projectileManager.DrawDebugGUI();
+}
+
+bool Player::PlayerDead()
+{
+    if (health <= 0)return true;
+    return false;
 }
 
 void Player::CollisionPlayerVsEnemies()
@@ -126,10 +170,21 @@ void Player::CollisionPlayerVsEnemies()
             outPosition))
         {
             enemy->SetPosition(outPosition);
+            if (hit_delay.checker)
+            {
+                health--;
+                hit_delay.checker = false;
+                //ヒットエフェクト再生
+                {
+                    hitEffect->Play(position);
+                }
+            }
             if (position.y >= (enemy->GetPosition().y + enemy->GetHeight())-0.1f)
             {
                 Jump(jumpSpeed);
+#ifdef JUMPDAMAGE
                 enemy->ApplyDamage(1, 0.5f);
+#endif//JUMPDAMAGE
             }
         }
     }
@@ -162,6 +217,9 @@ void Player::CollisionProjectilesVsEnemies()
             {
                 if (projectile->GetProectileCategory() == enemy->GetEnemyCategory())
                 {
+                    //弾丸破棄
+                    projectile->Destroy();
+#ifdef PROJECTILEDAMAGE
                     //ダメージを与える
                     if (enemy->ApplyDamage(1, 0.5f))
                     {
@@ -196,9 +254,8 @@ void Player::CollisionProjectilesVsEnemies()
                             e.y += enemy->GetHeight() * 0.5f;
                             hitEffect->Play(e);
                         }
-                        //弾丸破棄
-                        projectile->Destroy();
                     }
+#endif // PROJECTILEDAMAGE
                 }
                 else
                 {
@@ -296,22 +353,49 @@ void Player::InputProjectile()
     GamePad& gamePad = Input::Instance().GetGamePad();
 
     //直進弾丸発射
-    if (gamePad.GetButton() & GamePad::BTN_X)
+    if (gamePad.GetButtonDown() & GamePad::BTN_X&&projectile_allangle.checker)
     {
-        //前方向
-        DirectX::XMFLOAT3 dir;
-        dir.x = transform._31 * 100.0f;
-        dir.y = transform._32 * 000.0f;
-        dir.z = transform._33 * 100.0f;
-        //発射位置（プレイヤーの腰当たり）
-        DirectX::XMFLOAT3 pos;
-        pos.x = position.x;
-        pos.y = position.y + height * 0.5f;
-        pos.z = position.z;
-        //発射
-        ProjectileStraight* projectile = new ProjectileStraight(&projectileManager, 0);
-        projectile->Launch(dir, pos);
+        for (int index = 0; index < 10; index++)
+        {
+            switch (index)
+            {
+            case 0:
+                ProjectileStraightWay(BLUE, 0.0f);
+                break;
+            case 1:
+                ProjectileStraightWay(BLUE, 3.14f);
+                break;
+                //case 2:
+                //    ProjectileStraightWay(BLUE, 12.0f);
+                //    break;
+                    //case 3:
+                    //    ProjectileStraightWay(BLUE, 0.6f);
+                    //    break;
+                    //case 4:
+                    //    ProjectileStraightWay(BLUE, 0.8f);
+                    //    break;
+                    //case 5:
+                    //    ProjectileStraightWay(BLUE, 10.0f);
+                    //    break;
+                    //case 6:
+                    //    ProjectileStraightWay(BLUE, -0.8f);
+                    //    break;
+                    //case 7:
+                    //    ProjectileStraightWay(BLUE, -0.6f);
+                    //    break;
+                    //case 8:
+                    //    ProjectileStraightWay(BLUE, -0.4f);
+                    //    break;
+                    //case 9:
+                    //    ProjectileStraightWay(BLUE, -0.2f);
+                    //    break;
+            default:
+                break;
+            }
+        }
+        projectile_allangle.checker = false;
     }
+    
     //追尾弾丸発射
     if (gamePad.GetButtonDown() & GamePad::BTN_Y)
     {
@@ -355,32 +439,33 @@ void Player::InputProjectile()
         }
 
         //発射
-        ProjectileHoming* projectile = new ProjectileHoming(&projectileManager, 1);
+        ProjectileHoming* projectile = new ProjectileHoming(&projectileManager, GREEN);
         projectile->Launch(dir, pos, target);
     }
-    if (delay_time == 10)
+    if (projectile_auto.checker)
     {
         for (int index = 0; index < 3; index++)
         {
             switch (index)
             {
             case 0:
-                ProjectileWay(0,0.0f);
+                ProjectileStraightWay(RED,0.0f);
                 break;
             case 1:
-                ProjectileWay(0,0.3f);
+                ProjectileStraightWay(RED,0.3f);
                 break;
             case 2:
-                ProjectileWay(0,-0.3f);
+                ProjectileStraightWay(RED,-0.3f);
                 break;
             default:
                 break;
             }
         }
+        projectile_auto.checker = false;
     }
 }
 
-void Player::ProjectileWay(int category,float angle)
+void Player::ProjectileStraightWay(int category,float angle)//category:弾のタイプ、angle:弾の角度
 {
     //発射
     ProjectileStraight* projectile{};
@@ -398,6 +483,7 @@ void Player::ProjectileWay(int category,float angle)
     pos.x = position.x;
     pos.y = position.y + height * 0.5f;
     pos.z = position.z;
+
     DirectX::XMVECTOR Right = DirectX::XMLoadFloat3(&right);
     Right = DirectX::XMVectorScale(Right, angle);
     DirectX::XMVECTOR Dir = DirectX::XMLoadFloat3(&dir);

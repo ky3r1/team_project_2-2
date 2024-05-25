@@ -7,8 +7,23 @@ void Enemy::DrewDebugPrimitive()
 {
     DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
 
-    //Õ“Ë”»’è—p‚ÌƒfƒoƒbƒO‰~’Œ‚ð•`‰æ
-    debugRenderer->DrawCylinder(position, radius, height, DirectX::XMFLOAT4(0, 0, 0, 1));
+    switch (enemy_category)
+    {
+    case RED:
+        debugRenderer->DrawCylinder(position, radius, height, DirectX::XMFLOAT4(1, 0, 0, 1));
+        break;
+    case GREEN:
+        debugRenderer->DrawCylinder(position, radius, height, DirectX::XMFLOAT4(0, 1, 0, 1));
+        break;
+    case BLUE:
+        debugRenderer->DrawCylinder(position, radius, height, DirectX::XMFLOAT4(0, 0, 1, 1));
+        break;
+    case YELLOW:
+        debugRenderer->DrawCylinder(position, radius, height, DirectX::XMFLOAT4(1, 1, 0, 1));
+        break;
+    default:
+        break;
+    }
 }
 
 //”jŠü

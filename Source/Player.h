@@ -23,6 +23,9 @@ public:
 
     //デバッグ用GUI
     void DrawDebugGUI() override;
+
+    //死亡判定
+    bool PlayerDead();
 private:
     //スティック入力値から移動ベクトルを取得
     DirectX::XMFLOAT3 GetMoveVec() const;
@@ -41,12 +44,6 @@ private:
 
     void CollisionProjectilesVsEnemies();
 
-    //ジャンプ処理
-    //void Jump(float speed);
-
-    //速力処理更新
-    //void UpdateVelocity(float elapsedTime);
-
     //弾丸入力処理
     void InputProjectile();
 
@@ -57,7 +54,7 @@ protected:
     //ジャンプ入力処理
     void InputJump();
 
-    void ProjectileWay(int category,float angle);
+    void ProjectileStraightWay(int category,float angle);
 private:
     Model* model = nullptr;
     float       moveSpeed = 5.0f;
@@ -68,8 +65,8 @@ private:
 
     int         jumpCount = 0;
     int         jumpLimit = 2;
-
-    int         delay_time;
+    DelayTime projectile_allangle;
+    DelayTime projectile_auto;
 
     ProjectileManager projectileManager;
 

@@ -27,4 +27,5 @@ public:
     int GetEnemyCategory() { return enemy_category; }
 protected:
     int enemy_category;
+    DirectX::XMFLOAT2 enemy_movespeed;
 };

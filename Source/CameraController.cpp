@@ -65,7 +65,7 @@ void CameraController::DrawDebugGUI()
         if (ImGui::TreeNode("Camera"))
         {
             ImGui::SliderFloat3("target", &target.x, -5, 5);
-            ImGui::SliderFloat3("angle", &angle.x, -3.14f, 3.14f);
+            ImGui::SliderFloat3("angle", &angle.x, -3.14f, 3.14f * 0.5f);
             ImGui::TreePop();
         }
     }

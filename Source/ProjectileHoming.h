@@ -22,9 +22,6 @@ public:
         const DirectX::XMFLOAT3& target);
 
     //デバッグプリミティブ描画
-    void DrawDebugPrimitive()override;
-
-    //デバッグプリミティブ描画
     void DrawDebugGUI()override;
 
 private:

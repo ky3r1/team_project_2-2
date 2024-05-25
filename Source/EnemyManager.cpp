@@ -60,7 +60,7 @@ void EnemyManager::DrawDebugPrimitive()
     //衝突判定用のデバッグ球を描画
     for (Enemy* enemy : enemies)
     {
-        debugRenderer->DrawCylinder(enemy->GetPosition(), enemy->GetRadius(), enemy->GetHeight(), DirectX::XMFLOAT4(0, 0, 0, 1));
+        enemy->DrewDebugPrimitive();
     }
 }
 

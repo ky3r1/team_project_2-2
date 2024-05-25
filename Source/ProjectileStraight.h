@@ -20,8 +20,6 @@ public:
     virtual void Launch(const DirectX::XMFLOAT3& direction, const DirectX::XMFLOAT3& position);
 
     //デバッグプリミティブ描画
-    virtual void DrawDebugPrimitive()override;
-    //デバッグプリミティブ描画
     virtual void DrawDebugGUI()override;
 private:
     Model* model = nullptr;

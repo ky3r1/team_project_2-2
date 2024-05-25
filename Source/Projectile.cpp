@@ -17,9 +17,23 @@ void Projectile::DrawDebugPrimitive()
 {
     DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
 
-
-    debugRenderer->DrawSphere(position, radius, DirectX::XMFLOAT4(1, 0, 0, 1));
-
+    switch (projectile_category)
+    {
+    case RED:
+        debugRenderer->DrawSphere(position, radius, DirectX::XMFLOAT4(1, 0, 0, 1));
+        break;
+    case GREEN:
+        debugRenderer->DrawSphere(position, radius, DirectX::XMFLOAT4(0, 1, 0, 1));
+        break;
+    case BLUE:
+        debugRenderer->DrawSphere(position, radius, DirectX::XMFLOAT4(0, 0, 1, 1));
+        break;
+    case YELLOW:
+        debugRenderer->DrawSphere(position, radius, DirectX::XMFLOAT4(1, 1, 0, 1));
+        break;
+    default:
+        break;
+    }
 }
 
 //s—ñXVˆ—

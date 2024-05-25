@@ -102,6 +102,12 @@ protected:
         0,0,0,1
     };
     float radius = 0.5f;
+    struct DelayTime
+    {
+        int time;
+        bool checker = false;
+    };
+    DelayTime hit_delay;
 
     float       gravity = -1.0f;
     DirectX::XMFLOAT3 velocity = { 0,0,0 };

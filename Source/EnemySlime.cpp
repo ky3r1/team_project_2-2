@@ -1,18 +1,19 @@
 #include "EnemySlime.h"
 
 //コンストラクタ
-EnemySlime::EnemySlime()
+EnemySlime::EnemySlime(int category)
 {
+    //TODO:エネミースライムのステータス設定
     model = new Model("Data/Model/Slime/Slime.mdl");
 
     //モデルが大きいのでスケーリング
     scale.x = scale.y = scale.z = 0.01f;
 
-    //幅、高さ設定
-    radius = 0.5f;
-    height = 1.0f;
+    radius = 0.5f;//当たり判定の幅、半径
+    height = 1.0f;//当たり判定の高さ
 
-    enemy_category = 0;
+    enemy_movespeed = { 0.05f,0.05f };//X:エネミーのX軸スピード、Y:エネミーのZ軸スピード
+    enemy_category = category;
 }
 
 //デストラクタ
@@ -46,21 +47,12 @@ void EnemySlime::Render(ID3D11DeviceContext* dc, Shader* shader)
 
 void EnemySlime::MoveEnemy(Player* player)
 {
-    float enemy_movespeed = 0.05f;
     DirectX::XMFLOAT3 player_position = player->GetPosition();
 
-    //if (position.x < 0)
-    //{
-    //    position.x += 0.1f;
-    //}
-    //else
-    //{
-    //    position.x -= 0.1f;
-    //}
     if (position.x > player_position.x)
     {
         //position.x -= 0.1f;
-        position.x -= enemy_movespeed;
+        position.x -= enemy_movespeed.x;
         if (position.x < player_position.x)
         {
             position.x = player_position.x;
@@ -69,7 +61,7 @@ void EnemySlime::MoveEnemy(Player* player)
     if (position.x < player_position.x)
     {
         //position.x += 0.1f;
-        position.x += enemy_movespeed;
+        position.x += enemy_movespeed.x;
         if (position.x > player_position.x)
         {
             position.x = player_position.x;
@@ -77,7 +69,7 @@ void EnemySlime::MoveEnemy(Player* player)
     }
     if (position.z > player_position.z)
     {
-        position.z -= enemy_movespeed;
+        position.z -= enemy_movespeed.y;
         if (position.z < player_position.z)
         {
             position.z = player_position.z;
@@ -85,7 +77,7 @@ void EnemySlime::MoveEnemy(Player* player)
     }
     if (position.z < player_position.z)
     {
-        position.z += enemy_movespeed;
+        position.z += enemy_movespeed.y;
         if (position.z > player_position.z)
         {
             position.z = player_position.z;
