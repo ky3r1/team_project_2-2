@@ -1,7 +1,7 @@
 #include "EnemySlime.h"
 
 //コンストラクタ
-EnemySlime::EnemySlime(int category)
+EnemySlime::EnemySlime(int category,int index)
 {
     //TODO:エネミースライムのステータス設定
     model = new Model("Data/Model/Slime/Slime.mdl");
@@ -11,6 +11,17 @@ EnemySlime::EnemySlime(int category)
 
     radius = 0.5f;//当たり判定の幅、半径
     height = 1.0f;//当たり判定の高さ
+
+    enemy_num = index;
+    switch (index)
+    {
+    case 0:
+        position = (DirectX::XMFLOAT3(2.0f, 0, 5));
+        break;
+    case 1:
+        position = (DirectX::XMFLOAT3(4.0f, 0, 5));
+        break;
+    }
 
     enemy_movespeed = { 0.05f,0.05f };//X:エネミーのX軸スピード、Y:エネミーのZ軸スピード
     enemy_category = category;
@@ -93,11 +104,11 @@ void EnemySlime::OnDead()
 
 void EnemySlime::DrawDebugGUI()
 {
-    if (ImGui::TreeNode("EnemySlime"))
-    {
-        ImGui::SliderFloat3("position", &position.x, -5, 5);
-        ImGui::SliderFloat3("scale", &scale.x, 0.01f, 4.0f);
-        ImGui::SliderFloat3("angle", &angle.x, -3.14f, 3.14f);
-        ImGui::TreePop();
-    }
+    if (enemy_num != 0)    ImGui::Separator();
+    std::string p = std::string("position") + std::to_string(enemy_num);
+    ImGui::SliderFloat3(p.c_str(), &position.x, -5, 5);
+    std::string s = std::string("scale") + std::to_string(enemy_num);
+    ImGui::SliderFloat3(s.c_str(), &scale.x, 0.01f, 4.0f);
+    std::string a = std::string("angle") + std::to_string(enemy_num);
+    ImGui::SliderFloat3(a.c_str(), &angle.x, -3.14f, 3.14f);
 }

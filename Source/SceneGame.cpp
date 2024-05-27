@@ -80,16 +80,7 @@ void SceneGame::Initialize()
 #ifdef ENEMYSLIME
 	for (int index = 0; index < 2; index++)
 	{
-		EnemySlime* slime = new EnemySlime(RED);
-		switch (index)
-		{
-		case 0:
-			slime->SetPosition(DirectX::XMFLOAT3(2.0f, 0, 5));
-			break;
-		case 1:
-			slime->SetPosition(DirectX::XMFLOAT3(4.0f, 0, 5));
-			break;
-		}
+		EnemySlime* slime = new EnemySlime(RED,index);
 		EnemyManager::Instance().Register(slime);
 	}
 #endif // ENEMYSLIME
@@ -370,7 +361,7 @@ void SceneGame::CrickEnemyAdd(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4
 		if (stage_main.RayCast(world_position_start, world_position_end, hit))
 		{
 			EnemyManager& enemyManager = EnemyManager::Instance();
-			EnemySlime* slime = new EnemySlime(RED);
+			EnemySlime* slime = new EnemySlime(RED, 0);
 			slime->SetPosition(DirectX::XMFLOAT3(hit.position.x, hit.position.y, hit.position.z));
 			enemyManager.Register(slime);
 		}

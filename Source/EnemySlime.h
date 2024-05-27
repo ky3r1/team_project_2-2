@@ -7,7 +7,7 @@
 class EnemySlime : public Enemy
 {
 public:
-    EnemySlime(int category);
+    EnemySlime(int category,int index);
     ~EnemySlime() override;
 
     //XVˆ—

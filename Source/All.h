@@ -38,7 +38,7 @@
 #define ENEMYHITTINGDAMAGE
 
 //エネミー
-//#define ALLENEMY
+#define ALLENEMY
 //スライム
 #define ENEMYSLIME
 
