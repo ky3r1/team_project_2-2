@@ -1,6 +1,7 @@
 #include "Graphics/Graphics.h"
 #include "SceneTitle.h"
 #include "SceneGame.h"
+#include "SceneTutorial.h"
 #include "SceneManager.h"
 #include "SceneLoading.h"
 #include "Input/Input.h"
@@ -34,7 +35,7 @@ void SceneTitle::Update(float elapsedTime)
         ;
     if (gamePad.GetButtonDown() & anyButton)
     {
-        SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+        SceneManager::Instance().ChangeScene(new SceneLoading(new SceneTutorial));
     }
 }
 
