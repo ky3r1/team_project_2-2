@@ -185,6 +185,9 @@
     <ClInclude Include="Source\StageManager.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SceneTutorial.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -317,6 +320,9 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Source\Stage.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneTutorial.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
