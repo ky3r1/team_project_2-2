@@ -26,6 +26,21 @@ public:
 
     //死亡判定
     bool PlayerDead();
+
+    //enemy
+    float GetEnemy01(){ return player_score.enemy01; }
+    void SetEnemy01(float e) { player_score.enemy01 =e; }
+    float GetEnemy02() { return player_score.enemy02; }
+    void SetEnemy02(float e) { player_score.enemy02 = e; }
+    float GetEnemy03() { return player_score.enemy03; }
+    void SetEnemy03(float e) { player_score.enemy03 = e; }
+    float GetEnemy04() { return player_score.enemy04; }
+    void SetEnemy04(float e) { player_score.enemy04 = e; }
+    float GetEnemy05() { return player_score.enemy05; }
+    void SetEnemy05(float e) { player_score.enemy05 = e; }
+    float GetTotalScore() { return player_score.total_score; }
+    void SetToralScore(float s) { player_score.total_score = s; }
+
 private:
     //スティック入力値から移動ベクトルを取得
     DirectX::XMFLOAT3 GetMoveVec() const;
@@ -54,7 +69,11 @@ protected:
     //ジャンプ入力処理
     void InputJump();
 
-    void ProjectileStraightWay(int category,float angle);
+    //前方弾発射
+    void ProjectileStraightFront(int category,float angle);
+
+    //後方弾発射
+    void ProjectileStraightBack(int category, float angle);
 private:
     Model* model = nullptr;
     float       moveSpeed = 5.0f;
@@ -67,6 +86,19 @@ private:
     int         jumpLimit = 2;
     DelayTime projectile_allangle;
     DelayTime projectile_auto;
+    DelayTime projectile_front;
+
+    //score
+    struct Score
+    {
+        float enemy01;
+        float enemy02;
+        float enemy03;
+        float enemy04;
+        float enemy05;
+        float total_score;
+    };
+    Score player_score;
 
     ProjectileManager projectileManager;
 

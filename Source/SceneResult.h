@@ -2,6 +2,7 @@
 
 #include "Graphics/Sprite.h"
 #include "Scene.h"
+//#include "Player.h"
 
 //タイトルシーン
 class SceneResult : public Scene

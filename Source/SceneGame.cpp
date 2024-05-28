@@ -69,7 +69,7 @@ void SceneGame::Initialize()
 		DirectX::XMFLOAT3(0, 1, 0)
 	);
 	camera.SetPerspectiveFov(
-		DirectX::XMConvertToRadians(45),
+		DirectX::XMConvertToRadians(90),
 		graphics.GetScreenWidth() / graphics.GetScreenHeight(),
 		0.1f,
 		1000.0f
@@ -151,7 +151,7 @@ void SceneGame::Render()
 	ID3D11DepthStencilView* dsv = graphics.GetDepthStencilView();
 
 	// 画面クリア＆レンダーターゲット設定
-	FLOAT color[] = { 0.0f, 0.0f, 0.5f, 1.0f };	// RGBA(0.0～1.0)
+	FLOAT color[] = { 0.4f, 0.4f, 0.4f, 1.0f };	// RGBA(0.0～1.0)
 	dc->ClearRenderTargetView(rtv, color);
 	dc->ClearDepthStencilView(dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	dc->OMSetRenderTargets(1, &rtv, dsv);
@@ -311,8 +311,9 @@ void SceneGame::CrickEnemyAdd(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4
 
 
 	//エネミー配置処理
+	GamePad& gamePad = Input::Instance().GetGamePad();
 	Mouse& mouse = Input::Instance().GetMouse();
-	if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
+	if (gamePad.GetButtonDown() & GamePad::BTN_A)
 	{
 		//マウスカーソル座標取得
 		DirectX::XMFLOAT3 screenPosition;
@@ -338,32 +339,32 @@ void SceneGame::CrickEnemyAdd(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4
 		DirectX::XMFLOAT3 world_position_start;
 		DirectX::XMStoreFloat3(&world_position_start, WorldPosition);
 
-		screenPosition.z = 1;
-		ScreenCursor = DirectX::XMLoadFloat3(&screenPosition);
-		WorldPosition = DirectX::XMVector3Unproject
-		(
-			ScreenCursor,
-			viewport.TopLeftX,
-			viewport.TopLeftY,
-			viewport.Width,
-			viewport.Height,
-			viewport.MinDepth,
-			viewport.MaxDepth,
-			Projection,
-			View,
-			World
-		);
-		DirectX::XMFLOAT3 world_position_end;
-		DirectX::XMStoreFloat3(&world_position_end, WorldPosition);
+		//screenPosition.z = 1;
+		//ScreenCursor = DirectX::XMLoadFloat3(&screenPosition);
+		//WorldPosition = DirectX::XMVector3Unproject
+		//(
+		//	ScreenCursor,
+		//	viewport.TopLeftX,
+		//	viewport.TopLeftY,
+		//	viewport.Width,
+		//	viewport.Height,
+		//	viewport.MinDepth,
+		//	viewport.MaxDepth,
+		//	Projection,
+		//	View,
+		//	World
+		//);
+		//DirectX::XMFLOAT3 world_position_end;
+		//DirectX::XMStoreFloat3(&world_position_end, WorldPosition);
 
-		HitResult hit;
-		StageMain stage_main;
-		if (stage_main.RayCast(world_position_start, world_position_end, hit))
-		{
+		//HitResult hit;
+		//StageMain stage_main;
+		//if (stage_main.RayCast(world_position_start, world_position_end, hit))
+		//{
 			EnemyManager& enemyManager = EnemyManager::Instance();
-			EnemySlime* slime = new EnemySlime(RED, 0);
-			slime->SetPosition(DirectX::XMFLOAT3(hit.position.x, hit.position.y, hit.position.z));
+			EnemySlime* slime = new EnemySlime(GREEN, 0);
+			slime->SetPosition(DirectX::XMFLOAT3(world_position_start.x, world_position_start.y, world_position_start.z));
 			enemyManager.Register(slime);
-		}
+		//}
 	}
 }

@@ -10,6 +10,7 @@
 
 #define DELAYAUTOTIME 40
 #define DELAYALLANGLETIME 60
+#define DELAYFRONTTIME 60
 
 #define DELAYPLAYERVSENEMY 60
 
@@ -22,7 +23,12 @@ Player::Player()
 
     projectile_auto.time = DELAYAUTOTIME;
     projectile_allangle.time = DELAYALLANGLETIME;
+    projectile_front.time = DELAYFRONTTIME;
+
     hit_delay.time = DELAYPLAYERVSENEMY;
+    moveSpeed = 5.0f;
+
+    player_score = {};
 
     //ÉqÉbÉgÉGÉtÉFÉNÉgì«Ç›çûÇ›
     hitEffect = new Effect("Data/Effect/Hit.efk");
@@ -42,8 +48,9 @@ void Player::Update(float elapsedTime)
     InputMove(elapsedTime);
 
     //ÉWÉÉÉìÉvèàóù
+#ifdef JUMPFRAG
     InputJump();
-
+#endif
     //íeä€ì¸óÕèàóù
     InputProjectile();
 
@@ -85,6 +92,17 @@ void Player::Update(float elapsedTime)
     {
         projectile_auto.checker = true;
         projectile_auto.time = DELAYAUTOTIME;
+    }
+
+    //ëOï˚ÇÃíeÇÃdelay
+    if (!projectile_front.checker)
+    {
+        projectile_front.time--;
+    }
+    if (projectile_front.time < 0)
+    {
+        projectile_front.checker = true;
+        projectile_front.time = DELAYFRONTTIME;
     }
 
     //é¸àÕÇ…èoÇ∑íeÇÃdelay
@@ -136,6 +154,7 @@ void Player::DrawDebugGUI()
             ImGui::SliderFloat("movespeed", &moveSpeed, 0.0f, 10.0f);
 
             ImGui::SliderInt("delay_auto_time", &projectile_auto.time, 0.0f, DELAYAUTOTIME);
+            ImGui::SliderInt("delay_front_time", &projectile_front.time, 0.0f, DELAYFRONTTIME);
             ImGui::SliderInt("delay_allangle_time", &projectile_allangle.time, 0.0f, DELAYALLANGLETIME);
 
             ImGui::TreePop();
@@ -353,44 +372,44 @@ void Player::OnLanding()
 void Player::InputProjectile()
 {
     GamePad& gamePad = Input::Instance().GetGamePad();
-
+    Mouse& mouse = Input::Instance().GetMouse();
     //íºêiíeä€î≠éÀ
-    if (gamePad.GetButtonDown() & GamePad::BTN_X&&projectile_allangle.checker)
+    if (mouse.GetButton() & Mouse::BTN_RIGHT &&projectile_allangle.checker)
     {
         for (int index = 0; index < 10; index++)
         {
             switch (index)
             {
             case 0:
-                ProjectileStraightWay(BLUE, 0.0f);
+                ProjectileStraightFront(BLUE, 0.0f);
                 break;
             case 1:
-                ProjectileStraightWay(BLUE, 3.14f);
+                ProjectileStraightFront(BLUE, 0.9);
                 break;
-                //case 2:
-                //    ProjectileStraightWay(BLUE, 12.0f);
-                //    break;
-                    //case 3:
-                    //    ProjectileStraightWay(BLUE, 0.6f);
-                    //    break;
-                    //case 4:
-                    //    ProjectileStraightWay(BLUE, 0.8f);
-                    //    break;
-                    //case 5:
-                    //    ProjectileStraightWay(BLUE, 10.0f);
-                    //    break;
-                    //case 6:
-                    //    ProjectileStraightWay(BLUE, -0.8f);
-                    //    break;
-                    //case 7:
-                    //    ProjectileStraightWay(BLUE, -0.6f);
-                    //    break;
-                    //case 8:
-                    //    ProjectileStraightWay(BLUE, -0.4f);
-                    //    break;
-                    //case 9:
-                    //    ProjectileStraightWay(BLUE, -0.2f);
-                    //    break;
+            case 2:
+                ProjectileStraightFront(BLUE, 3.0);
+                break;
+            case 3:
+                ProjectileStraightFront(BLUE, -0.9);
+                break;
+            case 4:
+                ProjectileStraightFront(BLUE, -3.0);
+                break;
+            case 5:
+                ProjectileStraightBack(BLUE, 0.0f);
+                break;
+            case 6:
+                ProjectileStraightBack(BLUE, 0.9f);
+                break;
+            case 7:
+                ProjectileStraightBack(BLUE, 3.0f);
+                break;
+            case 8:
+                ProjectileStraightBack(BLUE, -0.9f);
+                break;
+            case 9:
+                ProjectileStraightBack(BLUE, -3.0f);
+                break;
             default:
                 break;
             }
@@ -398,51 +417,14 @@ void Player::InputProjectile()
         projectile_allangle.checker = false;
     }
     
-    //í«îˆíeä€î≠éÀ
-    if (gamePad.GetButtonDown() & GamePad::BTN_Y)
+    //ëOï˚íeä€î≠éÀ
+    if (mouse.GetButton() & Mouse::BTN_LEFT)
     {
-        //ëOï˚å¸
-        DirectX::XMFLOAT3 dir;
-        dir.x = transform._31 * 100.0f;
-        dir.y = 0.0f;
-        dir.z = transform._33 * 100.0f;
-        //î≠éÀà íuÅiÉvÉåÉCÉÑÅ[ÇÃçòìñÇΩÇËÅj
-        DirectX::XMFLOAT3 pos;
-        pos.x = position.x;
-        pos.y = position.y + height * 0.5f;
-        pos.z = position.z;
-
-        //É^Å[ÉQÉbÉgÅiÉfÉtÉHÉãÉgÇ≈ÇÕÉvÉåÉCÉÑÅ[ÇÃëOï˚
-        DirectX::XMFLOAT3 target;
-        target.x = pos.x + dir.x * 1000.0f;
-        target.y = pos.y + dir.y * 1000.0f;
-        target.z = pos.z + dir.z * 1000.0f;
-
-        //àÍî‘ãﬂÇ≠ÇÃìGÇÉ^Å[ÉQÉbÉgÇ…Ç∑ÇÈ
-        float dist = FLT_MAX;
-        EnemyManager& enemyManager = EnemyManager::Instance();
-        int enemyCount = enemyManager.GetEnemyCount();
-        for (int i = 0; i < enemyCount; i++)
+        if (projectile_front.checker)
         {
-            //ìGÇ∆ÇÃãóó£îªíË
-            Enemy* enemy = EnemyManager::Instance().GetEnemy(i);
-            DirectX::XMVECTOR P = DirectX::XMLoadFloat3(&position);
-            DirectX::XMVECTOR E = DirectX::XMLoadFloat3(&enemy->GetPosition());
-            DirectX::XMVECTOR V = DirectX::XMVectorSubtract(E, P);
-            DirectX::XMVECTOR D = DirectX::XMVector3LengthSq(V);
-            float d;
-            DirectX::XMStoreFloat(&d, D);
-            if (d < dist)
-            {
-                dist = d;
-                target = enemy->GetPosition();
-                target.y += enemy->GetHeight() * 0.5f;
-            }
+            ProjectileStraightFront(GREEN, 0.0f);
+            projectile_front.checker = false;
         }
-
-        //î≠éÀ
-        ProjectileHoming* projectile = new ProjectileHoming(&projectileManager, GREEN);
-        projectile->Launch(dir, pos, target);
     }
     if (projectile_auto.checker)
     {
@@ -451,13 +433,13 @@ void Player::InputProjectile()
             switch (index)
             {
             case 0:
-                ProjectileStraightWay(RED,0.0f);
+                ProjectileStraightFront(BLUE,0.0f);
                 break;
             case 1:
-                ProjectileStraightWay(RED,0.3f);
+                ProjectileStraightFront(RED,0.3f);
                 break;
             case 2:
-                ProjectileStraightWay(RED,-0.3f);
+                ProjectileStraightFront(RED,-0.3f);
                 break;
             default:
                 break;
@@ -467,7 +449,7 @@ void Player::InputProjectile()
     }
 }
 
-void Player::ProjectileStraightWay(int category,float angle)//category:íeÇÃÉ^ÉCÉvÅAangle:íeÇÃäpìx
+void Player::ProjectileStraightFront(int category,float angle)//category:íeÇÃÉ^ÉCÉvÅAangle:íeÇÃäpìx
 {
     //î≠éÀ
     ProjectileStraight* projectile{};
@@ -476,6 +458,41 @@ void Player::ProjectileStraightWay(int category,float angle)//category:íeÇÃÉ^ÉCÉ
     dir.x = transform._31 * 100.0f;
     dir.y = 0.0f;
     dir.z = transform._33 * 100.0f;
+    DirectX::XMFLOAT3 right;
+    right.x = transform._11 * 100.0f;
+    right.y = 0.0f;
+    right.z = transform._13 * 100.0f;
+    //î≠éÀà íuÅiÉvÉåÉCÉÑÅ[ÇÃçòìñÇΩÇËÅj
+    DirectX::XMFLOAT3 pos;
+    pos.x = position.x;
+    pos.y = position.y + height * 0.5f;
+    pos.z = position.z;
+
+    DirectX::XMVECTOR Right = DirectX::XMLoadFloat3(&right);
+    Right = DirectX::XMVectorScale(Right, angle);
+    DirectX::XMVECTOR Dir = DirectX::XMLoadFloat3(&dir);
+    DirectX::XMVECTOR Pos = DirectX::XMLoadFloat3(&pos);
+    DirectX::XMVECTOR Ev = DirectX::XMVectorAdd(Dir, Right);
+    DirectX::XMVECTOR Ep = DirectX::XMVectorAdd(Pos, Ev);
+    Ep = DirectX::XMVectorSubtract(Ep, Pos);
+    DirectX::XMFLOAT3 ep;
+    DirectX::XMStoreFloat3(&ep, Ep);
+    dir.x = ep.x;
+    dir.y = 0.0f;
+    dir.z = ep.z;
+    projectile = new ProjectileStraight(&projectileManager, category);
+    projectile->Launch(dir, pos);
+}
+
+void Player::ProjectileStraightBack(int category, float angle)
+{
+    //î≠éÀ
+    ProjectileStraight* projectile{};
+    //ëOï˚å¸
+    DirectX::XMFLOAT3 dir;
+    dir.x = -transform._31 * 100.0f;
+    dir.y = 0.0f;
+    dir.z = -transform._33 * 100.0f;
     DirectX::XMFLOAT3 right;
     right.x = transform._11 * 100.0f;
     right.y = 0.0f;

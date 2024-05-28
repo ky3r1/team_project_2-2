@@ -28,17 +28,18 @@
 #define ALLPLAYER
 //壁当たり判定
 //#define WallCollision
-
+//Jump
+//#define JUMPFRAG
 //Player->Enemy 弾のダメージ
 #define PROJECTILEDAMAGE
 //Player->Enemy 踏みつけダメージ
 #define JUMPDAMAGE
 
 //Enemy->Player 接触ダメージ
-#define ENEMYHITTINGDAMAGE
+//#define ENEMYHITTINGDAMAGE
 
 //エネミー
-#define ALLENEMY
+//#define ALLENEMY
 //スライム
 #define ENEMYSLIME
 
