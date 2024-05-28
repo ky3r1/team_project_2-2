@@ -58,7 +58,6 @@ void SceneTutorial::Initialize()
 	player = new Player();
 #endif //  ALLPLAYER
 
-	game_timer = 0;
 
 	//ƒJƒƒ‰‰Šúİ’è
 	Graphics& graphics = Graphics::Instance();

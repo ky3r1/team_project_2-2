@@ -32,5 +32,5 @@ private:
 	Player* player = nullptr;
 	CameraController* cameraController = nullptr;
 	Sprite* gauge = nullptr;
-	int game_timer = 0;
+	bool play_timer = false;
 };
