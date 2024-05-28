@@ -9,7 +9,7 @@
 #include "ProjectileHoming.h"
 
 //TODO:’e‚ÌDelayTime
-#define DELAYAUTOTIME 40
+#define DELAYAUTOTIME 30
 #define DELAYALLANGLETIME 60
 #define DELAYFRONTTIME 60
 
