@@ -8,11 +8,24 @@
 #include "ProjectileStraight.h"
 #include "ProjectileHoming.h"
 
+//TODO:弾のDelayTime
 #define DELAYAUTOTIME 40
 #define DELAYALLANGLETIME 60
 #define DELAYFRONTTIME 60
 
+//TODO:PlayerDamageの当たり判定のDelayTime
 #define DELAYPLAYERVSENEMY 60
+
+//TODO:Enemyのスコア
+#define ENEMY01_SCORE 10
+#define ENEMY02_SCORE 20
+#define ENEMY03_SCORE 30
+#define ENEMY04_SCORE 40
+#define ENEMY05_SCORE 50
+
+
+extern float enemy_score[5];
+extern float total_score;
 
 Player::Player()
 {
@@ -28,7 +41,8 @@ Player::Player()
     hit_delay.time = DELAYPLAYERVSENEMY;
     moveSpeed = 5.0f;
 
-    player_score = {};
+    for (int i = 0; i < 5; i++)enemy_score[i] = 0;
+    total_score   = 0;
 
     //ヒットエフェクト読み込み
     hitEffect = new Effect("Data/Effect/Hit.efk");
@@ -157,6 +171,9 @@ void Player::DrawDebugGUI()
             ImGui::SliderInt("delay_front_time", &projectile_front.time, 0.0f, DELAYFRONTTIME);
             ImGui::SliderInt("delay_allangle_time", &projectile_allangle.time, 0.0f, DELAYALLANGLETIME);
 
+            ImGui::SliderFloat("enemy_score_red", &enemy_score[0], 0.0f, 10.0f);
+            ImGui::SliderFloat("totoal_socre", &total_score, 0.0f, 10.0f);
+
             ImGui::TreePop();
         }
     }
@@ -238,6 +255,27 @@ void Player::CollisionProjectilesVsEnemies()
             {
                 if (projectile->GetProectileCategory() == enemy->GetEnemyCategory())
                 {
+                    enemy_score[enemy->GetEnemyCategory()] += 1;
+                    switch (enemy->GetEnemyCategory())
+                    {
+                    case RED:
+                        total_score += ENEMY01_SCORE;
+                        break;
+                    case GREEN:
+                        total_score += ENEMY02_SCORE;
+                        break;
+                    case BLUE:
+                        total_score += ENEMY03_SCORE;
+                        break;
+                    case YELLOW:
+                        total_score += ENEMY04_SCORE;
+                        break;
+                    case PURPLE:
+                        total_score += ENEMY05_SCORE;
+                        break;
+                    default:
+                        break;
+                    }
                     //弾丸破棄
                     projectile->Destroy();
 #ifdef PROJECTILEDAMAGE
@@ -433,7 +471,7 @@ void Player::InputProjectile()
             switch (index)
             {
             case 0:
-                ProjectileStraightFront(BLUE,0.0f);
+                ProjectileStraightFront(RED,0.0f);
                 break;
             case 1:
                 ProjectileStraightFront(RED,0.3f);
