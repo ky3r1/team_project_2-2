@@ -210,6 +210,28 @@ void Player::CollisionPlayerVsEnemies()
 #ifdef ENEMYHITTINGDAMAGE
             if (hit_delay.checker)
             {
+                //吹き飛ばす
+                {
+                    //吹き飛ばす力
+                    const float power = 10.0f;
+
+                    //敵の位置
+                    DirectX::XMVECTOR eVec = DirectX::XMLoadFloat3(&enemy->GetPosition());
+                    //プレイヤーの位置
+                    DirectX::XMVECTOR pVec = DirectX::XMLoadFloat3(&position);
+                    //弾から敵への方向ベクトルを計算（敵 - 弾）
+                    auto v = DirectX::XMVectorSubtract(pVec, eVec);
+                    //方向ベクトルを正規化
+                    v = DirectX::XMVector3Normalize(v);
+
+                    DirectX::XMFLOAT3 vec;
+                    DirectX::XMStoreFloat3(&vec, v);
+
+                    velocity.x += power * vec.x;
+                    velocity.y += power * 0.5f;
+                    velocity.z += power * vec.z;
+                }
+
                 health--;
                 hit_delay.checker = false;
                 //ヒットエフェクト再生

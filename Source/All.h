@@ -36,7 +36,7 @@
 #define JUMPDAMAGE
 
 //Enemy->Player 接触ダメージ
-//#define ENEMYHITTINGDAMAGE
+#define ENEMYHITTINGDAMAGE
 
 //エネミー
 #define ALLENEMY
