@@ -31,7 +31,7 @@ Player::Player()
     player_score = {};
 
     //ヒットエフェクト読み込み
-    hitEffect = new Effect("Data/Effect/Hit.efk");
+    hitEffect = new Effect("Data/Effect/sample_01.efk");
 }
 
 Player::~Player()
