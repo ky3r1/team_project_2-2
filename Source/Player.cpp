@@ -46,7 +46,7 @@ Player::Player()
     total_score   = 0;
 
     //ヒットエフェクト読み込み
-    hitEffect = new Effect("Data/Effect/Hit.efk");
+    hitEffect = new Effect("Data/Effect/sample_01.efk");
 }
 
 Player::~Player()
