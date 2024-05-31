@@ -39,7 +39,7 @@
 //#define ENEMYHITTINGDAMAGE
 
 //エネミー
-//#define ALLENEMY
+#define ALLENEMY
 //スライム
 #define ENEMYSLIME
 
@@ -51,7 +51,8 @@
 //#define ENEMYADD
 
 ///////////////////CATEGORY////////////////////////
-#define RED 0
-#define GREEN 1
-#define BLUE 2
-#define YELLOW 3
+#define RED 0       //enemy01
+#define GREEN 1     //enemy02
+#define BLUE 2      //enemy03
+#define YELLOW 3    //enemy04
+#define PURPLE 4    //enemy05

@@ -31,6 +31,9 @@ void Projectile::DrawDebugPrimitive()
     case YELLOW:
         debugRenderer->DrawSphere(position, radius, DirectX::XMFLOAT4(1, 1, 0, 1));
         break;
+    case PURPLE:
+        debugRenderer->DrawSphere(position, radius, DirectX::XMFLOAT4(1, 0, 1, 1));
+        break;
     default:
         break;
     }

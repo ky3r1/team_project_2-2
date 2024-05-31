@@ -8,6 +8,8 @@
 #include "SceneManager.h"
 #include "SceneLoading.h"
 
+float enemy_score[5];
+float total_score;
 
 void SceneResult::Initialize()
 {
@@ -35,6 +37,7 @@ void SceneResult::Update(float elapsedTime)
         | GamePad::BTN_X
         | GamePad::BTN_Y
         ;
+    
     if (gamePad.GetButtonDown() & anyButton)
     {
         SceneManager::Instance().ChangeScene(new SceneLoading(new SceneTitle));
