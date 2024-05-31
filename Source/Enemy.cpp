@@ -24,6 +24,9 @@ void Enemy::DrewDebugPrimitive()
     case PURPLE:
         debugRenderer->DrawCylinder(position, radius, height, DirectX::XMFLOAT4(1, 0, 1, 1));
         break;
+    case WHITE:
+        debugRenderer->DrawCylinder(position, radius, height, DirectX::XMFLOAT4(1, 1, 1, 1));
+        break;
     default:
         break;
     }

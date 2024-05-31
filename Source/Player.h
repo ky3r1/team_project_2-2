@@ -5,12 +5,20 @@
 #include "Character.h"
 #include "ProjectileManager.h"
 #include "Effect.h"
+#include "Input/Input.h"
+
 
 class Player : public Character
 {
 public:
     Player();
     ~Player() override;
+
+    static Player& Instance()
+    {
+        static Player instance;
+        return instance;
+    }
 
     //更新処理
     void Update(float olapsedTime);
@@ -27,6 +35,8 @@ public:
     //死亡判定
     bool PlayerDead();
 
+    // プレイヤーの種類
+    int GetPlayerCategory() { return player_category; }
 
 private:
     //スティック入力値から移動ベクトルを取得
@@ -68,6 +78,7 @@ private:
     float       jumpSpeed = 20.0f;
     /*float       gravity = -1.0f;
     DirectX::XMFLOAT3 velocity = { 0,0,0 };*/
+    int player_category;
 
     int         jumpCount = 0;
     int         jumpLimit = 2;
@@ -78,4 +89,6 @@ private:
     ProjectileManager projectileManager;
 
     Effect*     hitEffect = nullptr;
+
+    GamePad& gamePad = Input::Instance().GetGamePad();
 };

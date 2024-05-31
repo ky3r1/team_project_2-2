@@ -80,9 +80,10 @@ void SceneGame::Initialize()
 #ifdef ENEMYSLIME
 	for (int index = 0; index < 2; index++)
 	{
-		EnemySlime* slime = new EnemySlime(RED,index);
+		EnemySlime* slime = new EnemySlime(BLUE,index);
 		EnemyManager::Instance().Register(slime);
 	}
+	
 #endif // ENEMYSLIME
 
 

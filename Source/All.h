@@ -56,3 +56,4 @@
 #define BLUE 2      //enemy03
 #define YELLOW 3    //enemy04
 #define PURPLE 4    //enemy05
+#define WHITE 5    //enemy06

@@ -82,15 +82,15 @@ void SceneTutorial::Initialize()
 	cameraController = new CameraController();
 #ifdef ALLENEMY
 #ifdef ENEMYSLIME
-#endif // ENEMYSLIME
-	
-
-#endif // ALLENEMY
-	for (int index = 0; index < 2; index++)
+	/*for (int index = 0; index < 2; index++)
 	{
 		EnemySlime* slime = new EnemySlime(RED, index);
 		EnemyManager::Instance().Register(slime);
-	}
+	}*/
+#endif // ENEMYSLIME
+	slime = new EnemySlime(RED, 0);
+
+#endif // ALLENEMY
 }
 
 // I—¹‰»
@@ -152,6 +152,7 @@ void SceneTutorial::Update(float elapsedTime)
 	{
 		delay_timer--;
 	}
+	
 
 	if(game_timer==0)
 	{
@@ -160,41 +161,68 @@ void SceneTutorial::Update(float elapsedTime)
 			delay_check = true;
 			if (delay_timer < 0)
 			{
+				enemyAdd = true;
 				delay_check = false;
 				delay_timer = TUTORIAL_DELAYTIME;
 				game_timer++;
 			}
 		}
 	}
-	if(game_timer==1)
+	if (game_timer == 1)
 	{
-		if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
+		if (enemyAdd == true)
+		{
+			EnemyManager& enemyManager = EnemyManager::Instance();
+			slime = new EnemySlime(RED, 0);
+			slime->SetPosition(DirectX::XMFLOAT3(2, 1, 2));
+			enemyManager.Register(slime);
+		}
+		enemyAdd = false;
+		if (slime->GetHealth() <= 0)
 		{
 			delay_check = true;
 			if (delay_timer < 0)
 			{
 				delay_check = false;
 				delay_timer = TUTORIAL_DELAYTIME;
+				enemyAdd = true;
 				game_timer++;
 			}
 		}
 	}
-	if(game_timer==2)
+	if (game_timer == 2)
 	{
-		if (mouse.GetButton() & Mouse::BTN_RIGHT)
+		if (enemyAdd == true)
+		{
+			EnemyManager& enemyManager = EnemyManager::Instance();
+		    slime = new EnemySlime(GREEN, 0);
+			slime->SetPosition(DirectX::XMFLOAT3(2, 1, 2));
+			enemyManager.Register(slime);
+		}
+		enemyAdd = false;
+		if (slime->GetHealth() <= 0)
 		{
 			delay_check = true;
 			if (delay_timer < 0)
 			{
 				delay_check = false;
 				delay_timer = TUTORIAL_DELAYTIME;
+				enemyAdd = true;
 				game_timer++;
 			}
 		}
 	}
 	if(game_timer==3)
 	{
-		if (gamePad.GetButtonDown() & GamePad::BTN_A)
+		if (enemyAdd == true)
+		{
+			EnemyManager& enemyManager = EnemyManager::Instance();
+			slime = new EnemySlime(BLUE, 0);
+			slime->SetPosition(DirectX::XMFLOAT3(2, 1, 2));
+			enemyManager.Register(slime);
+		}
+		enemyAdd = false;
+		if (slime->GetHealth() <= 0)
 		{
 			delay_check = true;
 			if (delay_timer < 0)
