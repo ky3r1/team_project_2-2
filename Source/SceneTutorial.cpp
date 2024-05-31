@@ -12,6 +12,7 @@
 #include "SceneManager.h"
 #include "SceneLoading.h"
 #include "SceneResult.h"
+#include "SceneGame.h"
 
 //StageIncldue
 #include "StageManager.h"
@@ -152,9 +153,8 @@ void SceneTutorial::Update(float elapsedTime)
 		delay_timer--;
 	}
 
-	switch (game_timer)
+	if(game_timer==0)
 	{
-	case 0:
 		if (gamePad.GetButtonDown() & (GamePad::BTN_UP | GamePad::BTN_RIGHT | GamePad::BTN_DOWN | GamePad::BTN_LEFT))
 		{
 			delay_check = true;
@@ -165,7 +165,9 @@ void SceneTutorial::Update(float elapsedTime)
 				game_timer++;
 			}
 		}
-	case 1:
+	}
+	if(game_timer==1)
+	{
 		if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
 		{
 			delay_check = true;
@@ -176,7 +178,9 @@ void SceneTutorial::Update(float elapsedTime)
 				game_timer++;
 			}
 		}
-	case 2:
+	}
+	if(game_timer==2)
+	{
 		if (mouse.GetButton() & Mouse::BTN_RIGHT)
 		{
 			delay_check = true;
@@ -187,7 +191,9 @@ void SceneTutorial::Update(float elapsedTime)
 				game_timer++;
 			}
 		}
-	case 3:
+	}
+	if(game_timer==3)
+	{
 		if (gamePad.GetButtonDown() & GamePad::BTN_A)
 		{
 			delay_check = true;
@@ -198,9 +204,14 @@ void SceneTutorial::Update(float elapsedTime)
 				game_timer++;
 			}
 		}
-	case 4:
-		break;
-	};
+	}
+	if(game_timer==4)
+	{
+		if (gamePad.GetButtonDown() & GamePad::BTN_B)
+		{
+			SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+		}
+	}
 }
 
 // ï`âÊèàóù
