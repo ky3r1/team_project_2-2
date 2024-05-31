@@ -34,5 +34,6 @@ private:
 	Sprite* gauge = nullptr;
 	Sprite* sprite = nullptr;
 	int game_timer = 0;
-	bool clear_check = false;
+	bool delay_check = false;
+	int delay_timer = 0;
 };

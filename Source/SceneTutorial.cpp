@@ -21,6 +21,7 @@
 
 #include "Input/Input.h"
 
+#define TUTORIAL_DELAYTIME 120
 
 // 初期化
 void SceneTutorial::Initialize()
@@ -59,6 +60,8 @@ void SceneTutorial::Initialize()
 #endif //  ALLPLAYER
 
 	game_timer = 0;
+	delay_timer = TUTORIAL_DELAYTIME;
+	delay_check = false;
 
 	//カメラ初期設定
 	Graphics& graphics = Graphics::Instance();
@@ -79,7 +82,7 @@ void SceneTutorial::Initialize()
 #ifdef ALLENEMY
 #ifdef ENEMYSLIME
 #endif // ENEMYSLIME
-
+	
 
 #endif // ALLENEMY
 	for (int index = 0; index < 2; index++)
@@ -144,24 +147,58 @@ void SceneTutorial::Update(float elapsedTime)
 	//エフェクト更新処理
 	EffectManager::Instance().Update(elapsedTime);
 
+	if (delay_check == true)
+	{
+		delay_timer--;
+	}
+
 	switch (game_timer)
 	{
 	case 0:
-		if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
+		if (gamePad.GetButtonDown() & (GamePad::BTN_UP | GamePad::BTN_RIGHT | GamePad::BTN_DOWN | GamePad::BTN_LEFT))
 		{
-			game_timer++;
+			delay_check = true;
+			if (delay_timer < 0)
+			{
+				delay_check = false;
+				delay_timer = TUTORIAL_DELAYTIME;
+				game_timer++;
+			}
 		}
 	case 1:
-		if (mouse.GetButton() & Mouse::BTN_RIGHT)
+		if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
 		{
-			game_timer++;
+			delay_check = true;
+			if (delay_timer < 0)
+			{
+				delay_check = false;
+				delay_timer = TUTORIAL_DELAYTIME;
+				game_timer++;
+			}
 		}
 	case 2:
-		if (gamePad.GetButtonDown() & GamePad::BTN_A)
+		if (mouse.GetButton() & Mouse::BTN_RIGHT)
 		{
-			game_timer++;
+			delay_check = true;
+			if (delay_timer < 0)
+			{
+				delay_check = false;
+				delay_timer = TUTORIAL_DELAYTIME;
+				game_timer++;
+			}
 		}
 	case 3:
+		if (gamePad.GetButtonDown() & GamePad::BTN_A)
+		{
+			delay_check = true;
+			if (delay_timer < 0)
+			{
+				delay_check = false;
+				delay_timer = TUTORIAL_DELAYTIME;
+				game_timer++;
+			}
+		}
+	case 4:
 		break;
 	};
 }
