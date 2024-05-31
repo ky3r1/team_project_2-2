@@ -8,8 +8,9 @@
 #include "ProjectileStraight.h"
 #include "ProjectileHoming.h"
 
+static Player* instance = nullptr;
 //TODO:’e‚ÌDelayTime
-#define DELAYAUTOTIME 0
+#define DELAYAUTOTIME 30
 int a = 0;
 #define DELAYALLANGLETIME 60
 #define DELAYFRONTTIME 60
@@ -55,6 +56,11 @@ Player::~Player()
     hitEffect = nullptr;
     delete model;
     model = nullptr;
+}
+
+Player& Player::Instance()
+{
+    return *instance;
 }
 
 void Player::Update(float elapsedTime)

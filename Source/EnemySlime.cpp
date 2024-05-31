@@ -1,4 +1,5 @@
 #include "EnemySlime.h"
+#include "Player.h"
 
 //コンストラクタ
 EnemySlime::EnemySlime(int category,int index)
@@ -11,6 +12,8 @@ EnemySlime::EnemySlime(int category,int index)
 
     radius = 0.5f;//当たり判定の幅、半径
     height = 1.0f;//当たり判定の高さ
+    movespeed = 5.0f;
+    turnspeed = 2.0f;
 
     enemy_num = index;
     switch (index)
@@ -22,8 +25,6 @@ EnemySlime::EnemySlime(int category,int index)
         position = (DirectX::XMFLOAT3(4.0f, 0, 5));
         break;
     }
-
-    enemy_movespeed = { 0.05f,0.05f };//X:エネミーのX軸スピード、Y:エネミーのZ軸スピード
     enemy_category = category;
 }
 
@@ -36,7 +37,7 @@ EnemySlime::~EnemySlime()
 //更新処理
 void EnemySlime::Update(float elapsedTime)
 {
-
+    elapedtime = elapsedTime;
     //速力処理更新
     UpdateVelocity(elapsedTime);
 
@@ -58,42 +59,17 @@ void EnemySlime::Render(ID3D11DeviceContext* dc, Shader* shader)
 
 void EnemySlime::MoveEnemy(Player* player)
 {
-    DirectX::XMFLOAT3 player_position = player->GetPosition();
+    // ターゲット方向への進行ベクトルを算出
+    DirectX::XMFLOAT3 targetPosition = player->GetPosition();
+    float vx = targetPosition.x - position.x;
+    float vz = targetPosition.z - position.z;
+    float dist = sqrtf(vx * vx + vz * vz);
+    vx /= dist;
+    vz /= dist;
 
-    if (position.x > player_position.x)
-    {
-        //position.x -= 0.1f;
-        position.x -= enemy_movespeed.x;
-        if (position.x < player_position.x)
-        {
-            position.x = player_position.x;
-        }
-    }
-    if (position.x < player_position.x)
-    {
-        //position.x += 0.1f;
-        position.x += enemy_movespeed.x;
-        if (position.x > player_position.x)
-        {
-            position.x = player_position.x;
-        }
-    }
-    if (position.z > player_position.z)
-    {
-        position.z -= enemy_movespeed.y;
-        if (position.z < player_position.z)
-        {
-            position.z = player_position.z;
-        }
-    }
-    if (position.z < player_position.z)
-    {
-        position.z += enemy_movespeed.y;
-        if (position.z > player_position.z)
-        {
-            position.z = player_position.z;
-        }
-    }
+    // 移動処理
+    Move(vx, vz, movespeed * 0.5f);
+    Turn(elapedtime, vx, vz, turnspeed * 0.5f);
 }
 
 //死亡したときに呼ばれる

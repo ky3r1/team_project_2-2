@@ -11,6 +11,8 @@ class Player : public Character
 public:
     Player();
     ~Player() override;
+    //インスタンス
+    static Player& Instance();
 
     //更新処理
     void Update(float olapsedTime);
