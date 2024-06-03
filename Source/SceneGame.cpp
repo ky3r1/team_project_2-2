@@ -82,6 +82,8 @@ void SceneGame::Initialize()
 	{
 		EnemySlime* slime = new EnemySlime(BLUE,index);
 		EnemyManager::Instance().Register(slime);
+		slime = new EnemySlime(RED, index);
+		EnemyManager::Instance().Register(slime);
 	}
 	
 #endif // ENEMYSLIME

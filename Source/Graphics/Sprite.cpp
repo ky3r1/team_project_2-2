@@ -1,7 +1,7 @@
-#include <stdio.h> 
+#include <stdio.h>
 #include <WICTextureLoader.h>
 #include "Sprite.h"
-#include "Misc.h"
+#include "misc.h"
 #include "Graphics/Graphics.h"
 
 // コンストラクタ
@@ -51,7 +51,7 @@ Sprite::Sprite(const char* filename)
 		subresource_data.SysMemSlicePitch = 0; //Not use for vertex buffers.
 		// 頂点バッファオブジェクトの生成
 		hr = device->CreateBuffer(&buffer_desc, &subresource_data, &vertexBuffer);
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// 頂点シェーダー
@@ -73,7 +73,7 @@ Sprite::Sprite(const char* filename)
 
 		// 頂点シェーダー生成
 		HRESULT hr = device->CreateVertexShader(csoData.get(), csoSize, nullptr, vertexShader.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		// 入力レイアウト
 		D3D11_INPUT_ELEMENT_DESC inputElementDesc[] =
@@ -83,7 +83,7 @@ Sprite::Sprite(const char* filename)
 			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,       0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		};
 		hr = device->CreateInputLayout(inputElementDesc, ARRAYSIZE(inputElementDesc), csoData.get(), csoSize, inputLayout.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ピクセルシェーダー
@@ -105,7 +105,7 @@ Sprite::Sprite(const char* filename)
 
 		// ピクセルシェーダー生成
 		HRESULT hr = device->CreatePixelShader(csoData.get(), csoSize, nullptr, pixelShader.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ブレンドステート
@@ -124,7 +124,7 @@ Sprite::Sprite(const char* filename)
 		desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 		HRESULT hr = device->CreateBlendState(&desc, blendState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// 深度ステンシルステート
@@ -136,7 +136,7 @@ Sprite::Sprite(const char* filename)
 		desc.DepthFunc = D3D11_COMPARISON_ALWAYS;
 
 		HRESULT hr = device->CreateDepthStencilState(&desc, depthStencilState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ラスタライザーステート
@@ -155,7 +155,7 @@ Sprite::Sprite(const char* filename)
 		desc.AntialiasedLineEnable = false;
 
 		HRESULT hr = device->CreateRasterizerState(&desc, rasterizerState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// サンプラステート
@@ -177,7 +177,7 @@ Sprite::Sprite(const char* filename)
 		desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 
 		HRESULT hr = device->CreateSamplerState(&desc, samplerState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// テクスチャの生成
@@ -191,13 +191,13 @@ Sprite::Sprite(const char* filename)
 		// テクスチャ読み込み
 		Microsoft::WRL::ComPtr<ID3D11Resource> resource;
 		HRESULT hr = DirectX::CreateWICTextureFromFile(device, wfilename, resource.GetAddressOf(), shaderResourceView.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		// テクスチャ情報の取得
 		D3D11_TEXTURE2D_DESC desc;
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> texture2d;
 		hr = resource->QueryInterface<ID3D11Texture2D>(texture2d.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 		texture2d->GetDesc(&desc);
 
 		textureWidth = desc.Width;
@@ -229,10 +229,10 @@ Sprite::Sprite(const char* filename)
 
 		Microsoft::WRL::ComPtr<ID3D11Texture2D>	texture;
 		HRESULT hr = device->CreateTexture2D(&desc, &data, texture.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		hr = device->CreateShaderResourceView(texture.Get(), nullptr, shaderResourceView.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		textureWidth = desc.Width;
 		textureHeight = desc.Height;
@@ -311,7 +311,7 @@ void Sprite::Render(ID3D11DeviceContext *immediate_context,
 		// 頂点バッファの内容の編集を開始する。
 		D3D11_MAPPED_SUBRESOURCE mappedBuffer;
 		HRESULT hr = immediate_context->Map(vertexBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedBuffer);
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		// pDataを編集することで頂点データの内容を書き換えることができる。
 		Vertex* v = static_cast<Vertex*>(mappedBuffer.pData);

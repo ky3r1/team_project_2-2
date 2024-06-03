@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <memory>
-#include "Misc.h"
+#include "misc.h"
 #include "Graphics/ImGuiRenderer.h"
 
 ImGuiRenderer::ImGuiRenderer(HWND hWnd, ID3D11Device* device)
@@ -68,7 +68,7 @@ ImGuiRenderer::ImGuiRenderer(HWND hWnd, ID3D11Device* device)
 
 		// 頂点シェーダー生成
 		HRESULT hr = device->CreateVertexShader(csoData.get(), csoSize, nullptr, vertexShader.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		// 入力レイアウト
 		D3D11_INPUT_ELEMENT_DESC inputElementDesc[] =
@@ -78,7 +78,7 @@ ImGuiRenderer::ImGuiRenderer(HWND hWnd, ID3D11Device* device)
 			{"COLOR",		0,	DXGI_FORMAT_R8G8B8A8_UNORM,	0,	D3D11_APPEND_ALIGNED_ELEMENT,	D3D11_INPUT_PER_VERTEX_DATA,	0 },
 		};
 		hr = device->CreateInputLayout(inputElementDesc, ARRAYSIZE(inputElementDesc), csoData.get(), csoSize, inputLayout.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ピクセルシェーダー
@@ -100,7 +100,7 @@ ImGuiRenderer::ImGuiRenderer(HWND hWnd, ID3D11Device* device)
 
 		// ピクセルシェーダー生成
 		HRESULT hr = device->CreatePixelShader(csoData.get(), csoSize, nullptr, pixelShader.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// 定数バッファ
@@ -115,7 +115,7 @@ ImGuiRenderer::ImGuiRenderer(HWND hWnd, ID3D11Device* device)
 		desc.StructureByteStride = 0;
 
 		HRESULT hr = device->CreateBuffer(&desc, 0, constantBuffer.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ブレンドステート
@@ -134,7 +134,7 @@ ImGuiRenderer::ImGuiRenderer(HWND hWnd, ID3D11Device* device)
 		desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 		HRESULT hr = device->CreateBlendState(&desc, blendState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// 深度ステンシルステート
@@ -146,7 +146,7 @@ ImGuiRenderer::ImGuiRenderer(HWND hWnd, ID3D11Device* device)
 		desc.DepthFunc = D3D11_COMPARISON_ALWAYS;
 
 		HRESULT hr = device->CreateDepthStencilState(&desc, depthStencilState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ラスタライザーステート
@@ -165,7 +165,7 @@ ImGuiRenderer::ImGuiRenderer(HWND hWnd, ID3D11Device* device)
 		desc.AntialiasedLineEnable = false;
 
 		HRESULT hr = device->CreateRasterizerState(&desc, rasterizerState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// サンプラステート
@@ -187,7 +187,7 @@ ImGuiRenderer::ImGuiRenderer(HWND hWnd, ID3D11Device* device)
 		desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 
 		HRESULT hr = device->CreateSamplerState(&desc, samplerState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// フォントテクスチャ
@@ -217,7 +217,7 @@ ImGuiRenderer::ImGuiRenderer(HWND hWnd, ID3D11Device* device)
 			subresourceData.SysMemPitch = desc.Width * 4;
 			subresourceData.SysMemSlicePitch = 0;
 			HRESULT hr = device->CreateTexture2D(&desc, &subresourceData, texture.GetAddressOf());
-			_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+			_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 		}
 
 		// シェーダーリソースビュー
@@ -229,7 +229,7 @@ ImGuiRenderer::ImGuiRenderer(HWND hWnd, ID3D11Device* device)
 			desc.Texture2D.MipLevels = 1;
 			desc.Texture2D.MostDetailedMip = 0;
 			HRESULT hr = device->CreateShaderResourceView(texture.Get(), &desc, shaderResourceView.GetAddressOf());
-			_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+			_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 		}
 
 		// テクスチャを渡す
@@ -308,7 +308,7 @@ void ImGuiRenderer::Render(ID3D11DeviceContext* context)
 		Microsoft::WRL::ComPtr<ID3D11Device> device;
 		context->GetDevice(device.GetAddressOf());
 		HRESULT hr = device->CreateBuffer(&desc, nullptr, vertexBuffer.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// インデックスバッファ
@@ -329,7 +329,7 @@ void ImGuiRenderer::Render(ID3D11DeviceContext* context)
 		Microsoft::WRL::ComPtr<ID3D11Device> device;
 		context->GetDevice(device.GetAddressOf());
 		HRESULT hr = device->CreateBuffer(&desc, nullptr, indexBuffer.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// 定数バッファ更新
@@ -397,10 +397,10 @@ void ImGuiRenderer::Render(ID3D11DeviceContext* context)
 	{
 		D3D11_MAPPED_SUBRESOURCE mappedVB, mappedIB;
 		HRESULT hr = context->Map(vertexBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedVB);
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		hr = context->Map(indexBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedIB);
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		ImDrawVert* dstVertex = (ImDrawVert*)mappedVB.pData;
 		ImDrawIdx* dstIndex = (ImDrawIdx*)mappedIB.pData;

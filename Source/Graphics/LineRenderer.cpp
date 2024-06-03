@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <memory>
-#include "Misc.h"
+#include "misc.h"
 #include "LineRenderer.h"
 
 LineRenderer::LineRenderer(ID3D11Device* device, UINT vertexCount)
@@ -25,7 +25,7 @@ LineRenderer::LineRenderer(ID3D11Device* device, UINT vertexCount)
 
 		// 頂点シェーダー生成
 		HRESULT hr = device->CreateVertexShader(csoData.get(), csoSize, nullptr, vertexShader.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		// 入力レイアウト
 		D3D11_INPUT_ELEMENT_DESC inputElementDesc[] =
@@ -34,7 +34,7 @@ LineRenderer::LineRenderer(ID3D11Device* device, UINT vertexCount)
 			{ "COLOR",		0, DXGI_FORMAT_R32G32B32A32_FLOAT,	0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		};
 		hr = device->CreateInputLayout(inputElementDesc, ARRAYSIZE(inputElementDesc), csoData.get(), csoSize, inputLayout.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ピクセルシェーダー
@@ -57,7 +57,7 @@ LineRenderer::LineRenderer(ID3D11Device* device, UINT vertexCount)
 
 		// ピクセルシェーダー生成
 		HRESULT hr = device->CreatePixelShader(csoData.get(), csoSize, nullptr, pixelShader.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// 定数バッファ
@@ -73,7 +73,7 @@ LineRenderer::LineRenderer(ID3D11Device* device, UINT vertexCount)
 		desc.StructureByteStride = 0;
 
 		HRESULT hr = device->CreateBuffer(&desc, 0, constantBuffer.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ブレンドステート
@@ -92,7 +92,7 @@ LineRenderer::LineRenderer(ID3D11Device* device, UINT vertexCount)
 		desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 		HRESULT hr = device->CreateBlendState(&desc, blendState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// 深度ステンシルステート
@@ -104,7 +104,7 @@ LineRenderer::LineRenderer(ID3D11Device* device, UINT vertexCount)
 		desc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
 
 		HRESULT hr = device->CreateDepthStencilState(&desc, depthStencilState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ラスタライザーステート
@@ -123,7 +123,7 @@ LineRenderer::LineRenderer(ID3D11Device* device, UINT vertexCount)
 		desc.AntialiasedLineEnable = false;
 
 		HRESULT hr = device->CreateRasterizerState(&desc, rasterizerState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// 頂点バッファ
@@ -137,7 +137,7 @@ LineRenderer::LineRenderer(ID3D11Device* device, UINT vertexCount)
 		desc.StructureByteStride = 0;
 
 		HRESULT hr = device->CreateBuffer(&desc, nullptr, vertexBuffer.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 }
 
@@ -182,7 +182,7 @@ void LineRenderer::Render(ID3D11DeviceContext* context, const DirectX::XMFLOAT4X
 	{
 		D3D11_MAPPED_SUBRESOURCE mappedVB;
 		HRESULT hr = context->Map(vertexBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedVB);
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		memcpy(mappedVB.pData, &vertices[start], sizeof(Vertex) * count);
 
