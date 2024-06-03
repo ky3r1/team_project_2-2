@@ -191,6 +191,9 @@
     <ClInclude Include="Source\Graphics\texture.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SceneTutorial.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -324,15 +327,6 @@
     </ClCompile>
     <ClCompile Include="Source\Stage.cpp">
       <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\sprite_bach.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\shader.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\texture.cpp">
-      <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

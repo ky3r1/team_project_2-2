@@ -28,7 +28,8 @@
 #define ALLPLAYER
 //壁当たり判定
 //#define WallCollision
-
+//Jump
+//#define JUMPFRAG
 //Player->Enemy 弾のダメージ
 #define PROJECTILEDAMAGE
 //Player->Enemy 踏みつけダメージ
@@ -50,7 +51,9 @@
 //#define ENEMYADD
 
 ///////////////////CATEGORY////////////////////////
-#define RED 0
-#define GREEN 1
-#define BLUE 2
-#define YELLOW 3
+#define RED 0       //enemy01
+#define GREEN 1     //enemy02
+#define BLUE 2      //enemy03
+#define YELLOW 3    //enemy04
+#define PURPLE 4    //enemy05
+#define WHITE 5    //enemy06

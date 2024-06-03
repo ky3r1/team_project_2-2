@@ -1,6 +1,7 @@
 #include "Graphics/Graphics.h"
 #include "SceneTitle.h"
 #include "SceneGame.h"
+#include "SceneTutorial.h"
 #include "SceneManager.h"
 #include "SceneLoading.h"
 #include "Input/Input.h"

@@ -1,4 +1,4 @@
-#include "SceneGame.h"
+#include "SceneTutorial.h"
 
 //CameraInclude
 #include "Camera.h"
@@ -12,6 +12,7 @@
 #include "SceneManager.h"
 #include "SceneLoading.h"
 #include "SceneResult.h"
+#include "SceneGame.h"
 
 //StageIncldue
 #include "StageManager.h"
@@ -21,9 +22,10 @@
 
 #include "Input/Input.h"
 
+#define TUTORIAL_DELAYTIME 120
 
 // 初期化
-void SceneGame::Initialize()
+void SceneTutorial::Initialize()
 {
 	//ステージ初期化
 #ifdef ALLSTAGE
@@ -58,7 +60,9 @@ void SceneGame::Initialize()
 	player = new Player();
 #endif //  ALLPLAYER
 
-
+	game_timer = 0;
+	delay_timer = TUTORIAL_DELAYTIME;
+	delay_check = false;
 
 	//カメラ初期設定
 	Graphics& graphics = Graphics::Instance();
@@ -78,20 +82,19 @@ void SceneGame::Initialize()
 	cameraController = new CameraController();
 #ifdef ALLENEMY
 #ifdef ENEMYSLIME
-	for (int index = 0; index < 2; index++)
+	/*for (int index = 0; index < 2; index++)
 	{
-		EnemySlime* slime = new EnemySlime(BLUE,index);
+		EnemySlime* slime = new EnemySlime(RED, index);
 		EnemyManager::Instance().Register(slime);
-	}
-	
+	}*/
 #endif // ENEMYSLIME
-
+	slime = new EnemySlime(RED, 0);
 
 #endif // ALLENEMY
 }
 
 // 終了化
-void SceneGame::Finalize()
+void SceneTutorial::Finalize()
 {
 	//エネミー終了化
 	EnemyManager::Instance().clear();
@@ -112,13 +115,16 @@ void SceneGame::Finalize()
 		delete gauge;
 		gauge = nullptr;
 	}
-
+	
 	StageManager::Instance().Clear();
 }
 
 // 更新処理
-void SceneGame::Update(float elapsedTime)
+void SceneTutorial::Update(float elapsedTime)
 {
+	Mouse& mouse = Input::Instance().GetMouse();
+	GamePad& gamePad = Input::Instance().GetGamePad();
+
 	//カメラコントローラー更新処理
 #ifdef  ALLPLAYER
 	DirectX::XMFLOAT3 target = player->GetPosition();
@@ -131,7 +137,7 @@ void SceneGame::Update(float elapsedTime)
 
 #ifdef  ALLPLAYER
 	player->Update(elapsedTime);
-	if(player->PlayerDead())SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
+	if (player->PlayerDead())SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
 #endif //  ALLPLAYER
 
 
@@ -141,10 +147,103 @@ void SceneGame::Update(float elapsedTime)
 
 	//エフェクト更新処理
 	EffectManager::Instance().Update(elapsedTime);
+
+	if (delay_check == true)
+	{
+		delay_timer--;
+	}
+	
+
+	if(game_timer==0)
+	{
+		if (gamePad.GetButtonDown() & (GamePad::BTN_UP | GamePad::BTN_RIGHT | GamePad::BTN_DOWN | GamePad::BTN_LEFT))
+		{
+			delay_check = true;
+			if (delay_timer < 0)
+			{
+				enemyAdd = true;
+				delay_check = false;
+				delay_timer = TUTORIAL_DELAYTIME;
+				game_timer++;
+			}
+		}
+	}
+	if (game_timer == 1)
+	{
+		if (enemyAdd == true)
+		{
+			EnemyManager& enemyManager = EnemyManager::Instance();
+			slime = new EnemySlime(RED, 0);
+			slime->SetPosition(DirectX::XMFLOAT3(2, 1, 2));
+			enemyManager.Register(slime);
+		}
+		enemyAdd = false;
+		if (slime->GetHealth() <= 0)
+		{
+			delay_check = true;
+			if (delay_timer < 0)
+			{
+				delay_check = false;
+				delay_timer = TUTORIAL_DELAYTIME;
+				enemyAdd = true;
+				game_timer++;
+			}
+		}
+	}
+	if (game_timer == 2)
+	{
+		if (enemyAdd == true)
+		{
+			EnemyManager& enemyManager = EnemyManager::Instance();
+		    slime = new EnemySlime(GREEN, 0);
+			slime->SetPosition(DirectX::XMFLOAT3(2, 1, 2));
+			enemyManager.Register(slime);
+		}
+		enemyAdd = false;
+		if (slime->GetHealth() <= 0)
+		{
+			delay_check = true;
+			if (delay_timer < 0)
+			{
+				delay_check = false;
+				delay_timer = TUTORIAL_DELAYTIME;
+				enemyAdd = true;
+				game_timer++;
+			}
+		}
+	}
+	if(game_timer==3)
+	{
+		if (enemyAdd == true)
+		{
+			EnemyManager& enemyManager = EnemyManager::Instance();
+			slime = new EnemySlime(BLUE, 0);
+			slime->SetPosition(DirectX::XMFLOAT3(2, 1, 2));
+			enemyManager.Register(slime);
+		}
+		enemyAdd = false;
+		if (slime->GetHealth() <= 0)
+		{
+			delay_check = true;
+			if (delay_timer < 0)
+			{
+				delay_check = false;
+				delay_timer = TUTORIAL_DELAYTIME;
+				game_timer++;
+			}
+		}
+	}
+	if(game_timer==4)
+	{
+		if (gamePad.GetButtonDown() & GamePad::BTN_B)
+		{
+			SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+		}
+	}
 }
 
 // 描画処理
-void SceneGame::Render()
+void SceneTutorial::Render()
 {
 	Graphics& graphics = Graphics::Instance();
 	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
@@ -203,7 +302,7 @@ void SceneGame::Render()
 	}
 
 	// 2Dスプライト描画
-	{		
+	{
 #ifdef HPGAUGE
 		RenderEnemyGauge(dc, rc.view, rc.projection);
 		RenderPlayerGauge(dc, rc.view, rc.projection);
@@ -222,7 +321,7 @@ void SceneGame::Render()
 }
 
 //エネミーHPゲージ描画
-void SceneGame::RenderEnemyGauge(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection)
+void SceneTutorial::RenderEnemyGauge(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection)
 {
 	//すべての敵の頭上にHPゲージを表示
 	EnemyManager& enemyManager = EnemyManager::Instance();
@@ -236,7 +335,7 @@ void SceneGame::RenderEnemyGauge(ID3D11DeviceContext* dc, const DirectX::XMFLOAT
 }
 
 //プレイヤーHPゲージ描画
-void SceneGame::RenderPlayerGauge(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection)
+void SceneTutorial::RenderPlayerGauge(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection)
 {
 
 	DirectX::XMFLOAT3 player_position = player->GetPosition();
@@ -246,7 +345,7 @@ void SceneGame::RenderPlayerGauge(ID3D11DeviceContext* dc, const DirectX::XMFLOA
 	CharacterGauge(dc, view, projection, player_position, player->GetHealth(), color);
 }
 
-void SceneGame::CharacterGauge(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection, DirectX::XMFLOAT3 position,float health, DirectX::XMFLOAT4 gaugecolor)
+void SceneTutorial::CharacterGauge(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection, DirectX::XMFLOAT3 position, float health, DirectX::XMFLOAT4 gaugecolor)
 {
 	//ビューポート
 	D3D11_VIEWPORT viewport;
@@ -299,7 +398,7 @@ void SceneGame::CharacterGauge(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X
 	}
 }
 
-void SceneGame::CrickEnemyAdd(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection)
+void SceneTutorial::CrickEnemyAdd(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection)
 {	//ビューポート
 	D3D11_VIEWPORT viewport;
 	UINT numViewports = 1;
@@ -362,10 +461,10 @@ void SceneGame::CrickEnemyAdd(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4
 		//StageMain stage_main;
 		//if (stage_main.RayCast(world_position_start, world_position_end, hit))
 		//{
-			EnemyManager& enemyManager = EnemyManager::Instance();
-			EnemySlime* slime = new EnemySlime(GREEN, 0);
-			slime->SetPosition(DirectX::XMFLOAT3(world_position_start.x, world_position_start.y, world_position_start.z));
-			enemyManager.Register(slime);
+		EnemyManager& enemyManager = EnemyManager::Instance();
+		EnemySlime* slime = new EnemySlime(GREEN, 0);
+		slime->SetPosition(DirectX::XMFLOAT3(world_position_start.x, world_position_start.y, world_position_start.z));
+		enemyManager.Register(slime);
 		//}
 	}
 }

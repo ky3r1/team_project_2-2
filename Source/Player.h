@@ -5,12 +5,20 @@
 #include "Character.h"
 #include "ProjectileManager.h"
 #include "Effect.h"
+#include "Input/Input.h"
+
 
 class Player : public Character
 {
 public:
     Player();
     ~Player() override;
+
+    static Player& Instance()
+    {
+        static Player instance;
+        return instance;
+    }
 
     //更新処理
     void Update(float olapsedTime);
@@ -26,6 +34,10 @@ public:
 
     //死亡判定
     bool PlayerDead();
+
+    // プレイヤーの種類
+    int GetPlayerCategory() { return player_category; }
+
 private:
     //スティック入力値から移動ベクトルを取得
     DirectX::XMFLOAT3 GetMoveVec() const;
@@ -54,7 +66,11 @@ protected:
     //ジャンプ入力処理
     void InputJump();
 
-    void ProjectileStraightWay(int category,float angle);
+    //前方弾発射
+    void ProjectileStraightFront(int category,float angle);
+
+    //後方弾発射
+    void ProjectileStraightBack(int category, float angle);
 private:
     Model* model = nullptr;
     float       moveSpeed = 5.0f;
@@ -62,13 +78,17 @@ private:
     float       jumpSpeed = 20.0f;
     /*float       gravity = -1.0f;
     DirectX::XMFLOAT3 velocity = { 0,0,0 };*/
+    int player_category;
 
     int         jumpCount = 0;
     int         jumpLimit = 2;
     DelayTime projectile_allangle;
     DelayTime projectile_auto;
+    DelayTime projectile_front;
 
     ProjectileManager projectileManager;
 
     Effect*     hitEffect = nullptr;
+
+    GamePad& gamePad = Input::Instance().GetGamePad();
 };
