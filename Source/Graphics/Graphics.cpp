@@ -1,4 +1,4 @@
-#include "Misc.h"
+#include "misc.h"
 #include "Graphics/LambertShader.h"
 #include "Graphics/Graphics.h"
 
@@ -76,7 +76,7 @@ Graphics::Graphics(HWND hWnd)
 			&featureLevel,					// 作成に成功したD3D_FEATURE_LEVELを格納するためのD3D_FEATURE_LEVEL列挙型変数のアドレスを設定する。
 			immediateContext.GetAddressOf()	// 作成が成功した場合に、Contextのアドレスを格納するポインタ変数へのアドレス。ここで指定したポインタ変数経由でContextを操作する。
 			);
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// レンダーターゲットビューの生成
@@ -85,11 +85,11 @@ Graphics::Graphics(HWND hWnd)
 		// ※スワップチェーンに内包されているバックバッファテクスチャは'色'を書き込むテクスチャ。
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> backBuffer;
 		hr = swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(backBuffer.GetAddressOf()));
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		// バックバッファテクスチャへの書き込みの窓口となるレンダーターゲットビューを生成する。
 		hr = device->CreateRenderTargetView(backBuffer.Get(), nullptr, renderTargetView.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// 深度ステンシルビューの生成
@@ -108,11 +108,11 @@ Graphics::Graphics(HWND hWnd)
 		depthStencilBufferDesc.CPUAccessFlags = 0;
 		depthStencilBufferDesc.MiscFlags = 0;
 		hr = device->CreateTexture2D(&depthStencilBufferDesc, nullptr, depthStencilBuffer.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		// 深度ステンシルテクスチャへの書き込みに窓口になる深度ステンシルビューを作成する。
 		hr = device->CreateDepthStencilView(depthStencilBuffer.Get(), nullptr, depthStencilView.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ビューポートの設定

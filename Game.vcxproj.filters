@@ -137,9 +137,6 @@
     <ClInclude Include="Source\Logger.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Misc.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Player.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -184,6 +181,15 @@
     </ClInclude>
     <ClInclude Include="Source\StageManager.h">
       <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\sprite_bach.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\misc.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\texture.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -318,6 +324,15 @@
     </ClCompile>
     <ClCompile Include="Source\Stage.cpp">
       <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\sprite_bach.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\shader.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\texture.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

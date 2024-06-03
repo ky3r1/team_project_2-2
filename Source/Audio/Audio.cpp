@@ -1,4 +1,4 @@
-#include "Misc.h"
+#include "Graphics/misc.h"
 #include "Audio/Audio.h"
 
 Audio* Audio::instance = nullptr;
@@ -14,7 +14,7 @@ Audio::Audio()
 
 	// COMの初期化
 	hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 	UINT32 createFlags = 0;
 #if defined(DEBUG) || defined(_DEBUG)
@@ -23,7 +23,7 @@ Audio::Audio()
 
 	// XAudio初期化
 	hr = XAudio2Create(&xaudio, createFlags);
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 	// マスタリングボイス生成
 	hr = xaudio->CreateMasteringVoice(&masteringVoice);

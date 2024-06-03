@@ -1,4 +1,4 @@
-#include "Misc.h"
+#include "misc.h"
 #include "Graphics/LambertShader.h"
 
 LambertShader::LambertShader(ID3D11Device* device)
@@ -22,7 +22,7 @@ LambertShader::LambertShader(ID3D11Device* device)
 
 		// 頂点シェーダー生成
 		HRESULT hr = device->CreateVertexShader(csoData.get(), csoSize, nullptr, vertexShader.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		// 入力レイアウト
 		D3D11_INPUT_ELEMENT_DESC inputElementDesc[] =
@@ -36,7 +36,7 @@ LambertShader::LambertShader(ID3D11Device* device)
 			{ "BONES",    0, DXGI_FORMAT_R32G32B32A32_UINT,  0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		};
 		hr = device->CreateInputLayout(inputElementDesc, ARRAYSIZE(inputElementDesc), csoData.get(), csoSize, inputLayout.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ピクセルシェーダー
@@ -58,7 +58,7 @@ LambertShader::LambertShader(ID3D11Device* device)
 
 		// ピクセルシェーダー生成
 		HRESULT hr = device->CreatePixelShader(csoData.get(), csoSize, nullptr, pixelShader.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// 定数バッファ
@@ -74,19 +74,19 @@ LambertShader::LambertShader(ID3D11Device* device)
 		desc.StructureByteStride = 0;
 
 		HRESULT hr = device->CreateBuffer(&desc, 0, sceneConstantBuffer.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		// メッシュ用バッファ
 		desc.ByteWidth = sizeof(CbMesh);
 
 		hr = device->CreateBuffer(&desc, 0, meshConstantBuffer.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		// サブセット用バッファ
 		desc.ByteWidth = sizeof(CbSubset);
 
 		hr = device->CreateBuffer(&desc, 0, subsetConstantBuffer.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ブレンドステート
@@ -105,7 +105,7 @@ LambertShader::LambertShader(ID3D11Device* device)
 		desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 		HRESULT hr = device->CreateBlendState(&desc, blendState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// 深度ステンシルステート
@@ -117,7 +117,7 @@ LambertShader::LambertShader(ID3D11Device* device)
 		desc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
 
 		HRESULT hr = device->CreateDepthStencilState(&desc, depthStencilState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ラスタライザーステート
@@ -136,7 +136,7 @@ LambertShader::LambertShader(ID3D11Device* device)
 		desc.AntialiasedLineEnable = false;
 
 		HRESULT hr = device->CreateRasterizerState(&desc, rasterizerState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// サンプラステート
@@ -158,7 +158,7 @@ LambertShader::LambertShader(ID3D11Device* device)
 		desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 
 		HRESULT hr = device->CreateSamplerState(&desc, samplerState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 }
 

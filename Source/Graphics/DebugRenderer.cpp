@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <memory>
-#include "Misc.h"
+#include "misc.h"
 #include "Graphics/DebugRenderer.h"
 
 DebugRenderer::DebugRenderer(ID3D11Device* device)
@@ -24,7 +24,7 @@ DebugRenderer::DebugRenderer(ID3D11Device* device)
 
 		// 頂点シェーダー生成
 		HRESULT hr = device->CreateVertexShader(csoData.get(), csoSize, nullptr, vertexShader.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 		// 入力レイアウト
 		D3D11_INPUT_ELEMENT_DESC inputElementDesc[] =
@@ -32,7 +32,7 @@ DebugRenderer::DebugRenderer(ID3D11Device* device)
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		};
 		hr = device->CreateInputLayout(inputElementDesc, ARRAYSIZE(inputElementDesc), csoData.get(), csoSize, inputLayout.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ピクセルシェーダー
@@ -54,7 +54,7 @@ DebugRenderer::DebugRenderer(ID3D11Device* device)
 
 		// ピクセルシェーダー生成
 		HRESULT hr = device->CreatePixelShader(csoData.get(), csoSize, nullptr, pixelShader.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// 定数バッファ
@@ -70,7 +70,7 @@ DebugRenderer::DebugRenderer(ID3D11Device* device)
 		desc.StructureByteStride = 0;
 
 		HRESULT hr = device->CreateBuffer(&desc, 0, constantBuffer.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ブレンドステート
@@ -89,7 +89,7 @@ DebugRenderer::DebugRenderer(ID3D11Device* device)
 		desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 		HRESULT hr = device->CreateBlendState(&desc, blendState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// 深度ステンシルステート
@@ -101,7 +101,7 @@ DebugRenderer::DebugRenderer(ID3D11Device* device)
 		desc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
 
 		HRESULT hr = device->CreateDepthStencilState(&desc, depthStencilState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// ラスタライザーステート
@@ -120,7 +120,7 @@ DebugRenderer::DebugRenderer(ID3D11Device* device)
 		desc.AntialiasedLineEnable = false;
 
 		HRESULT hr = device->CreateRasterizerState(&desc, rasterizerState.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 
 	// 球メッシュ作成
@@ -290,7 +290,7 @@ void DebugRenderer::CreateSphereMesh(ID3D11Device* device, float radius, int sli
 		subresourceData.SysMemSlicePitch = 0;
 
 		HRESULT hr = device->CreateBuffer(&desc, &subresourceData, sphereVertexBuffer.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 }
 
@@ -361,6 +361,6 @@ void DebugRenderer::CreateCylinderMesh(ID3D11Device* device, float radius1, floa
 		subresourceData.SysMemSlicePitch = 0;
 
 		HRESULT hr = device->CreateBuffer(&desc, &subresourceData, cylinderVertexBuffer.GetAddressOf());
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 	}
 }

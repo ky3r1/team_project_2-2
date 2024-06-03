@@ -10,7 +10,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-#include "Misc.h"
+#include "misc.h"
 #include "Logger.h"
 #include "Graphics/ModelResource.h"
 
@@ -231,10 +231,10 @@ void ModelResource::BuildModel(ID3D11Device* device, const char* dirname)
 
 				Microsoft::WRL::ComPtr<ID3D11Texture2D>	texture;
 				HRESULT hr = device->CreateTexture2D(&desc, &data, texture.GetAddressOf());
-				_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+				_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 				hr = device->CreateShaderResourceView(texture.Get(), nullptr, material.shaderResourceView.GetAddressOf());
-				_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+				_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 				// 後始末
 				stbi_image_free(pixels);
@@ -268,10 +268,10 @@ void ModelResource::BuildModel(ID3D11Device* device, const char* dirname)
 
 				Microsoft::WRL::ComPtr<ID3D11Texture2D>	texture;
 				HRESULT hr = device->CreateTexture2D(&desc, &data, texture.GetAddressOf());
-				_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+				_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 				hr = device->CreateShaderResourceView(texture.Get(), nullptr, material.shaderResourceView.GetAddressOf());
-				_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+				_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 			}
 		}
 	}
@@ -301,7 +301,7 @@ void ModelResource::BuildModel(ID3D11Device* device, const char* dirname)
 			subresourceData.SysMemSlicePitch = 0;
 
 			HRESULT hr = device->CreateBuffer(&bufferDesc, &subresourceData, mesh.vertexBuffer.GetAddressOf());
-			_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+			_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 		}
 
 		// インデックスバッファ
@@ -320,7 +320,7 @@ void ModelResource::BuildModel(ID3D11Device* device, const char* dirname)
 			subresourceData.SysMemPitch = 0; //Not use for index buffers.
 			subresourceData.SysMemSlicePitch = 0; //Not use for index buffers.
 			HRESULT hr = device->CreateBuffer(&bufferDesc, &subresourceData, mesh.indexBuffer.GetAddressOf());
-			_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+			_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 		}
 	}
 }
