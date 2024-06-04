@@ -194,6 +194,9 @@
     <ClInclude Include="Source\SceneTutorial.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\MouseManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -328,6 +331,13 @@
     <ClCompile Include="Source\Stage.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Graphics\shader.cpp" />
+    <ClCompile Include="Source\Graphics\sprite_bach.cpp" />
+    <ClCompile Include="Source\Graphics\texture.cpp" />
+    <ClCompile Include="Source\MouseManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneTutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HLSL\Debug.hlsli">

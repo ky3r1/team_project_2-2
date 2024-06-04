@@ -1,6 +1,9 @@
 #pragma once
 
 #include "All.h"
+#include "Input/Input.h"
+#include"StageMain.h"
+
 
 //キャラクター
 class Character
@@ -60,6 +63,9 @@ private:
 
     //水平移動更新処理
     void UpdateHorizontalMove(float elapsedTime);
+
+    // 3Dを2Dに変換
+    void ProjectileDirection(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection);
 
 protected:
     //移動処理

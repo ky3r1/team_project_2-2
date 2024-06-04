@@ -5,7 +5,7 @@
 #include "Character.h"
 #include "ProjectileManager.h"
 #include "Effect.h"
-#include "Input/Input.h"
+//#include "SceneGame.h"
 
 
 class Player : public Character
@@ -79,6 +79,8 @@ private:
     /*float       gravity = -1.0f;
     DirectX::XMFLOAT3 velocity = { 0,0,0 };*/
     int player_category;
+    int color_count = 0;
+    int projectile_shot;
 
     int         jumpCount = 0;
     int         jumpLimit = 2;

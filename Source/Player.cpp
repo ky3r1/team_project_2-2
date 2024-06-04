@@ -50,6 +50,7 @@ Player::Player()
     //ヒットエフェクト読み込み
     hitEffect = new Effect("Data/Effect/sample_01.efk");
     player_category = WHITE;
+    projectile_shot = 0;
 }
 
 Player::~Player()
@@ -135,6 +136,11 @@ void Player::Update(float elapsedTime)
     {
         projectile_allangle.checker = true;
         projectile_allangle.time = DELAYALLANGLETIME;
+    }
+
+    if (color_count == 0)
+    {
+        player_category = WHITE;
     }
 }
 
@@ -241,8 +247,9 @@ void Player::CollisionPlayerVsEnemies()
                 if (player_category == WHITE)
                 {
                     player_category = enemy->GetEnemyCategory();
+                    color_count = 5;
                 }
-                
+
                 if (player_category == enemy->GetEnemyCategory())
                 {
                 }
@@ -295,6 +302,7 @@ void Player::CollisionProjectilesVsEnemies()
             {
                 if (projectile->GetProectileCategory() == enemy->GetEnemyCategory())
                 {
+                    color_count--;
                     enemy_score[enemy->GetEnemyCategory()] += 1;
                     switch (enemy->GetEnemyCategory())
                     {
@@ -359,6 +367,7 @@ void Player::CollisionProjectilesVsEnemies()
                 else if (projectile->GetProectileCategory() == WHITE)
                 {
                     player_category = enemy->GetEnemyCategory();
+                    color_count = 5;
                     projectile->Destroy();
                 }
                 else
@@ -460,12 +469,11 @@ void Player::InputJump()
     GamePad& gamePad = Input::Instance().GetGamePad();
     if (gamePad.GetButtonDown() & GamePad::BTN_A)
     {
-        if (jumpCount == jumpLimit)
-        {
-            return;
-        }
-        jumpCount++;
-        Jump(jumpSpeed);
+        projectile_shot++;
+    }
+    if (projectile_shot == 2)
+    {
+        projectile_shot = 0;
     }
 }
 
@@ -479,48 +487,48 @@ void Player::InputProjectile()
     GamePad& gamePad = Input::Instance().GetGamePad();
     Mouse& mouse = Input::Instance().GetMouse();
     //直進弾丸発射
-    //if (mouse.GetButton() & Mouse::BTN_RIGHT &&projectile_allangle.checker)
-    //{
-    //    for (int index = 0; index < 10; index++)
-    //    {
-    //        switch (index)
-    //        {
-    //        case 0:
-    //            ProjectileStraightFront(BLUE, 0.0f);
-    //            break;
-    //        case 1:
-    //            ProjectileStraightFront(BLUE, 0.9);
-    //            break;
-    //        case 2:
-    //            ProjectileStraightFront(BLUE, 3.0);
-    //            break;
-    //        case 3:
-    //            ProjectileStraightFront(BLUE, -0.9);
-    //            break;
-    //        case 4:
-    //            ProjectileStraightFront(BLUE, -3.0);
-    //            break;
-    //        case 5:
-    //            ProjectileStraightBack(BLUE, 0.0f);
-    //            break;
-    //        case 6:
-    //            ProjectileStraightBack(BLUE, 0.9f);
-    //            break;
-    //        case 7:
-    //            ProjectileStraightBack(BLUE, 3.0f);
-    //            break;
-    //        case 8:
-    //            ProjectileStraightBack(BLUE, -0.9f);
-    //            break;
-    //        case 9:
-    //            ProjectileStraightBack(BLUE, -3.0f);
-    //            break;
-    //        default:
-    //            break;
-    //        }
-    //    }
-    //    projectile_allangle.checker = false;
-    //}
+    /*if (mouse.GetButton() & Mouse::BTN_LEFT &&projectile_allangle.checker)
+    {
+        for (int index = 0; index < 10; index++)
+        {
+            switch (index)
+            {
+            case 0:
+                ProjectileStraightFront(BLUE, 0.0f);
+                break;
+            case 1:
+                ProjectileStraightFront(BLUE, 0.9);
+                break;
+            case 2:
+                ProjectileStraightFront(BLUE, 3.0);
+                break;
+            case 3:
+                ProjectileStraightFront(BLUE, -0.9);
+                break;
+            case 4:
+                ProjectileStraightFront(BLUE, -3.0);
+                break;
+            case 5:
+                ProjectileStraightBack(BLUE, 0.0f);
+                break;
+            case 6:
+                ProjectileStraightBack(BLUE, 0.9f);
+                break;
+            case 7:
+                ProjectileStraightBack(BLUE, 3.0f);
+                break;
+            case 8:
+                ProjectileStraightBack(BLUE, -0.9f);
+                break;
+            case 9:
+                ProjectileStraightBack(BLUE, -3.0f);
+                break;
+            default:
+                break;
+            }
+        }
+        projectile_allangle.checker = false;
+    }*/
     //
     ////前方弾丸発射
     //if (mouse.GetButton() & Mouse::BTN_RIGHT)
@@ -566,26 +574,75 @@ void Player::InputProjectile()
     {
         if (mouse.GetButton() & Mouse::BTN_LEFT)
         {
-            if (projectile_front.checker)
+            if (projectile_shot == 0)
             {
-                for (int index = 0; index < 3; index++)
+                if (projectile_front.checker)
+                {
+                    for (int index = 0; index < 3; index++)
+                    {
+                        switch (index)
+                        {
+                        case 0:
+                            ProjectileStraightFront(player_category, 0.0f);
+                            break;
+                        case 1:
+                            ProjectileStraightFront(player_category, 0.3f);
+                            break;
+                        case 2:
+                            ProjectileStraightFront(player_category, -0.3f);
+                            break;
+                        default:
+                            break;
+                        }
+                    }
+                    projectile_front.checker = false;
+                }
+            }
+        }
+            //直進弾丸発射
+        if (mouse.GetButton() & Mouse::BTN_LEFT && projectile_allangle.checker)
+        {
+            if (projectile_shot == 1)
+            {                
+                for (int index = 0; index < 10; index++)
                 {
                     switch (index)
                     {
                     case 0:
-                        ProjectileStraightFront(player_category,0.0f);
+                        ProjectileStraightFront(BLUE, 0.0f);
                         break;
                     case 1:
-                        ProjectileStraightFront(player_category,0.3f);
+                        ProjectileStraightFront(BLUE, 0.9);
                         break;
                     case 2:
-                        ProjectileStraightFront(player_category,-0.3f);
+                        ProjectileStraightFront(BLUE, 3.0);
+                        break;
+                    case 3:
+                        ProjectileStraightFront(BLUE, -0.9);
+                        break;
+                    case 4:
+                        ProjectileStraightFront(BLUE, -3.0);
+                        break;
+                    case 5:
+                        ProjectileStraightBack(BLUE, 0.0f);
+                        break;
+                    case 6:
+                        ProjectileStraightBack(BLUE, 0.9f);
+                        break;
+                    case 7:
+                        ProjectileStraightBack(BLUE, 3.0f);
+                        break;
+                    case 8:
+                        ProjectileStraightBack(BLUE, -0.9f);
+                        break;
+                    case 9:
+                        ProjectileStraightBack(BLUE, -3.0f);
                         break;
                     default:
                         break;
                     }
                 }
-                projectile_front.checker = false;
+                projectile_allangle.checker = false;                
             }
         }
     }
