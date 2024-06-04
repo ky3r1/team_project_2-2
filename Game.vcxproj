@@ -148,6 +148,7 @@
     <ClInclude Include="Source\Input\Input.h" />
     <ClInclude Include="Source\Input\Mouse.h" />
     <ClInclude Include="Source\Logger.h" />
+    <ClInclude Include="Source\MouseManager.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Projectile.h" />
     <ClInclude Include="Source\ProjectileHoming.h" />
@@ -213,6 +214,7 @@
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\StageMain.cpp" />
     <ClCompile Include="Source\StageManager.cpp" />
+    <ClCompile Include="Source\MouseManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HLSL\Debug.hlsli" />
