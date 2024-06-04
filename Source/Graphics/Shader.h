@@ -22,7 +22,7 @@ public:
 	virtual void Begin(ID3D11DeviceContext* dc, const RenderContext& rc) = 0;
 
 	// ï`âÊ
-	virtual void Draw(ID3D11DeviceContext* dc, const Model* model) = 0;
+	virtual void Draw(ID3D11DeviceContext* dc, const Model* model, DirectX::XMFLOAT4 color) = 0;
 
 	// ï`âÊèIóπ
 	virtual void End(ID3D11DeviceContext* context) = 0;

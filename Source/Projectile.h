@@ -43,6 +43,8 @@ public:
     int GetProectileCategory() { return projectile_category; }
 
     virtual void DrawDebugGUI() = 0;
+
+    virtual void ChangeColor(DirectX::XMFLOAT4& color, int category);
 protected:
     //çsóÒçXêVèàóù
     void UpdateTransform();
@@ -51,6 +53,7 @@ protected:
     DirectX::XMFLOAT3       position = { 0,0,0 };
     DirectX::XMFLOAT3       direction = { 0,0,1 };
     DirectX::XMFLOAT3       scale = { 1,1,1 };
+    DirectX::XMFLOAT4       color = { 1,1,1,1 };
     DirectX::XMFLOAT4X4     transform = { 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 };
     ProjectileManager*      manager = nullptr;
     float                   radius = 0.5f;

@@ -7,7 +7,9 @@ StageMain::StageMain()
 {
     //instance = this;
     //ステージモデルの読み込み
-    model = new Model("Data/Model/ExampleStage/ExampleStage.mdl");
+    model = new Model("Data/Model/Bullet/Bullete.mdl");
+
+    color = { 1,0,0,1 };
 }
 
 //デストラクタ
@@ -27,7 +29,7 @@ void StageMain::Update(float elapsedTime)
 void StageMain::Render(ID3D11DeviceContext* dc, Shader* shader)
 {
     //シェーダーのモデル描画
-    shader->Draw(dc, model);
+    shader->Draw(dc, model,color);
 }
 
 bool StageMain::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, HitResult& hit)

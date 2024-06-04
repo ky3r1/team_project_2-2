@@ -42,6 +42,31 @@ void Projectile::DrawDebugPrimitive()
     }
 }
 
+void Projectile::ChangeColor(DirectX::XMFLOAT4& color, int category)
+{
+    switch (category)
+    {
+    case RED:
+        color = { 1,0,0,1 };
+        break;
+    case GREEN:
+        color = { 0,1,0,1 };
+        break;
+    case BLUE:
+        color = { 0,0,1,1 };
+        break;
+    case YELLOW:
+        color = { 1,1,0,1 };
+        break;
+    case PURPLE:
+        color = { 1,0,1,1 };
+        break;
+    case WHITE:
+        color = { 1,1,1,1 };
+        break;
+    }
+}
+
 //çsóÒçXêVèàóù
 void Projectile::UpdateTransform()
 {

@@ -78,14 +78,22 @@ void SceneGame::Initialize()
 	cameraController = new CameraController();
 #ifdef ALLENEMY
 #ifdef ENEMYSLIME
-	for (int index = 0; index < 2; index++)
+	int index = 0;
+	while (index < 3)
 	{
-		EnemySlime* slime = new EnemySlime(BLUE,index);
+		//Blue
+		EnemySlime* slime = new EnemySlime(BLUE, index);
 		EnemyManager::Instance().Register(slime);
-		slime = new EnemySlime(RED, index);
-		EnemyManager::Instance().Register(slime);
+		index++;
 	}
-	
+	//Red
+	while (index < 5)
+	{
+		//Blue
+		EnemySlime* slime = new EnemySlime(RED, index);
+		EnemyManager::Instance().Register(slime);
+		index++;
+	}
 #endif // ENEMYSLIME
 
 
@@ -316,13 +324,13 @@ void SceneGame::CrickEnemyAdd(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4
 	//エネミー配置処理
 	GamePad& gamePad = Input::Instance().GetGamePad();
 	Mouse& mouse = Input::Instance().GetMouse();
-	if (gamePad.GetButtonDown() & GamePad::BTN_A)
+	if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
 	{
 		//マウスカーソル座標取得
 		DirectX::XMFLOAT3 screenPosition;
 		screenPosition.x = static_cast<float>(mouse.GetPositionX());
-		screenPosition.y = static_cast<float>(mouse.GetPositionY());
-		screenPosition.z = 0;
+		screenPosition.y = 1;
+		screenPosition.z = static_cast<float>(mouse.GetPositionY());
 
 		DirectX::XMVECTOR ScreenCursor = DirectX::XMLoadFloat3(&screenPosition);
 

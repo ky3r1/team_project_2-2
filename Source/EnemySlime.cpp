@@ -4,13 +4,15 @@
 EnemySlime::EnemySlime(int category,int index)
 {
     //TODO:エネミースライムのステータス設定
-    model = new Model("Data/Model/Slime/Slime.mdl");
+    model = new Model("Data/Model/Enemy/enemy.mdl");
 
-    //モデルが大きいのでスケーリング
-    scale.x = scale.y = scale.z = 0.01f;
+    //表示サイズを調整
+    scale.x = scale.y = scale.z = 0.006f;
 
     radius = 0.5f;//当たり判定の幅、半径
     height = 1.0f;//当たり判定の高さ
+
+    //color = { 1,0,0,1 };
 
     enemy_num = index;
     switch (index)
@@ -21,10 +23,20 @@ EnemySlime::EnemySlime(int category,int index)
     case 1:
         position = (DirectX::XMFLOAT3(4.0f, 0, 5));
         break;
+    case 2:
+        position = (DirectX::XMFLOAT3(-2.0f, 0, 5));
+        break;
+    case 3:
+        position = (DirectX::XMFLOAT3(-4.0f, 0, 5));
+        break;
+    case 4:
+        position = (DirectX::XMFLOAT3(0.0f, 0, 5));
+        break;
     }
 
     enemy_speed = { 5.0f,2.0f };//X:エネミーのスピード、Y:エネミーのターンスピード
     enemy_category = category;
+    ChangeColor(color, enemy_category);
 }
 
 //デストラクタ
@@ -53,7 +65,7 @@ void EnemySlime::Update(float elapsedTime)
 //描画処理
 void EnemySlime::Render(ID3D11DeviceContext* dc, Shader* shader)
 {
-    shader->Draw(dc, model);
+    shader->Draw(dc, model, color);
 }
 
 void EnemySlime::MoveEnemy(Player* player)
