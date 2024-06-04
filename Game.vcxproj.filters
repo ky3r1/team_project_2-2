@@ -334,8 +334,10 @@
     <ClCompile Include="Source\Graphics\shader.cpp" />
     <ClCompile Include="Source\Graphics\sprite_bach.cpp" />
     <ClCompile Include="Source\Graphics\texture.cpp" />
-    <ClCompile Include="Source\SceneTutorial.cpp" />
     <ClCompile Include="Source\MouseManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneTutorial.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
