@@ -244,7 +244,7 @@ void Player::CollisionPlayerVsEnemies()
                     player_category = enemy->GetEnemyCategory();
                     color_count = 5;
                 }
-                
+
                 if (player_category == enemy->GetEnemyCategory())
                 {
                 }
