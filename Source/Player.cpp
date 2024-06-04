@@ -31,9 +31,11 @@ extern float total_score;
 Player::Player()
 {
     //TODO:プレイヤーのステータス設定
-    model = new Model("Data/Model/Mr.Incredible/Mr.Incredible.mdl");
+    model = new Model("Data/Model/Player/Player.mdl");
 
-    scale.x = scale.y = scale.z = 0.01f;
+    scale.x = scale.y = scale.z = 0.005f;
+
+    color = { 1,0,0,1 };
 
     projectile_auto.time = DELAYAUTOTIME;
     projectile_allangle.time = DELAYALLANGLETIME;
@@ -60,6 +62,9 @@ Player::~Player()
 
 void Player::Update(float elapsedTime)
 {
+    //色変え
+    ChangeColor(color, player_category);
+
     //移動入力処理
     InputMove(elapsedTime);
 
@@ -147,7 +152,7 @@ void Player::InputMove(float elapsedTime)
 
 void Player::Render(ID3D11DeviceContext* dc, Shader* shader)
 {
-    shader->Draw(dc, model);
+    shader->Draw(dc, model, color);
 
     //弾丸描画処理
     projectileManager.Render(dc, shader);

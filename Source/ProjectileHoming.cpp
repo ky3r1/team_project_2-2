@@ -3,8 +3,9 @@
 ProjectileHoming::ProjectileHoming(ProjectileManager* manager,int category)
     : Projectile(manager)
 {
-    model = new Model("Data/Model/SpikeBall/SpikeBall.mdl");
-    //model = new Model("Data/Model/Sword/Sword.mdl");
+    model = new Model("Data/Model/Bullet/Bullet.mdl");
+
+    color = { 1,0,0,1 };
 
     //モデルが小さいのでスケーリング
     scale.x = scale.y = scale.z = 0.5f; //sword is 3.0
@@ -102,7 +103,7 @@ void ProjectileHoming::Update(float elapsedTime)
 
 void ProjectileHoming::Render(ID3D11DeviceContext* dc, Shader* shader)
 {
-    shader->Draw(dc, model);
+    shader->Draw(dc, model,color);
 }
 
 void ProjectileHoming::Launch(const DirectX::XMFLOAT3& direction,

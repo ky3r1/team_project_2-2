@@ -86,6 +86,8 @@ protected:
 
     //Ž€–S‚µ‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚é
     virtual void OnDead() {}
+
+    virtual void ChangeColor(DirectX::XMFLOAT4& color, int category);
 public:
     int GetHealth()const { return health; }
 
@@ -95,6 +97,7 @@ protected:
     DirectX::XMFLOAT3   position = { 0,0,0 };
     DirectX::XMFLOAT3   angle = { 0,0,0 };
     DirectX::XMFLOAT3   scale = { 1,1,1 };
+    DirectX::XMFLOAT4   color = { 1,1,1,1 };
     DirectX::XMFLOAT4X4 transform = {
         1,0,0,0,
         0,1,0,0,
