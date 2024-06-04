@@ -5,7 +5,7 @@
 #include "Character.h"
 #include "ProjectileManager.h"
 #include "Effect.h"
-#include "SceneGame.h"
+//#include "SceneGame.h"
 
 
 class Player : public Character

@@ -337,9 +337,7 @@
     <ClCompile Include="Source\MouseManager.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneTutorial.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
+    <ClCompile Include="Source\SceneTutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HLSL\Debug.hlsli">
