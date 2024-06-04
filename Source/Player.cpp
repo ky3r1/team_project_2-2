@@ -48,7 +48,7 @@ Player::Player()
     total_score   = 0;
 
     //ヒットエフェクト読み込み
-    hitEffect = new Effect("Data/Effect/sample_01.efk");
+    hitEffect = new Effect("Data/Effect/EF/ef01.efkefc");
     player_category = WHITE;
     projectile_shot = 0;
 }
@@ -486,80 +486,6 @@ void Player::InputProjectile()
 {
     GamePad& gamePad = Input::Instance().GetGamePad();
     Mouse& mouse = Input::Instance().GetMouse();
-    //直進弾丸発射
-    /*if (mouse.GetButton() & Mouse::BTN_LEFT &&projectile_allangle.checker)
-    {
-        for (int index = 0; index < 10; index++)
-        {
-            switch (index)
-            {
-            case 0:
-                ProjectileStraightFront(BLUE, 0.0f);
-                break;
-            case 1:
-                ProjectileStraightFront(BLUE, 0.9);
-                break;
-            case 2:
-                ProjectileStraightFront(BLUE, 3.0);
-                break;
-            case 3:
-                ProjectileStraightFront(BLUE, -0.9);
-                break;
-            case 4:
-                ProjectileStraightFront(BLUE, -3.0);
-                break;
-            case 5:
-                ProjectileStraightBack(BLUE, 0.0f);
-                break;
-            case 6:
-                ProjectileStraightBack(BLUE, 0.9f);
-                break;
-            case 7:
-                ProjectileStraightBack(BLUE, 3.0f);
-                break;
-            case 8:
-                ProjectileStraightBack(BLUE, -0.9f);
-                break;
-            case 9:
-                ProjectileStraightBack(BLUE, -3.0f);
-                break;
-            default:
-                break;
-            }
-        }
-        projectile_allangle.checker = false;
-    }*/
-    //
-    ////前方弾丸発射
-    //if (mouse.GetButton() & Mouse::BTN_RIGHT)
-    //{
-    //    if (projectile_front.checker)
-    //    {
-    //        ProjectileStraightFront(GREEN, 0.0f);
-    //        projectile_front.checker = false;
-    //    }
-    //}
-    //if (projectile_auto.checker)
-    //{
-    //    for (int index = 0; index < 3; index++)
-    //    {
-    //        switch (index)
-    //        {
-    //        case 0:
-    //            ProjectileStraightFront(RED,0.0f);
-    //            break;
-    //        case 1:
-    //            ProjectileStraightFront(RED,0.3f);
-    //            break;
-    //        case 2:
-    //            ProjectileStraightFront(RED,-0.3f);
-    //            break;
-    //        default:
-    //            break;
-    //        }
-    //    }
-    //    projectile_auto.checker = false;
-    //
 
     //前方弾丸発射
     if (mouse.GetButton() & Mouse::BTN_RIGHT)
@@ -609,34 +535,34 @@ void Player::InputProjectile()
                     switch (index)
                     {
                     case 0:
-                        ProjectileStraightFront(BLUE, 0.0f);
+                        ProjectileStraightFront(player_category, 0.0f);
                         break;
                     case 1:
-                        ProjectileStraightFront(BLUE, 0.9);
+                        ProjectileStraightFront(player_category, 0.9);
                         break;
                     case 2:
-                        ProjectileStraightFront(BLUE, 3.0);
+                        ProjectileStraightFront(player_category, 3.0);
                         break;
                     case 3:
-                        ProjectileStraightFront(BLUE, -0.9);
+                        ProjectileStraightFront(player_category, -0.9);
                         break;
                     case 4:
-                        ProjectileStraightFront(BLUE, -3.0);
+                        ProjectileStraightFront(player_category, -3.0);
                         break;
                     case 5:
-                        ProjectileStraightBack(BLUE, 0.0f);
+                        ProjectileStraightBack(player_category, 0.0f);
                         break;
                     case 6:
-                        ProjectileStraightBack(BLUE, 0.9f);
+                        ProjectileStraightBack(player_category, 0.9f);
                         break;
                     case 7:
-                        ProjectileStraightBack(BLUE, 3.0f);
+                        ProjectileStraightBack(player_category, 3.0f);
                         break;
                     case 8:
-                        ProjectileStraightBack(BLUE, -0.9f);
+                        ProjectileStraightBack(player_category, -0.9f);
                         break;
                     case 9:
-                        ProjectileStraightBack(BLUE, -3.0f);
+                        ProjectileStraightBack(player_category, -3.0f);
                         break;
                     default:
                         break;

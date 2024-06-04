@@ -12,7 +12,6 @@ ProjectileStraight::ProjectileStraight(ProjectileManager* manager, int category)
     scale.x = scale.y = scale.z = 0.006f;
     radius = 0.5f;
     projectile_category = category;
-    ChangeColor(color, projectile_category);
 }
 
 ProjectileStraight::~ProjectileStraight()
@@ -22,6 +21,7 @@ ProjectileStraight::~ProjectileStraight()
 
 void ProjectileStraight::Update(float elapsedTime)
 {
+    ChangeColor(color, projectile_category);
     //éıñΩèàóù
     lifeTimer -= elapsedTime;
     if (lifeTimer <= 0)
