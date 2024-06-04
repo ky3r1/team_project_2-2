@@ -237,7 +237,7 @@ void Player::CollisionPlayerVsEnemies()
                 {
                     player_category = enemy->GetEnemyCategory();
                 }
-                
+
                 if (player_category == enemy->GetEnemyCategory())
                 {
                 }
