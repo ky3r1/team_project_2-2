@@ -7,6 +7,7 @@
 #include "Collision.h"
 #include "ProjectileStraight.h"
 #include "ProjectileHoming.h"
+#include "MouseManager.h"
 
 //TODO:’e‚ÌDelayTime
 #define DELAYAUTOTIME 40
@@ -61,6 +62,8 @@ Player::~Player()
 
 void Player::Update(float elapsedTime)
 {
+    
+
     //ˆÚ“®“ü—Íˆ—
     InputMove(elapsedTime);
 
@@ -649,9 +652,9 @@ void Player::ProjectileStraightFront(int category,float angle)//category:’e‚Ìƒ^ƒ
     ProjectileStraight* projectile{};
     //‘O•ûŒü
     DirectX::XMFLOAT3 dir;
-    dir.x = transform._31 * 100.0f;
+    dir.x = /*transform._31 * 100.0f;*/ MouseManager::GetInstance().GetWorldMousePos().x - position.x;
     dir.y = 0.0f;
-    dir.z = transform._33 * 100.0f;
+    dir.z = /*transform._33 * 100.0f;*/ MouseManager::GetInstance().GetWorldMousePos().z - position.z;
     DirectX::XMFLOAT3 right;
     right.x = transform._11 * 100.0f;
     right.y = 0.0f;
