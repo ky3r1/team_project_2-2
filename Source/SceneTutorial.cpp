@@ -290,6 +290,7 @@ void SceneTutorial::Render()
 #ifdef HPGAUGE
 		RenderEnemyGauge(dc, rc.view, rc.projection);
 		RenderPlayerGauge(dc, rc.view, rc.projection);
+		ui[0]->begin(graphics.GetDeviceContext(), 0);
 		ui[0]->render(graphics.GetDeviceContext(), 100, 200, 480, 360, 1, 1, 1, 1, 0, 0, 0, 480, 360);
 		ui[0]->end(graphics.GetDeviceContext());
 #endif // HPGAUGE
@@ -299,10 +300,10 @@ void SceneTutorial::Render()
 	}
 
 #ifdef DEBUGIMGUI
-	/*player->DrawDebugGUI();
+	player->DrawDebugGUI();
 	cameraController->DrawDebugGUI();
 	EnemyManager::Instance().DrawDebugGUI();
-	StageManager::Instance().DrawDebugGUI();*/
+	StageManager::Instance().DrawDebugGUI();
 #endif // DebugImGui
 }
 
