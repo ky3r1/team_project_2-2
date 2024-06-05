@@ -23,7 +23,6 @@
 
 #include "Input/Input.h"
 
-#define TUTORIAL_DELAYTIME 120
 
 // 初期化
 void SceneTutorial::Initialize()
@@ -56,6 +55,11 @@ void SceneTutorial::Initialize()
 #ifdef HPGAUGE
 	gauge = new Sprite;
 	ui[0]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\Left_mouse.png",1);
+	ui[1]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\Right_mouse.png",1);
+	ui[2]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_3.png",1);
+	ui[3]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_4.png",1);
+	ui[4]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_5.png",1);
+	ui[5]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_6.png",1);
 #endif // HPGAUGE
 
 #ifdef  ALLPLAYER
@@ -63,8 +67,6 @@ void SceneTutorial::Initialize()
 #endif //  ALLPLAYER
 
 	game_timer = 0;
-	delay_timer = TUTORIAL_DELAYTIME;
-	delay_check = false;
 
 	//カメラ初期設定
 	Graphics& graphics = Graphics::Instance();
@@ -145,34 +147,26 @@ void SceneTutorial::Update(float elapsedTime)
 
 	//エネミー更新処理
 	EnemyManager::Instance().Update(elapsedTime);
-	EnemyManager::Instance().EnemyMove(player);
+	//EnemyManager::Instance().EnemyMove(player);
 
 	//エフェクト更新処理
 	EffectManager::Instance().Update(elapsedTime);
 
-	Graphics& graphics = Graphics::Instance();
-	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
-
-	MouseManager::GetInstance().MouseTransform(dc, Camera::Instance().GetView(), Camera::Instance().GetProjection());
-
-	if (delay_check == true)
+	if (clear_check == true)
 	{
-		delay_timer--;
+		if (gamePad.GetButtonDown() & GamePad::BTN_B)
+		{
+			clear_check = false;
+			enemyAdd = true;
+			game_timer++;
+		}
 	}
-	
 
 	if(game_timer==0)
 	{
 		if (gamePad.GetButtonDown() & (GamePad::BTN_UP | GamePad::BTN_RIGHT | GamePad::BTN_DOWN | GamePad::BTN_LEFT))
 		{
-			delay_check = true;
-			if (delay_timer < 0)
-			{
-				enemyAdd = true;
-				delay_check = false;
-				delay_timer = TUTORIAL_DELAYTIME;
-				game_timer++;
-			}
+			clear_check = true;
 		}
 	}
 	if (game_timer == 1)
@@ -183,40 +177,29 @@ void SceneTutorial::Update(float elapsedTime)
 			slime = new EnemySlime(RED, 0);
 			slime->SetPosition(DirectX::XMFLOAT3(2, 1, 2));
 			enemyManager.Register(slime);
+			slime = new EnemySlime(BLUE, 0);
+			slime->SetPosition(DirectX::XMFLOAT3(0, 1, 2));
+			enemyManager.Register(slime);
 		}
 		enemyAdd = false;
 		if (player->GetPlayerCategory() != WHITE)
 		{
-			delay_check = true;
-			if (delay_timer < 0)
-			{
-				delay_check = false;
-				delay_timer = TUTORIAL_DELAYTIME;
-				enemyAdd = true;
-				game_timer++;
-			}
+			clear_check = true;
 		}
 	}
 	if (game_timer == 2)
 	{
-		if (enemyAdd == true)
+		/*if (enemyAdd == true)
 		{
 			EnemyManager& enemyManager = EnemyManager::Instance();
 		    slime = new EnemySlime(GREEN, 0);
 			slime->SetPosition(DirectX::XMFLOAT3(2, 1, 2));
 			enemyManager.Register(slime);
-		}
+		}*/
 		enemyAdd = false;
 		if (slime->GetHealth() <= 0)
 		{
-			delay_check = true;
-			if (delay_timer < 0)
-			{
-				delay_check = false;
-				delay_timer = TUTORIAL_DELAYTIME;
-				enemyAdd = true;
-				game_timer++;
-			}
+			clear_check = true;
 		}
 	}
 	if(game_timer==3)
@@ -231,13 +214,7 @@ void SceneTutorial::Update(float elapsedTime)
 		enemyAdd = false;
 		if (slime->GetHealth() <= 0)
 		{
-			delay_check = true;
-			if (delay_timer < 0)
-			{
-				delay_check = false;
-				delay_timer = TUTORIAL_DELAYTIME;
-				game_timer++;
-			}
+			
 		}
 	}
 	if(game_timer==4)
