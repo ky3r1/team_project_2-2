@@ -20,7 +20,9 @@ Framework::Framework(HWND hWnd)
 	, graphics(hWnd)
 {
 	//エフェクトマネージャー初期化
-	EffectManager::Instance().Initialize();
+	EffectManager::Instance().Initialize(); graphics.GetDeviceContext();
+	EffectManager::Instance().Initialize(); graphics.GetDeviceContext();
+	EffectManager::Instance().Initialize(); graphics.GetDeviceContext();
 
 	//シーン初期化
 	//sceneGame.Initialize();

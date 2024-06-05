@@ -7,6 +7,7 @@
 #include "EnemyManager.h"
 #include "EnemySlime.h"
 #include "EffectManager.h"
+#include "MouseManager.h"
 
 //SceneIncldue
 #include "SceneManager.h"
@@ -148,6 +149,11 @@ void SceneTutorial::Update(float elapsedTime)
 
 	//エフェクト更新処理
 	EffectManager::Instance().Update(elapsedTime);
+
+	Graphics& graphics = Graphics::Instance();
+	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
+
+	MouseManager::GetInstance().MouseTransform(dc, Camera::Instance().GetView(), Camera::Instance().GetProjection());
 
 	if (delay_check == true)
 	{
@@ -307,7 +313,9 @@ void SceneTutorial::Render()
 #ifdef HPGAUGE
 		RenderEnemyGauge(dc, rc.view, rc.projection);
 		RenderPlayerGauge(dc, rc.view, rc.projection);
+		ui[0]->begin(graphics.GetDeviceContext(), 0);
 		ui[0]->render(graphics.GetDeviceContext(), 100, 200, 480, 360, 1, 1, 1, 1, 0, 0, 0, 480, 360);
+		ui[0]->end(graphics.GetDeviceContext());
 #endif // HPGAUGE
 #ifdef ENEMYADD
 		CrickEnemyAdd(dc, rc.view, rc.projection);
@@ -378,6 +386,8 @@ void SceneTutorial::CharacterGauge(ID3D11DeviceContext* dc, const DirectX::XMFLO
 		World
 	);
 	DirectX::XMStoreFloat3(&position, Position);
+
+	player->SetScreenPos(position);
 
 	for (int i = 0; i < health; ++i)
 	{
