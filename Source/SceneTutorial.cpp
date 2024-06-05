@@ -54,6 +54,7 @@ void SceneTutorial::Initialize()
 
 #ifdef HPGAUGE
 	gauge = new Sprite;
+	ui[0]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\Left_mouse.png",1);
 #endif // HPGAUGE
 
 #ifdef  ALLPLAYER
@@ -178,7 +179,7 @@ void SceneTutorial::Update(float elapsedTime)
 			enemyManager.Register(slime);
 		}
 		enemyAdd = false;
-		if (slime->GetHealth() <= 0)
+		if (player->GetPlayerCategory() != WHITE)
 		{
 			delay_check = true;
 			if (delay_timer < 0)
@@ -306,6 +307,7 @@ void SceneTutorial::Render()
 #ifdef HPGAUGE
 		RenderEnemyGauge(dc, rc.view, rc.projection);
 		RenderPlayerGauge(dc, rc.view, rc.projection);
+		ui[0]->render(graphics.GetDeviceContext(), 100, 200, 480, 360, 1, 1, 1, 1, 0, 0, 0, 480, 360);
 #endif // HPGAUGE
 #ifdef ENEMYADD
 		CrickEnemyAdd(dc, rc.view, rc.projection);

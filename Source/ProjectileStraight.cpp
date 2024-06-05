@@ -4,11 +4,12 @@ ProjectileStraight::ProjectileStraight(ProjectileManager* manager, int category)
     : Projectile(manager)
 {
     //model = new Model("Data/Model/SpikeBall/SpikeBall.mdl");
-    model = new Model("Data/Model/Sword/Sword.mdl");
+    model = new Model("Data/Model/Bullet/Bullet.mdl");
+
+    color = { 0,1,0,1 };
 
     //表示サイズを調整
-    //scale.x = scale.y = scale.z = 0.5f;
-    scale.x = scale.y = scale.z = 3.0f;
+    scale.x = scale.y = scale.z = 0.006f;
     radius = 0.5f;
     projectile_category = category;
 }
@@ -20,6 +21,7 @@ ProjectileStraight::~ProjectileStraight()
 
 void ProjectileStraight::Update(float elapsedTime)
 {
+    ChangeColor(color, projectile_category);
     //寿命処理
     lifeTimer -= elapsedTime;
     if (lifeTimer <= 0)
@@ -42,7 +44,7 @@ void ProjectileStraight::Update(float elapsedTime)
 
 void ProjectileStraight::Render(ID3D11DeviceContext* dc, Shader* shader)
 {
-    shader->Draw(dc, model);
+    shader->Draw(dc, model,color);
 }
 
 void ProjectileStraight::Launch(const DirectX::XMFLOAT3& direction,

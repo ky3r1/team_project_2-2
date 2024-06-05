@@ -196,7 +196,7 @@ void LambertShader::Begin(ID3D11DeviceContext* dc, const RenderContext& rc)
 }
 
 // •`‰æ
-void LambertShader::Draw(ID3D11DeviceContext* dc, const Model* model)
+void LambertShader::Draw(ID3D11DeviceContext* dc, const Model* model, DirectX::XMFLOAT4 color)
 {
 	const ModelResource* resource = model->GetResource();
 	const std::vector<Model::Node>& nodes = model->GetNodes();
@@ -231,7 +231,7 @@ void LambertShader::Draw(ID3D11DeviceContext* dc, const Model* model)
 		for (const ModelResource::Subset& subset : mesh.subsets)
 		{
 			CbSubset cbSubset;
-			cbSubset.materialColor = subset.material->color;
+			cbSubset.materialColor = color;
 			dc->UpdateSubresource(subsetConstantBuffer.Get(), 0, 0, &cbSubset, 0, 0);
 			dc->PSSetShaderResources(0, 1, subset.material->shaderResourceView.GetAddressOf());
 			dc->PSSetSamplers(0, 1, samplerState.GetAddressOf());

@@ -112,6 +112,32 @@ void Character::UpdateInvincibleTime(float elapsedTime)
     }
 }
 
+void Character::ChangeColor(DirectX::XMFLOAT4& color, int category)
+{
+    switch (category)
+    {
+    case RED:
+        color = { 1,0,0,1 };
+        break;
+    case GREEN:
+        color = { 0,1,0,1 };
+        break;
+    case BLUE:
+        color = { 0,0,1,1 };
+        break;
+    case YELLOW:
+        color = { 1,1,0,1 };
+        break;
+    case PURPLE:
+        color = { 1,0,1,1 };
+        break;
+    case WHITE:
+        color = { 1,1,1,1 };
+        break;
+    }
+
+}
+
 bool Character::ApplyDamage(int damage, float invincibleTime)
 {
     //　ダメージが０の場合は健康状態を変更する必要がない
