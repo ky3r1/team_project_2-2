@@ -355,3 +355,7 @@ void Sprite::Render(ID3D11DeviceContext *immediate_context,
 	}
 }
 
+void Sprite::Render(ID3D11DeviceContext* dc, DirectX::XMFLOAT2 pos, DirectX::XMFLOAT2 endpos, DirectX::XMFLOAT2 size, DirectX::XMFLOAT2 endsize, float angle, DirectX::XMFLOAT4 color) const
+{
+	Render(dc, pos.x, pos.y, endpos.x, endpos.y, size.x, size.y, endsize.x, endsize.y, angle, color.x, color.y, color.z, color.w);
+}

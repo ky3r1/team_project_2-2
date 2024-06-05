@@ -28,6 +28,15 @@ public:
 		float angle,
 		float r, float g, float b, float a) const;
 
+	// 描画実行
+	void Render(ID3D11DeviceContext* dc,
+		DirectX::XMFLOAT2 pos,
+		DirectX::XMFLOAT2 endpos,
+		DirectX::XMFLOAT2 size,
+		DirectX::XMFLOAT2 endsize,
+		float angle,
+		DirectX::XMFLOAT4 color ) const;
+
 	// テクスチャ幅取得
 	int GetTextureWidth() const { return textureWidth; }
 

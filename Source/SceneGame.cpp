@@ -149,7 +149,6 @@ void SceneGame::Update(float elapsedTime)
 	if(player->PlayerDead())SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
 #endif //  ALLPLAYER
 
-
 	//エネミー更新処理
 	EnemyManager::Instance().Update(elapsedTime);
 	EnemyManager::Instance().EnemyMove(player);
@@ -296,25 +295,25 @@ void SceneGame::CharacterGauge(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X
 
 	player->SetScreenPos(position);
 
-	for (int i = 0; i < health; ++i)
-	{
-		gauge->Render(
-			dc,
-			position.x - 25 + i * 10, position.y - 70,
-			9, 10,
-			100, 100,
-			25, 10,
-			0,
-			gaugecolor.x, gaugecolor.y, gaugecolor.z, gaugecolor.w);
-		gauge->Render(
-			dc,
-			position.x - 25 + i * 10, position.y - 70,
-			1, 10,
-			100, 100,
-			25, 10,
-			0,
-			0, 0, 0, 1);
-	}
+	//for (int i = 0; i < health; ++i)
+	//{
+	//	gauge->Render(
+	//		dc,
+	//		position.x - 25 + i * 10, position.y - 70,
+	//		9, 10,
+	//		100, 100,
+	//		25, 10,
+	//		0,
+	//		gaugecolor.x, gaugecolor.y, gaugecolor.z, gaugecolor.w);
+	//	gauge->Render(
+	//		dc,
+	//		position.x - 25 + i * 10, position.y - 70,
+	//		1, 10,
+	//		100, 100,
+	//		25, 10,
+	//		0,
+	//		0, 0, 0, 1);
+	//}
 }
 
 void SceneGame::CrickEnemyAdd(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection)

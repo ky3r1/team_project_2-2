@@ -16,7 +16,7 @@
 ///////////////////Stage////////////////////////
 
 //全ステージ
-//#define ALLSTAGE
+#define ALLSTAGE
 //動く床
 //#define STAGEMOVE
 //壁
