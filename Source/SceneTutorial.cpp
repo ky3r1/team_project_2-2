@@ -198,7 +198,7 @@ void SceneTutorial::Update(float elapsedTime)
 		enemyAdd = false;
 		if (slime->GetHealth() <= 0)
 		{
-			
+			clear_check = true;
 		}
 	}
 	if(game_timer==3)
