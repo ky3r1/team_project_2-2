@@ -64,6 +64,7 @@ Player::~Player()
     hitEffect = nullptr;
     delete model;
     model = nullptr;
+
     delete HP;
     HP = nullptr;
     delete HPbar;

@@ -46,7 +46,7 @@
 ///////////////////UI////////////////////////
 
 //HPÉQÅ[ÉW
-#define HPGAUGE
+//#define HPGAUGE
 //EnemyAdd
 //#define ENEMYADD
 

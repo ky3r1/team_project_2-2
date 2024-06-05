@@ -12,7 +12,7 @@ EnemySlime::EnemySlime(int category,int index)
     radius = 0.5f;//“–‚½‚è”»’è‚Ì•A”¼Œa
     height = 1.0f;//“–‚½‚è”»’è‚Ì‚‚³
 
-    //color = { 1,0,0,1 };
+    health = 1;
 
     enemy_num = index;
     switch (index)
