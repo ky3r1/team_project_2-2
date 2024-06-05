@@ -42,5 +42,4 @@ private:
 
 	std::unique_ptr<sprite_batch> ui[10];
 
-
 };

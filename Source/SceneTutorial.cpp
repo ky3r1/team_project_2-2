@@ -54,12 +54,12 @@ void SceneTutorial::Initialize()
 
 #ifdef HPGAUGE
 	gauge = new Sprite;
-	ui[0]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\Left_mouse.png",1);
-	ui[1]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\Right_mouse.png",1);
-	ui[2]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_3.png",1);
-	ui[3]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_4.png",1);
-	ui[4]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_5.png",1);
-	ui[5]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_6.png",1);
+	ui[0] = std::make_unique<sprite_batch>(L".\\Data\\Sprite\\Left_mouse.png", 1);
+	ui[1] = std::make_unique<sprite_batch>(L".\\Data\\Sprite\\Right_mouse.png", 1);
+	ui[2] = std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_3.png", 1);
+	ui[3] = std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_4.png", 1);
+	ui[4] = std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_5.png", 1);
+	ui[5] = std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_6.png", 1);
 #endif // HPGAUGE
 
 #ifdef  ALLPLAYER
@@ -119,7 +119,7 @@ void SceneTutorial::Finalize()
 		delete gauge;
 		gauge = nullptr;
 	}
-	
+
 	StageManager::Instance().Clear();
 }
 
@@ -189,13 +189,13 @@ void SceneTutorial::Update(float elapsedTime)
 	}
 	if (game_timer == 2)
 	{
-		/*if (enemyAdd == true)
+		if (enemyAdd == true)
 		{
 			EnemyManager& enemyManager = EnemyManager::Instance();
 		    slime = new EnemySlime(GREEN, 0);
 			slime->SetPosition(DirectX::XMFLOAT3(2, 1, 2));
 			enemyManager.Register(slime);
-		}*/
+		}
 		enemyAdd = false;
 		if (slime->GetHealth() <= 0)
 		{
@@ -290,9 +290,33 @@ void SceneTutorial::Render()
 #ifdef HPGAUGE
 		RenderEnemyGauge(dc, rc.view, rc.projection);
 		RenderPlayerGauge(dc, rc.view, rc.projection);
-		ui[0]->begin(graphics.GetDeviceContext(), 0);
-		ui[0]->render(graphics.GetDeviceContext(), 100, 200, 480, 360, 1, 1, 1, 1, 0, 0, 0, 480, 360);
-		ui[0]->end(graphics.GetDeviceContext());
+		if (game_timer == 0)
+		{
+			ui[2]->begin(graphics.GetDeviceContext(), 0);
+			ui[2]->render(graphics.GetDeviceContext(), 700, 200, 283, 67, 1, 1, 1, 1, 0, 0, 0, 283, 67);
+			ui[2]->end(graphics.GetDeviceContext());
+		}
+		if (game_timer == 1)
+		{
+			ui[1]->begin(graphics.GetDeviceContext(), 0);
+			ui[1]->render(graphics.GetDeviceContext(), 750, 300, 480, 360, 1, 1, 1, 1, 0, 0, 0, 480, 360);
+			ui[1]->end(graphics.GetDeviceContext());
+			ui[3]->begin(graphics.GetDeviceContext(), 0);
+			ui[3]->render(graphics.GetDeviceContext(), 700, 200, 375, 75, 1, 1, 1, 1, 0, 0, 0, 375, 75);
+			ui[3]->end(graphics.GetDeviceContext());
+			ui[4]->begin(graphics.GetDeviceContext(), 0);
+			ui[4]->render(graphics.GetDeviceContext(), 700, 300, 416, 47, 1, 1, 1, 1, 0, 0, 0, 416, 47);
+			ui[4]->end(graphics.GetDeviceContext());
+		}
+		if (game_timer == 2)
+		{
+			ui[0]->begin(graphics.GetDeviceContext(), 0);
+			ui[0]->render(graphics.GetDeviceContext(), 750, 300, 480, 360, 1, 1, 1, 1, 0, 0, 0, 480, 360);
+			ui[0]->end(graphics.GetDeviceContext());
+			ui[5]->begin(graphics.GetDeviceContext(), 0);
+			ui[5]->render(graphics.GetDeviceContext(), 700, 300, 272, 46, 1, 1, 1, 1, 0, 0, 0, 272, 46);
+			ui[5]->end(graphics.GetDeviceContext());
+		}
 #endif // HPGAUGE
 #ifdef ENEMYADD
 		CrickEnemyAdd(dc, rc.view, rc.projection);
