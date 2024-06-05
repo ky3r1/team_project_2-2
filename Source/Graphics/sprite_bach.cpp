@@ -55,7 +55,7 @@ sprite_batch::sprite_batch(
         };
 
         hr = create_vs_from_cso(
-            device, "Shader\\Sprite_vs.cso",
+            device, "Shader\\SpriteVS.cso",
             vertex_shader.GetAddressOf(), input_layout.GetAddressOf(),
             input_element_desc, _countof(input_element_desc)
         );
@@ -65,7 +65,7 @@ sprite_batch::sprite_batch(
     //ピクセルシェーダー
     {
         hr = create_ps_from_cso(
-            device, "Shader\\Sprite_ps.cso",
+            device, "Shader\\SpritePS.cso",
             pixel_shader[0].GetAddressOf()
         );
     }
@@ -93,10 +93,10 @@ sprite_batch::sprite_batch(
     {
         D3D11_DEPTH_STENCIL_DESC depth_stencil_desc{};
         memset(&depth_stencil_desc, 0, sizeof(depth_stencil_desc));
-        depth_stencil_desc.DepthEnable = false;	//深度テストのon,off
+        depth_stencil_desc.DepthEnable = true;	//深度テストのon,off
         depth_stencil_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;	//深度ステンシルバッファへの書き込みのon,off
-        //depth_stencil_desc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
-        depth_stencil_desc.DepthFunc = D3D11_COMPARISON_ALWAYS;
+        depth_stencil_desc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+        //depth_stencil_desc.DepthFunc = D3D11_COMPARISON_ALWAYS;
         hr = device->CreateDepthStencilState(&depth_stencil_desc, &depth_stencil_state);
         _ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
     }

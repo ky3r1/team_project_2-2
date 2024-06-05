@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Graphics/sprite_bach.h"
 #include "Player.h"
 #include "CameraController.h"
 #include "Scene.h"
@@ -36,7 +37,9 @@ private:
 	Sprite* sprite = nullptr;
 	EnemySlime* slime = nullptr;
 	int game_timer = 0;
-	bool delay_check = false;
-	int delay_timer = 0;
 	bool enemyAdd = false;
+	bool clear_check = false;
+
+	std::unique_ptr<sprite_batch> ui[10];
+
 };

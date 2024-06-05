@@ -51,6 +51,10 @@ public:
     //デバッグ用GUI
     virtual void DrawDebugGUI() {};
 
+    void SetScreenPos(DirectX::XMFLOAT3 sp) { screen_pos = sp; }
+
+    DirectX::XMFLOAT3 GetScreenPos() { return screen_pos; }
+
 private:
     //垂直速力処理
     void UpdateVerticalVelocity(float elapsedFrame);
@@ -101,6 +105,7 @@ public:
 
 protected:
     DirectX::XMFLOAT3   position = { 0,0,0 };
+    DirectX::XMFLOAT3   screen_pos = { 0,0,0 };
     DirectX::XMFLOAT3   angle = { 0,0,0 };
     DirectX::XMFLOAT3   scale = { 1,1,1 };
     DirectX::XMFLOAT4   color = { 1,1,1,1 };

@@ -7,6 +7,7 @@
 #include "EnemyManager.h"
 #include "EnemySlime.h"
 #include "EffectManager.h"
+#include "MouseManager.h"
 
 //SceneIncldue
 #include "SceneManager.h"
@@ -139,6 +140,10 @@ void SceneGame::Update(float elapsedTime)
 
 	StageManager::Instance().Update(elapsedTime);
 
+	Graphics& graphics = Graphics::Instance();
+	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
+	MouseManager::GetInstance().MouseTransform(dc, Camera::Instance().GetView(), Camera::Instance().GetProjection());
+
 #ifdef  ALLPLAYER
 	player->Update(elapsedTime);
 	if(player->PlayerDead())SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
@@ -175,6 +180,7 @@ void SceneGame::Render()
 	Camera& camera = Camera::Instance();
 	rc.view = camera.GetView();
 	rc.projection = camera.GetProjection();
+
 
 	// 3Dモデル描画
 	{
@@ -213,7 +219,7 @@ void SceneGame::Render()
 	}
 
 	// 2Dスプライト描画
-	{		
+	{
 #ifdef HPGAUGE
 		RenderEnemyGauge(dc, rc.view, rc.projection);
 		RenderPlayerGauge(dc, rc.view, rc.projection);
@@ -287,6 +293,8 @@ void SceneGame::CharacterGauge(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X
 		World
 	);
 	DirectX::XMStoreFloat3(&position, Position);
+
+	player->SetScreenPos(position);
 
 	for (int i = 0; i < health; ++i)
 	{
