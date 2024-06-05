@@ -33,6 +33,11 @@ Player::Player()
     //TODO:プレイヤーのステータス設定
     model = new Model("Data/Model/Player/Player.mdl");
 
+    HPbar = new Sprite("Data/Sprite/UI/HPbar.png");
+    HP = new Sprite("Data/Sprite/UI/HP.png");
+    Arrow = new Sprite("Data/Sprite/UI/sign.png");
+    Way3Arrow = new Sprite("Data/Sprite/UI/sign3.png");
+
     scale.x = scale.y = scale.z = 0.005f;
 
     color = { 1,0,0,1 };
@@ -48,7 +53,7 @@ Player::Player()
     total_score   = 0;
 
     //ヒットエフェクト読み込み
-    hitEffect = new Effect("Data/Effect/EF/ef01.efkefc");
+    hitEffect = new Effect("Data/Effect/Hit.efk");
     player_category = WHITE;
     projectile_shot = 0;
 }
@@ -59,6 +64,14 @@ Player::~Player()
     hitEffect = nullptr;
     delete model;
     model = nullptr;
+    delete HP;
+    HP = nullptr;
+    delete HPbar;
+    HPbar = nullptr;
+    delete Arrow;
+    Arrow = nullptr;
+    delete Way3Arrow;
+    Way3Arrow = nullptr;
 }
 
 void Player::Update(float elapsedTime)
@@ -162,6 +175,84 @@ void Player::Render(ID3D11DeviceContext* dc, Shader* shader)
 
     //弾丸描画処理
     projectileManager.Render(dc, shader);
+
+    //HP
+    DirectX::XMFLOAT2 sp_pos = { 0,0 };
+    DirectX::XMFLOAT2 sp_endpos = { 100,100 };
+    DirectX::XMFLOAT2 sp_size = { 0,0 };
+    DirectX::XMFLOAT2 sp_endsize = { 200,100 };
+    DirectX::XMFLOAT4 sp_color = { 1,1,1,1 };
+    HP->Render(dc, sp_pos, sp_endpos, sp_size, sp_endsize, 0, sp_color);
+
+    //HPbar
+    sp_pos = { 100,0 };
+    sp_endpos = { 100,100 };
+    sp_size = { 0,0 };
+    sp_endsize = { 100,100 };
+    if (health < 3)
+    {
+        sp_color = { 1,0,0,1 };
+    }
+    for (int i = 0; i < health; i++)
+    {
+        float x = sp_pos.x;
+        sp_pos.x += i * 100;
+        HPbar->Render(dc, sp_pos, sp_endpos, sp_size, sp_endsize, 0, sp_color);
+        sp_pos.x = x;
+    }
+
+    //Arrow
+    sp_pos = { 50,550 };
+    sp_endpos = { 100,100 };
+    sp_size = { 0,0 };
+    sp_endsize = { 100,100 };
+    sp_color = { 1,1,1,1 };
+    if (!projectile_auto.checker)
+    {
+        sp_color = { 1,1,1,0.5 };
+    }
+    Arrow->Render(dc, sp_pos, sp_endpos, sp_size, sp_endsize, 0, sp_color);
+
+    //Arrow
+    sp_pos = { 150,550 };
+    sp_endpos = { 100,100 };
+    sp_size = { 0,0 };
+    sp_endsize = { 100,100 };
+    switch (player_category)
+    {
+    case RED:
+        sp_color = { 1, 0, 0, 1 };
+        break;
+    case GREEN:
+        sp_color = { 0, 1, 0, 1 };
+        break;
+    case BLUE:
+        sp_color = { 0, 0, 1, 1 };
+        break;
+    case YELLOW:
+        sp_color = { 1, 1, 0, 1 };
+        break;
+    case PURPLE:
+        sp_color = { 1, 0, 1, 1 };
+        break;
+    case WHITE:
+        sp_color = { 1, 1, 1, 1 };
+        break;
+    default:
+        break;
+    }
+    if (!projectile_front.checker)
+    {
+        sp_color.w = 0.5;
+    }
+    if (projectile_shot == 0)
+    {
+        Arrow->Render(dc, sp_pos, sp_endpos, sp_size, sp_endsize, 0, sp_color);
+    }
+    if (projectile_shot == 1)
+    {
+        Arrow->Render(dc, sp_pos, sp_endpos, sp_size, sp_endsize, 180, sp_color);
+    }
 }
 
 void Player::DrawDebugGUI()
@@ -256,12 +347,9 @@ void Player::CollisionPlayerVsEnemies()
                 else
                 {
                     health--;
+                    hitEffect->Play(position,2.0f);
                 }
                 hit_delay.checker = false;
-                //ヒットエフェクト再生
-                {
-                    hitEffect->Play(position);
-                }
             }
 #endif // ENEMYHITTINGDAMAGE
             if (position.y >= (enemy->GetPosition().y + enemy->GetHeight())-0.1f)
@@ -359,7 +447,7 @@ void Player::CollisionProjectilesVsEnemies()
                         {
                             DirectX::XMFLOAT3 e = enemy->GetPosition();
                             e.y += enemy->GetHeight() * 0.5f;
-                            hitEffect->Play(e);
+                            hitEffect->Play(e,2.0f);
                         }
                     }
 #endif // PROJECTILEDAMAGE
@@ -490,10 +578,10 @@ void Player::InputProjectile()
     //前方弾丸発射
     if (mouse.GetButton() & Mouse::BTN_RIGHT)
     {
-        if (projectile_front.checker)
+        if (projectile_auto.checker)
         {
             ProjectileStraightFront(WHITE, 0.0f);
-            projectile_front.checker = false;
+            projectile_auto.checker = false;
         }
     }
     if(player_category!=WHITE)

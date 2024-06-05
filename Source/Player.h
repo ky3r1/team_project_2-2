@@ -5,7 +5,7 @@
 #include "Character.h"
 #include "ProjectileManager.h"
 #include "Effect.h"
-//#include ""
+#include "Graphics/sprite.h"
 
 
 class Player : public Character
@@ -91,6 +91,11 @@ private:
     ProjectileManager projectileManager;
 
     Effect*     hitEffect = nullptr;
+
+    Sprite*  HPbar = nullptr;
+    Sprite*  HP = nullptr;
+    Sprite*  Arrow = nullptr;
+    Sprite*  Way3Arrow = nullptr;
 
     GamePad& gamePad = Input::Instance().GetGamePad();
 };
