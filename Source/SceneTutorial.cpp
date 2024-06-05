@@ -144,6 +144,9 @@ void SceneTutorial::Update(float elapsedTime)
 	if (player->PlayerDead())SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
 #endif //  ALLPLAYER
 
+	Graphics& graphics = Graphics::Instance();
+	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
+	MouseManager::GetInstance().MouseTransform(dc, Camera::Instance().GetView(), Camera::Instance().GetProjection());
 
 	//エネミー更新処理
 	EnemyManager::Instance().Update(elapsedTime);
