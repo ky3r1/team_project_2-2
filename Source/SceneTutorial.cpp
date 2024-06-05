@@ -119,6 +119,7 @@ void SceneTutorial::Finalize()
 		delete gauge;
 		gauge = nullptr;
 	}
+	
 
 	StageManager::Instance().Clear();
 }
