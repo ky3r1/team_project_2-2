@@ -294,6 +294,8 @@ void SceneGame::CharacterGauge(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X
 	);
 	DirectX::XMStoreFloat3(&position, Position);
 
+	player->SetScreenPos(position);
+
 	for (int i = 0; i < health; ++i)
 	{
 		gauge->Render(

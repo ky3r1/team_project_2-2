@@ -7,6 +7,7 @@
 #include "EnemyManager.h"
 #include "EnemySlime.h"
 #include "EffectManager.h"
+#include "MouseManager.h"
 
 //SceneIncldue
 #include "SceneManager.h"
@@ -289,34 +290,8 @@ void SceneTutorial::Render()
 #ifdef HPGAUGE
 		RenderEnemyGauge(dc, rc.view, rc.projection);
 		RenderPlayerGauge(dc, rc.view, rc.projection);
-		if(game_timer==0)
-		{
-			ui[2]->begin(graphics.GetDeviceContext(), 0);
-			ui[2]->render(graphics.GetDeviceContext(), 700, 200, 283, 67, 1, 1, 1, 1, 0, 0, 0, 283, 67);
-			ui[2]->end(graphics.GetDeviceContext());
-		}
-		if (game_timer == 1)
-		{
-			ui[1]->begin(graphics.GetDeviceContext(), 0);
-			ui[1]->render(graphics.GetDeviceContext(), 750, 300, 480, 360, 1, 1, 1, 1, 0, 0, 0, 480, 360);
-			ui[1]->end(graphics.GetDeviceContext());
-			ui[3]->begin(graphics.GetDeviceContext(), 0);
-			ui[3]->render(graphics.GetDeviceContext(), 700, 200, 375, 75, 1, 1, 1, 1, 0, 0, 0, 375, 75);
-			ui[3]->end(graphics.GetDeviceContext());
-			ui[4]->begin(graphics.GetDeviceContext(), 0);
-			ui[4]->render(graphics.GetDeviceContext(), 700, 300, 416, 47, 1, 1, 1, 1, 0, 0, 0, 416, 47);
-			ui[4]->end(graphics.GetDeviceContext());
-		}
-		if (game_timer == 2)
-		{
-			ui[0]->begin(graphics.GetDeviceContext(), 0);
-			ui[0]->render(graphics.GetDeviceContext(), 750, 300, 480, 360, 1, 1, 1, 1, 0, 0, 0, 480, 360);
-			ui[0]->end(graphics.GetDeviceContext());
-			ui[5]->begin(graphics.GetDeviceContext(), 0);
-			ui[5]->render(graphics.GetDeviceContext(), 700, 300, 272, 46, 1, 1, 1, 1, 0, 0, 0, 272, 46);
-			ui[5]->end(graphics.GetDeviceContext());
-		}
-
+		ui[0]->render(graphics.GetDeviceContext(), 100, 200, 480, 360, 1, 1, 1, 1, 0, 0, 0, 480, 360);
+		ui[0]->end(graphics.GetDeviceContext());
 #endif // HPGAUGE
 #ifdef ENEMYADD
 		CrickEnemyAdd(dc, rc.view, rc.projection);
@@ -387,6 +362,8 @@ void SceneTutorial::CharacterGauge(ID3D11DeviceContext* dc, const DirectX::XMFLO
 		World
 	);
 	DirectX::XMStoreFloat3(&position, Position);
+
+	player->SetScreenPos(position);
 
 	for (int i = 0; i < health; ++i)
 	{

@@ -24,6 +24,8 @@ void MouseManager::MouseTransform(ID3D11DeviceContext* dc, const DirectX::XMFLOA
     screenPosition.y = 0;
     screenPosition.z = static_cast<float>(mouse.GetPositionY());
 
+    screen_mouse_position = screenPosition;
+
     DirectX::XMVECTOR ScreenCursor = DirectX::XMLoadFloat3(&screenPosition);
 
     DirectX::XMVECTOR WorldPosition = DirectX::XMVector3Unproject

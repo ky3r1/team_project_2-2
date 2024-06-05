@@ -13,7 +13,9 @@ public:
         return instance;
     }
 
-    DirectX::XMFLOAT3 GetWorldMousePos() { return world_mouse_position; }
+    DirectX::XMFLOAT3& GetWorldMousePos() { return world_mouse_position; }
+
+    DirectX::XMFLOAT3& GetScreenMousePos() { return screen_mouse_position; }
 
     void DrawDebugGUI();
 
@@ -21,4 +23,5 @@ private:
     GamePad& gamePad = Input::Instance().GetGamePad();
     Mouse& mouse = Input::Instance().GetMouse();
     DirectX::XMFLOAT3 world_mouse_position;
+    DirectX::XMFLOAT3 screen_mouse_position;
 };
