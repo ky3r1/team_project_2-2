@@ -160,19 +160,19 @@ void SceneGame::Update(float elapsedTime)
 	enemy_timer++;
 	switch (enemy_timer)
 	{
-	case 0:
+	case 60:
 		slime = new EnemySlime(BLUE, rand() % 8);
 		EnemyManager::Instance().Register(slime);
 		break;
-	case 60:
+	case 120:
 		slime = new EnemySlime(RED, rand() % 8);
 		EnemyManager::Instance().Register(slime);
 		break;
-	case 120:
+	case 180:
 		slime = new EnemySlime(GREEN, rand() % 8);
 		EnemyManager::Instance().Register(slime);
 		break;
-	case 180:
+	case 240:
 		enemy_timer = 0;
 		break;
 	}

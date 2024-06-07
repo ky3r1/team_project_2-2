@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "Graphics/Sprite.h"
 #include "Graphics/sprite_bach.h"
+#include "Audio/Audio.h"
 
 // ÉQÅ[ÉÄÉVÅ[Éì
 class SceneGame : public Scene
@@ -35,4 +36,6 @@ private:
 	Sprite* gauge = nullptr;
 	sprite_batch* Mouse_Cursor = nullptr;
 	int enemy_timer = 0;
+	//Audio audio;
+
 };
