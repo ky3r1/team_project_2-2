@@ -191,10 +191,10 @@ void SceneTutorial::Update(float elapsedTime)
 		{
 			EnemyManager& enemyManager = EnemyManager::Instance();
 			slime = new EnemySlime(RED, 0);
-			slime->SetPosition(DirectX::XMFLOAT3(5, 1, -3));
+			slime->SetPosition(DirectX::XMFLOAT3(6, 1, -5));
 			enemyManager.Register(slime);
 			slime = new EnemySlime(BLUE, 0);
-			slime->SetPosition(DirectX::XMFLOAT3(-2, 1, -4));
+			slime->SetPosition(DirectX::XMFLOAT3(-4, 1, -7));
 			enemyManager.Register(slime);
 		}
 		enemyAdd = false;
@@ -316,7 +316,7 @@ void SceneTutorial::Render()
 		if (game_timer == 0)
 		{
 			ui[7]->begin(graphics.GetDeviceContext(), 0);
-			ui[7]->render(graphics.GetDeviceContext(), 130, 350, 1400, 650, 1, 1, 1, 1, 0, 0, 0, 1920, 1080);
+			ui[7]->render(graphics.GetDeviceContext(), 130, 350, 1400, 650, 1, 1, 1, 0.7f, 0, 0, 0, 1920, 1080);
 			ui[7]->end(graphics.GetDeviceContext());
 			ui[2]->begin(graphics.GetDeviceContext(), 0);
 			ui[2]->render(graphics.GetDeviceContext(), 400, 500, 283, 67, 1, 1, 1, 1, 0, 0, 0, 283, 67);
@@ -325,7 +325,7 @@ void SceneTutorial::Render()
 		if (game_timer == 1)
 		{
 			ui[7]->begin(graphics.GetDeviceContext(), 0);
-			ui[7]->render(graphics.GetDeviceContext(), 130, 350, 1400, 650, 1, 1, 1, 1, 0, 0, 0, 1920, 1080);
+			ui[7]->render(graphics.GetDeviceContext(), 130, 350, 1400, 650, 1, 1, 1, 0.7f, 0, 0, 0, 1920, 1080);
 			ui[7]->end(graphics.GetDeviceContext());
 			ui[1]->begin(graphics.GetDeviceContext(), 0);
 			ui[1]->render(graphics.GetDeviceContext(), 720, 450, 300, 220, 1, 1, 1, 1, 0, 0, 0, 480, 360);
@@ -340,7 +340,7 @@ void SceneTutorial::Render()
 		if (game_timer == 2)
 		{
 			ui[7]->begin(graphics.GetDeviceContext(), 0);
-			ui[7]->render(graphics.GetDeviceContext(), 130, 350, 1400, 650, 1, 1, 1, 1, 0, 0, 0, 1920, 1080);
+			ui[7]->render(graphics.GetDeviceContext(), 130, 350, 1400, 650, 1, 1, 1, 0.7f, 0, 0, 0, 1920, 1080);
 			ui[7]->end(graphics.GetDeviceContext());
 			ui[0]->begin(graphics.GetDeviceContext(), 0);
 			ui[0]->render(graphics.GetDeviceContext(), 720, 450, 300, 220, 1, 1, 1, 1, 0, 0, 0, 480, 360);
@@ -355,7 +355,7 @@ void SceneTutorial::Render()
 		if (game_timer == 3)
 		{
 			ui[7]->begin(graphics.GetDeviceContext(), 0);
-			ui[7]->render(graphics.GetDeviceContext(), 130, 350, 1400, 650, 1, 1, 1, 1, 0, 0, 0, 1920, 1080);
+			ui[7]->render(graphics.GetDeviceContext(), 130, 350, 1400, 650, 1, 1, 1, 0.7f, 0, 0, 0, 1920, 1080);
 			ui[7]->end(graphics.GetDeviceContext());
 			ui[9]->begin(graphics.GetDeviceContext(), 0);
 			ui[9]->render(graphics.GetDeviceContext(), 400, 500, 300, 50, 1, 1, 1, 1, 0, 0, 0, 321, 46);
@@ -365,7 +365,7 @@ void SceneTutorial::Render()
 		if (clear_check == true)
 		{
 			ui[6]->begin(graphics.GetDeviceContext(), 0);
-			ui[6]->render(graphics.GetDeviceContext(), 400, 400, 258, 258, 1, 1, 1, 1, 0, 0, 0, 258, 258);
+			ui[6]->render(graphics.GetDeviceContext(), 600, 400, 258, 258, 1, 1, 1, 1, 0, 0, 0, 258, 258);
 			ui[6]->end(graphics.GetDeviceContext());
 			ui[8]->begin(graphics.GetDeviceContext(), 0);
 			ui[8]->render(graphics.GetDeviceContext(), 950, 540, 200, 69, 1, 1, 1, 1, 0, 0, 0, 450, 69);
