@@ -37,7 +37,8 @@ Player::Player()
     HPbar = new Sprite("Data/Sprite/UI/HPbar.png");
     HP = new Sprite("Data/Sprite/UI/HP.png");
     Arrow = new Sprite("Data/Sprite/UI/sign.png");
-    Way3Arrow = new Sprite("Data/Sprite/UI/sign3.png");
+    Way3Arrow = new Sprite("Data/Sprite/UI/3way.png");
+    AllArrow = new Sprite("Data/Sprite/UI/all_ways.png");
 
     scale.x = scale.y = scale.z = 0.005f;
 
@@ -74,6 +75,8 @@ Player::~Player()
     Arrow = nullptr;
     delete Way3Arrow;
     Way3Arrow = nullptr;
+    delete AllArrow;
+    AllArrow = nullptr;
 }
 
 void Player::Update(float elapsedTime)
@@ -249,11 +252,11 @@ void Player::Render(ID3D11DeviceContext* dc, Shader* shader)
     }
     if (projectile_shot == 0)
     {
-        Arrow->Render(dc, sp_pos, sp_endpos, sp_size, sp_endsize, 0, sp_color);
+        Way3Arrow->Render(dc, sp_pos, sp_endpos, sp_size, sp_endsize, 0, sp_color);
     }
     if (projectile_shot == 1)
     {
-        Arrow->Render(dc, sp_pos, sp_endpos, sp_size, sp_endsize, 180, sp_color);
+        AllArrow->Render(dc, sp_pos, sp_endpos, sp_size, sp_endsize, 180, sp_color);
     }
 }
 

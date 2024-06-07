@@ -96,6 +96,7 @@ private:
     Sprite*  HP = nullptr;
     Sprite*  Arrow = nullptr;
     Sprite*  Way3Arrow = nullptr;
+    Sprite*  AllArrow = nullptr;
 
     GamePad& gamePad = Input::Instance().GetGamePad();
 };
