@@ -39,8 +39,9 @@ private:
 	int game_timer = 0;
 	bool enemyAdd = false;
 	bool clear_check = false;
+	bool key_check = false;
 
 	//std::unique_ptr<sprite_batch> ui[6];
-	sprite_batch* ui[8];
+	sprite_batch* ui[11];
 
 };
