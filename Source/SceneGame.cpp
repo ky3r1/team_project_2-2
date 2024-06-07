@@ -53,6 +53,8 @@ void SceneGame::Initialize()
 
 #ifdef HPGAUGE
 	gauge = new Sprite;
+	Mouse_Cursor = new sprite_batch(L"Data\\Sprite\\mousecursor2.png", 1);
+
 #endif // HPGAUGE
 
 #ifdef  ALLPLAYER
@@ -123,7 +125,8 @@ void SceneGame::Finalize()
 		delete gauge;
 		gauge = nullptr;
 	}
-
+	delete Mouse_Cursor;
+	Mouse_Cursor = nullptr;
 	StageManager::Instance().Clear();
 }
 
@@ -164,6 +167,9 @@ void SceneGame::Render()
 	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
 	ID3D11RenderTargetView* rtv = graphics.GetRenderTargetView();
 	ID3D11DepthStencilView* dsv = graphics.GetDepthStencilView();
+
+
+	Mouse& mouse = Input::Instance().GetMouse();
 
 	// 画面クリア＆レンダーターゲット設定
 	FLOAT color[] = { 0.4f, 0.4f, 0.4f, 1.0f };	// RGBA(0.0～1.0)
@@ -222,6 +228,10 @@ void SceneGame::Render()
 #ifdef HPGAUGE
 		RenderEnemyGauge(dc, rc.view, rc.projection);
 		RenderPlayerGauge(dc, rc.view, rc.projection);
+		Mouse_Cursor->begin(graphics.GetDeviceContext(), 0);
+		Mouse_Cursor->render(graphics.GetDeviceContext(),
+			mouse.GetPositionX() - 50, mouse.GetPositionY() - 50, 100, 100, 1, 1, 1, 1, 0);
+		Mouse_Cursor->end(graphics.GetDeviceContext());
 #endif // HPGAUGE
 #ifdef ENEMYADD
 		CrickEnemyAdd(dc, rc.view, rc.projection);

@@ -7,7 +7,6 @@
 #include "Effect.h"
 #include "Graphics/sprite.h"
 
-
 class Player : public Character
 {
 public:

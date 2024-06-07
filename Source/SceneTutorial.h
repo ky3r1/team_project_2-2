@@ -43,5 +43,6 @@ private:
 
 	//std::unique_ptr<sprite_batch> ui[6];
 	sprite_batch* ui[11];
+	sprite_batch* Mouse_Cursor = nullptr;
 
 };

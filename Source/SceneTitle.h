@@ -2,6 +2,7 @@
 
 #include "Graphics/Sprite.h"
 #include "Scene.h"
+#include "Input/Input.h"
 
 //タイトルシーン
 class SceneTitle : public Scene
@@ -24,4 +25,9 @@ public:
 
 private:
     Sprite* sprite = nullptr;
+    Sprite* start = nullptr;
+    Sprite* tutorial = nullptr;
+    Sprite* mouse_cursor = nullptr;
+    Mouse& mouse = Input::Instance().GetMouse();
+
 };

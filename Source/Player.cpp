@@ -77,6 +77,7 @@ Player::~Player()
     Way3Arrow = nullptr;
     delete AllArrow;
     AllArrow = nullptr;
+    
 }
 
 void Player::Update(float elapsedTime)
@@ -177,6 +178,7 @@ void Player::InputMove(float elapsedTime)
 void Player::Render(ID3D11DeviceContext* dc, Shader* shader)
 {
     shader->Draw(dc, model, color);
+    Mouse& mouse = Input::Instance().GetMouse();
 
     //’eŠÛ•`‰æˆ—
     projectileManager.Render(dc, shader);

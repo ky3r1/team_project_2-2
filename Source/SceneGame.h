@@ -4,6 +4,7 @@
 #include "CameraController.h"
 #include "Scene.h"
 #include "Graphics/Sprite.h"
+#include "Graphics/sprite_bach.h"
 
 // ÉQÅ[ÉÄÉVÅ[Éì
 class SceneGame : public Scene
@@ -32,4 +33,5 @@ private:
 	Player* player = nullptr;
 	CameraController* cameraController = nullptr;
 	Sprite* gauge = nullptr;
+	sprite_batch* Mouse_Cursor = nullptr;
 };
