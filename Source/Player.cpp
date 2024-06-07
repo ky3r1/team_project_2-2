@@ -719,17 +719,34 @@ void Player::ProjectileStraightFront(int category,float angle)//category:íeÇÃÉ^É
 
 void Player::ProjectileStraightBack(int category, float angle)
 {
-    //î≠éÀ
     ProjectileStraight* projectile{};
     //ëOï˚å¸
     DirectX::XMFLOAT3 dir;
-    dir.x = -transform._31 * 100.0f;
+    DirectX::XMFLOAT3 dis_pos;
+    DirectX::XMVECTOR Dis_pos;
+    DirectX::XMMATRIX Right_;
+    DirectX::XMFLOAT3 r;
+    DirectX::XMFLOAT3 axis = { 0,1,0 };
+    DirectX::XMVECTOR Axis;
+
+    Axis = DirectX::XMLoadFloat3(&axis);
+    dis_pos.x = (MouseManager::GetInstance().GetScreenMousePos().x - screen_pos.x);
+    dis_pos.y = 0;
+    dis_pos.z = (MouseManager::GetInstance().GetScreenMousePos().z - screen_pos.y);
+    Dis_pos = DirectX::XMLoadFloat3(&dis_pos);
+    Dis_pos = DirectX::XMVector3Normalize(Dis_pos);
+    DirectX::XMStoreFloat3(&dis_pos, Dis_pos);
+    Right_ = DirectX::XMMatrixRotationAxis(Axis, DirectX::XMConvertToRadians(90));
+    Dis_pos = DirectX::XMVector3Transform(Dis_pos, Right_);
+    DirectX::XMStoreFloat3(&r, Dis_pos);
+
+    dir.x = /*transform._31 * 100.0f;*/ dis_pos.x;
     dir.y = 0.0f;
-    dir.z = -transform._33 * 100.0f;
+    dir.z = /*transform._33 * 100.0f;*/ -dis_pos.z;
     DirectX::XMFLOAT3 right;
-    right.x = transform._11 * 100.0f;
+    right.x = /*transform._11 * 100.0f;*/ -r.x;
     right.y = 0.0f;
-    right.z = transform._13 * 100.0f;
+    right.z = /*transform._13 * 100.0f;*/ r.z;
     //î≠éÀà íuÅiÉvÉåÉCÉÑÅ[ÇÃçòìñÇΩÇËÅj
     DirectX::XMFLOAT3 pos;
     pos.x = position.x;

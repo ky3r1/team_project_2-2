@@ -40,6 +40,7 @@ private:
 	bool enemyAdd = false;
 	bool clear_check = false;
 
-	std::unique_ptr<sprite_batch> ui[6];
+	//std::unique_ptr<sprite_batch> ui[6];
+	sprite_batch* ui[8];
 
 };
