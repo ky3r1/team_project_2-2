@@ -453,25 +453,25 @@ void SceneTutorial::CharacterGauge(ID3D11DeviceContext* dc, const DirectX::XMFLO
 
 	player->SetScreenPos(position);
 
-	for (int i = 0; i < health; ++i)
-	{
-		gauge->Render(
-			dc,
-			position.x - 25 + i * 10, position.y - 70,
-			9, 10,
-			100, 100,
-			25, 10,
-			0,
-			gaugecolor.x, gaugecolor.y, gaugecolor.z, gaugecolor.w);
-		gauge->Render(
-			dc,
-			position.x - 25 + i * 10, position.y - 70,
-			1, 10,
-			100, 100,
-			25, 10,
-			0,
-			0, 0, 0, 1);
-	}
+	//for (int i = 0; i < health; ++i)
+	//{
+	//	gauge->Render(
+	//		dc,
+	//		position.x - 25 + i * 10, position.y - 70,
+	//		9, 10,
+	//		100, 100,
+	//		25, 10,
+	//		0,
+	//		gaugecolor.x, gaugecolor.y, gaugecolor.z, gaugecolor.w);
+	//	gauge->Render(
+	//		dc,
+	//		position.x - 25 + i * 10, position.y - 70,
+	//		1, 10,
+	//		100, 100,
+	//		25, 10,
+	//		0,
+	//		0, 0, 0, 1);
+	//}
 }
 
 void SceneTutorial::CrickEnemyAdd(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection)
