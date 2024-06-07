@@ -32,6 +32,16 @@ EnemySlime::EnemySlime(int category,int index)
     case 4:
         position = (DirectX::XMFLOAT3(0.0f, 0, 5));
         break;
+    case 5:
+        position = (DirectX::XMFLOAT3(10.0f, 0, 5));
+        break;
+    case 6:
+        position = (DirectX::XMFLOAT3(-20.0f, 0, 20));
+        break;
+    case 7:
+        position = (DirectX::XMFLOAT3(30.0f, 0, 50));
+        break;
+
     }
 
     enemy_speed = { 5.0f,2.0f };//X:エネミーのスピード、Y:エネミーのターンスピード

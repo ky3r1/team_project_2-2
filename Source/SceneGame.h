@@ -34,4 +34,5 @@ private:
 	CameraController* cameraController = nullptr;
 	Sprite* gauge = nullptr;
 	sprite_batch* Mouse_Cursor = nullptr;
+	int enemy_timer = 0;
 };

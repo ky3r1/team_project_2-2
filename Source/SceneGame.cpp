@@ -82,6 +82,7 @@ void SceneGame::Initialize()
 #ifdef ALLENEMY
 #ifdef ENEMYSLIME
 	int index = 0;
+	enemy_timer = 0;
 	while (index < 3)
 	{
 		//Blue
@@ -155,6 +156,27 @@ void SceneGame::Update(float elapsedTime)
 	//エネミー更新処理
 	EnemyManager::Instance().Update(elapsedTime);
 	EnemyManager::Instance().EnemyMove(player);
+	EnemySlime* slime;
+	enemy_timer++;
+	switch (enemy_timer)
+	{
+	case 0:
+		slime = new EnemySlime(BLUE, rand() % 8);
+		EnemyManager::Instance().Register(slime);
+		break;
+	case 60:
+		slime = new EnemySlime(RED, rand() % 8);
+		EnemyManager::Instance().Register(slime);
+		break;
+	case 120:
+		slime = new EnemySlime(GREEN, rand() % 8);
+		EnemyManager::Instance().Register(slime);
+		break;
+	case 180:
+		enemy_timer = 0;
+		break;
+	}
+	
 
 	//エフェクト更新処理
 	EffectManager::Instance().Update(elapsedTime);
