@@ -75,10 +75,10 @@ void SceneTitle::Update(float elapsedTime)
 
         }
     }
-    if (gamePad.GetButtonDown() & anyButton)
+    /*if (gamePad.GetButtonDown() & anyButton)
     {
         SceneManager::Instance().ChangeScene(new SceneLoading(new SceneTutorial));
-    }
+    }*/
 }
 
 void SceneTitle::Render()
