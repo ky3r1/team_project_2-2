@@ -27,6 +27,8 @@ Framework::Framework(HWND hWnd)
 	//シーン初期化
 	//sceneGame.Initialize();
 	SceneManager::Instance().ChangeScene(new SceneTitle);
+
+	//se = Audio::Instance().LoadAudioSource("Data/Audio/SE.wav");
 }
 
 // デストラクタ
@@ -41,6 +43,15 @@ Framework::~Framework()
 // 更新処理
 void Framework::Update(float elapsedTime/*Elapsed seconds from last frame*/)
 {
+	/*if (Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_A)
+	{
+		se->Play(true);
+	}
+	if (Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_B)
+	{
+		se->Stop();
+	}*/
+
 	// 入力更新処理
 	input.Update();
 

@@ -80,6 +80,9 @@ void SceneTutorial::Initialize()
 	player = new Player();
 #endif //  ALLPLAYER
 
+	se = Audio::Instance().LoadAudioSource("Data/Audio/説明ウインドウが開く.wav");
+	se2 = Audio::Instance().LoadAudioSource("Data/Audio/成功音.wav");
+
 	game_timer = 0;
 
 	//カメラ初期設定
@@ -141,6 +144,8 @@ void SceneTutorial::Finalize()
 // 更新処理
 void SceneTutorial::Update(float elapsedTime)
 {
+	se->Play(false);
+
 	Mouse& mouse = Input::Instance().GetMouse();
 	GamePad& gamePad = Input::Instance().GetGamePad();
 
@@ -172,6 +177,8 @@ void SceneTutorial::Update(float elapsedTime)
 
 	if (clear_check == true)
 	{
+		se2->Play(false);
+
 		if (gamePad.GetButtonDown() & GamePad::BTN_B)
 		{
 			key_check = false;

@@ -37,5 +37,5 @@ private:
 	sprite_batch* Mouse_Cursor = nullptr;
 	int enemy_timer = 0;
 	//Audio audio;
-
+	std::unique_ptr<AudioSource> bgm;
 };

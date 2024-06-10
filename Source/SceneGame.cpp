@@ -61,7 +61,7 @@ void SceneGame::Initialize()
 	player = new Player();
 #endif //  ALLPLAYER
 
-
+	bgm = Audio::Instance().LoadAudioSource("Data/Audio/Neon_Garden.wav");
 
 	//カメラ初期設定
 	Graphics& graphics = Graphics::Instance();
@@ -107,6 +107,8 @@ void SceneGame::Initialize()
 // 終了化
 void SceneGame::Finalize()
 {
+	bgm->Stop();
+
 	//エネミー終了化
 	EnemyManager::Instance().clear();
 
@@ -134,6 +136,8 @@ void SceneGame::Finalize()
 // 更新処理
 void SceneGame::Update(float elapsedTime)
 {
+	bgm->Play(true);
+
 	//カメラコントローラー更新処理
 #ifdef  ALLPLAYER
 	DirectX::XMFLOAT3 target = player->GetPosition();
