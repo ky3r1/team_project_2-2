@@ -25,4 +25,5 @@ public:
 
 private:
     Sprite* sprite = nullptr;
+    Sprite* score = nullptr;
 };

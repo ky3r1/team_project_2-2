@@ -40,7 +40,7 @@ public:
 		DirectX::XMFLOAT4 color ) const;
 
 	void textout(ID3D11DeviceContext* immediate_context, std::string s,
-		float x, float y, float w, float h, float color[]);
+		float x, float y, float w, float h, DirectX::XMFLOAT4 color);
 
 	// テクスチャ幅取得
 	int GetTextureWidth() const { return textureWidth; }

@@ -133,7 +133,8 @@ Sprite::Sprite(const char* filename)
 		::memset(&desc, 0, sizeof(desc));
 		desc.DepthEnable = true;
 		desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-		desc.DepthFunc = D3D11_COMPARISON_ALWAYS;
+		//desc.DepthFunc = D3D11_COMPARISON_ALWAYS;
+		desc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
 
 		HRESULT hr = device->CreateDepthStencilState(&desc, depthStencilState.GetAddressOf());
 		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
@@ -358,7 +359,7 @@ void Sprite::Render(ID3D11DeviceContext *immediate_context,
 
 
 void Sprite::textout(ID3D11DeviceContext* immediate_context, std::string s,
-	float x, float y, float w, float h, float color[])
+	float x, float y, float w, float h, DirectX::XMFLOAT4 color)
 {
 	float sw = static_cast<float>(texture2d_desc.Width / 16);
 	float sh = static_cast<float>(texture2d_desc.Height / 16);
@@ -366,7 +367,7 @@ void Sprite::textout(ID3D11DeviceContext* immediate_context, std::string s,
 	for (const char c : s)
 	{
 		Render(immediate_context, x + carriage, y, w, h,
-			sw * (c & 0x0F), sh * (c >> 4), sw, sh,0, color[0], color[1], color[2], color[3]);
+			sw * (c & 0x0F), sh * (c >> 4), sw, sh,0, color.x,color.y,color.z,color.w);
 		carriage += w;
 	}
 }

@@ -15,6 +15,7 @@ void SceneResult::Initialize()
 {
     //スプライト初期化
     sprite = new Sprite("Data/Sprite/Title.png");
+    score = new Sprite("Data/Font/font0.png");
 }
 
 void SceneResult::Finalize()
@@ -69,5 +70,6 @@ void SceneResult::Render()
             0, 0, textureWidth, textureHeight,
             0,
             1, 1, 0, 1);
+        score->textout(dc, "score", 400, 600, 300, 300, { 1,1,1,1 });
     }
 }
