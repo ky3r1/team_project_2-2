@@ -38,4 +38,6 @@ private:
 	int enemy_timer = 0;
 	//Audio audio;
 	std::unique_ptr<AudioSource> bgm;
+	Sprite* score = nullptr;
+	std::string Score;
 };

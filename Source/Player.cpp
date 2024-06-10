@@ -27,7 +27,7 @@ int a = 0;
 
 
 extern float enemy_score[5];
-extern float total_score;
+extern int total_score;
 
 Player::Player()
 {
@@ -283,7 +283,7 @@ void Player::DrawDebugGUI()
             ImGui::SliderInt("delay_allangle_time", &projectile_allangle.time, 0.0f, DELAYALLANGLETIME);
 
             ImGui::SliderFloat("enemy_score_red", &enemy_score[0], 0.0f, 10.0f);
-            ImGui::SliderFloat("totoal_socre", &total_score, 0.0f, 10.0f);
+            //ImGui::SliderFloat("totoal_socre", &total_score, 0.0f, 10.0f);
 
             ImGui::TreePop();
         }

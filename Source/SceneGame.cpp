@@ -22,7 +22,7 @@
 
 #include "Input/Input.h"
 
-
+extern int total_score;
 // èâä˙âª
 void SceneGame::Initialize()
 {
@@ -54,6 +54,7 @@ void SceneGame::Initialize()
 #ifdef HPGAUGE
 	gauge = new Sprite;
 	Mouse_Cursor = new sprite_batch(L"Data\\Sprite\\mousecursor2.png", 1);
+	score = new Sprite("Data/Font/font0.png");
 
 #endif // HPGAUGE
 
@@ -212,6 +213,7 @@ void SceneGame::Render()
 	rc.view = camera.GetView();
 	rc.projection = camera.GetProjection();
 
+	Score = std::to_string(total_score);
 
 	// 3DÉÇÉfÉãï`âÊ
 	{

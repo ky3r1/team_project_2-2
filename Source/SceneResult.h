@@ -26,4 +26,5 @@ public:
 private:
     Sprite* sprite = nullptr;
     Sprite* score = nullptr;
+    std::string Score;
 };
