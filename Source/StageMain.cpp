@@ -7,9 +7,11 @@ StageMain::StageMain()
 {
     //instance = this;
     //ステージモデルの読み込み
-    model = new Model("Data/Model/Bullet/Bullete.mdl");
-
-    color = { 1,0,0,1 };
+    model = new Model("Data/Model/Stage/Stage.mdl");
+    scale = { 2.0f,2.0f,2.0f };
+    color = { 1,1,1,1 };
+    UpdateTransform();
+    model->UpdateTransform(transform);
 }
 
 //デストラクタ

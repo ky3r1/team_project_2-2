@@ -53,13 +53,15 @@ void SceneGame::Initialize()
 
 #ifdef HPGAUGE
 	gauge = new Sprite;
+	Mouse_Cursor = new sprite_batch(L"Data\\Sprite\\mousecursor2.png", 1);
+
 #endif // HPGAUGE
 
 #ifdef  ALLPLAYER
 	player = new Player();
 #endif //  ALLPLAYER
 
-
+	bgm = Audio::Instance().LoadAudioSource("Data/Audio/Neon_Garden.wav");
 
 	//カメラ初期設定
 	Graphics& graphics = Graphics::Instance();
@@ -80,6 +82,7 @@ void SceneGame::Initialize()
 #ifdef ALLENEMY
 #ifdef ENEMYSLIME
 	int index = 0;
+	enemy_timer = 0;
 	while (index < 3)
 	{
 		//Blue
@@ -104,6 +107,8 @@ void SceneGame::Initialize()
 // 終了化
 void SceneGame::Finalize()
 {
+	bgm->Stop();
+
 	//エネミー終了化
 	EnemyManager::Instance().clear();
 
@@ -123,13 +128,16 @@ void SceneGame::Finalize()
 		delete gauge;
 		gauge = nullptr;
 	}
-
+	delete Mouse_Cursor;
+	Mouse_Cursor = nullptr;
 	StageManager::Instance().Clear();
 }
 
 // 更新処理
 void SceneGame::Update(float elapsedTime)
 {
+	bgm->Play(true);
+
 	//カメラコントローラー更新処理
 #ifdef  ALLPLAYER
 	DirectX::XMFLOAT3 target = player->GetPosition();
@@ -149,10 +157,30 @@ void SceneGame::Update(float elapsedTime)
 	if(player->PlayerDead())SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
 #endif //  ALLPLAYER
 
-
 	//エネミー更新処理
 	EnemyManager::Instance().Update(elapsedTime);
 	EnemyManager::Instance().EnemyMove(player);
+	EnemySlime* slime;
+	enemy_timer++;
+	switch (enemy_timer)
+	{
+	case 60:
+		slime = new EnemySlime(BLUE, rand() % 8);
+		EnemyManager::Instance().Register(slime);
+		break;
+	case 120:
+		slime = new EnemySlime(RED, rand() % 8);
+		EnemyManager::Instance().Register(slime);
+		break;
+	case 180:
+		slime = new EnemySlime(GREEN, rand() % 8);
+		EnemyManager::Instance().Register(slime);
+		break;
+	case 240:
+		enemy_timer = 0;
+		break;
+	}
+	
 
 	//エフェクト更新処理
 	EffectManager::Instance().Update(elapsedTime);
@@ -165,6 +193,9 @@ void SceneGame::Render()
 	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
 	ID3D11RenderTargetView* rtv = graphics.GetRenderTargetView();
 	ID3D11DepthStencilView* dsv = graphics.GetDepthStencilView();
+
+
+	Mouse& mouse = Input::Instance().GetMouse();
 
 	// 画面クリア＆レンダーターゲット設定
 	FLOAT color[] = { 0.4f, 0.4f, 0.4f, 1.0f };	// RGBA(0.0～1.0)
@@ -223,6 +254,10 @@ void SceneGame::Render()
 #ifdef HPGAUGE
 		RenderEnemyGauge(dc, rc.view, rc.projection);
 		RenderPlayerGauge(dc, rc.view, rc.projection);
+		Mouse_Cursor->begin(graphics.GetDeviceContext(), 0);
+		Mouse_Cursor->render(graphics.GetDeviceContext(),
+			mouse.GetPositionX() - 50, mouse.GetPositionY() - 50, 100, 100, 1, 1, 1, 1, 0);
+		Mouse_Cursor->end(graphics.GetDeviceContext());
 #endif // HPGAUGE
 #ifdef ENEMYADD
 		CrickEnemyAdd(dc, rc.view, rc.projection);
@@ -296,25 +331,25 @@ void SceneGame::CharacterGauge(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X
 
 	player->SetScreenPos(position);
 
-	for (int i = 0; i < health; ++i)
-	{
-		gauge->Render(
-			dc,
-			position.x - 25 + i * 10, position.y - 70,
-			9, 10,
-			100, 100,
-			25, 10,
-			0,
-			gaugecolor.x, gaugecolor.y, gaugecolor.z, gaugecolor.w);
-		gauge->Render(
-			dc,
-			position.x - 25 + i * 10, position.y - 70,
-			1, 10,
-			100, 100,
-			25, 10,
-			0,
-			0, 0, 0, 1);
-	}
+	//for (int i = 0; i < health; ++i)
+	//{
+	//	gauge->Render(
+	//		dc,
+	//		position.x - 25 + i * 10, position.y - 70,
+	//		9, 10,
+	//		100, 100,
+	//		25, 10,
+	//		0,
+	//		gaugecolor.x, gaugecolor.y, gaugecolor.z, gaugecolor.w);
+	//	gauge->Render(
+	//		dc,
+	//		position.x - 25 + i * 10, position.y - 70,
+	//		1, 10,
+	//		100, 100,
+	//		25, 10,
+	//		0,
+	//		0, 0, 0, 1);
+	//}
 }
 
 void SceneGame::CrickEnemyAdd(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection)

@@ -6,6 +6,8 @@
 #include "Scene.h"
 #include "Graphics/Sprite.h"
 #include "EnemySlime.h"
+#include "Audio/Audio.h"
+
 
 // ÉQÅ[ÉÄÉVÅ[Éì
 class SceneTutorial : public Scene
@@ -39,8 +41,12 @@ private:
 	int game_timer = 0;
 	bool enemyAdd = false;
 	bool clear_check = false;
+	bool key_check = false;
 
-	std::unique_ptr<sprite_batch> ui[10];
+	//std::unique_ptr<sprite_batch> ui[6];
+	sprite_batch* ui[11];
+	sprite_batch* Mouse_Cursor = nullptr;
 
-
+	std::unique_ptr<AudioSource> se;
+	std::unique_ptr<AudioSource> se2;
 };

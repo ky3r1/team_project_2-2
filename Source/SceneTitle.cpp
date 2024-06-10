@@ -10,7 +10,10 @@
 void SceneTitle::Initialize()
 {
     //スプライト初期化
-    sprite = new Sprite("Data/Sprite/Title.png");
+    sprite = new Sprite("Data/Sprite/tital.png");
+    start = new Sprite("Data/Sprite/STRAT.png");
+    tutorial = new Sprite("Data/Sprite/tutorial.png");
+    mouse_cursor = new Sprite("Data/Sprite/mousecursor1.png");
 }
 
 void SceneTitle::Finalize()
@@ -20,6 +23,21 @@ void SceneTitle::Finalize()
     {
         delete sprite;
         sprite = nullptr;
+    }
+    if (start != nullptr)
+    {
+        delete start;
+        start = nullptr;
+    }
+    if (mouse_cursor != nullptr)
+    {
+        delete mouse_cursor;
+        mouse_cursor = nullptr;
+    }
+    if (tutorial != nullptr)
+    {
+        delete tutorial;
+        tutorial = nullptr;
     }
 }
 
@@ -33,6 +51,30 @@ void SceneTitle::Update(float elapsedTime)
         | GamePad::BTN_X
         | GamePad::BTN_Y
         ;
+    if (mouse.GetPositionX() > 130 &&
+        mouse.GetPositionX() < 530 &&
+        mouse.GetPositionY() > 440 &&
+        mouse.GetPositionY() < 561
+        )
+    {
+        if (mouse.GetButton() & mouse.BTN_LEFT)
+        {
+            SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+
+        }
+    }
+    if (mouse.GetPositionX() > 600 &&
+        mouse.GetPositionX() < 1090 &&
+        mouse.GetPositionY() > 440 &&
+        mouse.GetPositionY() < 561
+        )
+    {
+        if (mouse.GetButton() & mouse.BTN_LEFT)
+        {
+            SceneManager::Instance().ChangeScene(new SceneLoading(new SceneTutorial));
+
+        }
+    }
     if (gamePad.GetButtonDown() & anyButton)
     {
         SceneManager::Instance().ChangeScene(new SceneLoading(new SceneTutorial));
@@ -62,6 +104,21 @@ void SceneTitle::Render()
         sprite->Render(dc,
             0, 0, screenWidth, screenHeight,
             0, 0, textureWidth, textureHeight,
+            0,
+            1, 1, 1, 1);
+        start->Render(dc,
+            130, 440, 400, 121,
+            0, 0, 490, 121,
+            0,
+            1, 1, 1, 1);
+        tutorial->Render(dc,
+            600, 440, 490, 121,
+            0, 0, 709, 121,
+            0,
+            1, 1, 1, 1);
+        mouse_cursor->Render(dc,
+            mouse.GetPositionX() - 50, mouse.GetPositionY() - 50, 100, 100,
+            0, 0, 100, 100,
             0,
             1, 1, 1, 1);
     }

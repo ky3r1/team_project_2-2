@@ -4,6 +4,8 @@
 #include "CameraController.h"
 #include "Scene.h"
 #include "Graphics/Sprite.h"
+#include "Graphics/sprite_bach.h"
+#include "Audio/Audio.h"
 
 // ÉQÅ[ÉÄÉVÅ[Éì
 class SceneGame : public Scene
@@ -32,4 +34,8 @@ private:
 	Player* player = nullptr;
 	CameraController* cameraController = nullptr;
 	Sprite* gauge = nullptr;
+	sprite_batch* Mouse_Cursor = nullptr;
+	int enemy_timer = 0;
+	//Audio audio;
+	std::unique_ptr<AudioSource> bgm;
 };

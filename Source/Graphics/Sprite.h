@@ -30,6 +30,15 @@ public:
 		float angle,
 		float r, float g, float b, float a) const;
 
+	// ï`âÊé¿çs
+	void Render(ID3D11DeviceContext* dc,
+		DirectX::XMFLOAT2 pos,
+		DirectX::XMFLOAT2 endpos,
+		DirectX::XMFLOAT2 size,
+		DirectX::XMFLOAT2 endsize,
+		float angle,
+		DirectX::XMFLOAT4 color ) const;
+
 	void textout(ID3D11DeviceContext* immediate_context, std::string s,
 		float x, float y, float w, float h, float color[]);
 

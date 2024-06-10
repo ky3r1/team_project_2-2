@@ -15,6 +15,7 @@
 #include "SceneLoading.h"
 #include "SceneResult.h"
 #include "SceneGame.h"
+#include "SceneTitle.h"
 
 //StageIncldue
 #include "StageManager.h"
@@ -54,17 +55,33 @@ void SceneTutorial::Initialize()
 
 #ifdef HPGAUGE
 	gauge = new Sprite;
-	ui[0]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\Left_mouse.png",1);
-	ui[1]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\Right_mouse.png",1);
-	ui[2]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_3.png",1);
-	ui[3]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_4.png",1);
-	ui[4]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_5.png",1);
-	ui[5]=std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_6.png",1);
+	/*ui[0] = std::make_unique<sprite_batch>(L".\\Data\\Sprite\\Left_mouse.png", 1);
+	ui[1] = std::make_unique<sprite_batch>(L".\\Data\\Sprite\\Right_mouse.png", 1);
+	ui[2] = std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_3.png", 1);
+	ui[3] = std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_4.png", 1);
+	ui[4] = std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_5.png", 1);
+	ui[5] = std::make_unique<sprite_batch>(L".\\Data\\Sprite\\telop_6.png", 1);*/
+	ui[0] = new sprite_batch(L".\\Data\\Sprite\\Left_mouse.png", 1);
+	ui[1] = new sprite_batch(L".\\Data\\Sprite\\Right_mouse.png", 1);
+	ui[2] = new sprite_batch(L".\\Data\\Sprite\\telop_3.png", 1);
+	ui[3] = new sprite_batch(L".\\Data\\Sprite\\telop_4.png", 1);
+	ui[4] = new sprite_batch(L".\\Data\\Sprite\\telop_5.png", 1);
+	ui[5] = new sprite_batch(L".\\Data\\Sprite\\telop_6.png", 1);
+	ui[6] = new sprite_batch(L".\\Data\\Sprite\\check.png", 1);
+	ui[7] = new sprite_batch(L".\\Data\\Sprite\\message_window.png", 1);
+	ui[8] = new sprite_batch(L".\\Data\\Sprite\\telop_2.png", 1);
+	ui[9] = new sprite_batch(L".\\Data\\Sprite\\telop_1.png", 1);
+	ui[10] = new sprite_batch(L".\\Data\\Sprite\\telop_7.png", 1);
+	Mouse_Cursor = new sprite_batch(L"Data\\Sprite\\mousecursor2.png", 1);
+
 #endif // HPGAUGE
 
 #ifdef  ALLPLAYER
 	player = new Player();
 #endif //  ALLPLAYER
+
+	se = Audio::Instance().LoadAudioSource("Data/Audio/説明ウインドウが開く.wav");
+	se2 = Audio::Instance().LoadAudioSource("Data/Audio/成功音.wav");
 
 	game_timer = 0;
 
@@ -122,13 +139,16 @@ void SceneTutorial::Finalize()
 		delete gauge;
 		gauge = nullptr;
 	}
-
+	delete Mouse_Cursor;
+	Mouse_Cursor = nullptr;
 	StageManager::Instance().Clear();
 }
 
 // 更新処理
 void SceneTutorial::Update(float elapsedTime)
 {
+	se->Play(false);
+
 	Mouse& mouse = Input::Instance().GetMouse();
 	GamePad& gamePad = Input::Instance().GetGamePad();
 
@@ -160,8 +180,11 @@ void SceneTutorial::Update(float elapsedTime)
 
 	if (clear_check == true)
 	{
+		se2->Play(false);
+
 		if (gamePad.GetButtonDown() & GamePad::BTN_B)
 		{
+			key_check = false;
 			clear_check = false;
 			enemyAdd = true;
 			game_timer++;
@@ -181,10 +204,10 @@ void SceneTutorial::Update(float elapsedTime)
 		{
 			EnemyManager& enemyManager = EnemyManager::Instance();
 			slime = new EnemySlime(RED, 0);
-			slime->SetPosition(DirectX::XMFLOAT3(2, 1, 2));
+			slime->SetPosition(DirectX::XMFLOAT3(6, 1, -5));
 			enemyManager.Register(slime);
 			slime = new EnemySlime(BLUE, 0);
-			slime->SetPosition(DirectX::XMFLOAT3(0, 1, 2));
+			slime->SetPosition(DirectX::XMFLOAT3(-4, 1, -7));
 			enemyManager.Register(slime);
 		}
 		enemyAdd = false;
@@ -195,13 +218,13 @@ void SceneTutorial::Update(float elapsedTime)
 	}
 	if (game_timer == 2)
 	{
-		/*if (enemyAdd == true)
+		if (enemyAdd == true)
 		{
 			EnemyManager& enemyManager = EnemyManager::Instance();
 		    slime = new EnemySlime(GREEN, 0);
-			slime->SetPosition(DirectX::XMFLOAT3(2, 1, 2));
+			slime->SetPosition(DirectX::XMFLOAT3(3, 1, -3));
 			enemyManager.Register(slime);
-		}*/
+		}
 		enemyAdd = false;
 		if (slime->GetHealth() <= 0)
 		{
@@ -214,20 +237,27 @@ void SceneTutorial::Update(float elapsedTime)
 		{
 			EnemyManager& enemyManager = EnemyManager::Instance();
 			slime = new EnemySlime(BLUE, 0);
-			slime->SetPosition(DirectX::XMFLOAT3(2, 1, 2));
+			slime->SetPosition(DirectX::XMFLOAT3(0, 1, 1));
 			enemyManager.Register(slime);
 		}
 		enemyAdd = false;
-		if (slime->GetHealth() <= 0)
+		if (gamePad.GetButtonDown() & GamePad::BTN_A)
 		{
+			key_check = true;
+		}
+		if (key_check == true && slime->GetHealth() <= 0)
+		{
+			clear_check = true;
 
 		}
 	}
-	if(game_timer==4)
+	
+	if (game_timer == 4)
 	{
 		if (gamePad.GetButtonDown() & GamePad::BTN_B)
 		{
-			SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+			SceneManager::Instance().ChangeScene(new SceneLoading(new SceneTitle));
+			game_timer = 0;
 		}
 	}
 }
@@ -239,6 +269,8 @@ void SceneTutorial::Render()
 	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
 	ID3D11RenderTargetView* rtv = graphics.GetRenderTargetView();
 	ID3D11DepthStencilView* dsv = graphics.GetDepthStencilView();
+
+	Mouse& mouse = Input::Instance().GetMouse();
 
 	// 画面クリア＆レンダーターゲット設定
 	FLOAT color[] = { 0.4f, 0.4f, 0.4f, 1.0f };	// RGBA(0.0～1.0)
@@ -297,20 +329,79 @@ void SceneTutorial::Render()
 #ifdef HPGAUGE
 		RenderEnemyGauge(dc, rc.view, rc.projection);
 		RenderPlayerGauge(dc, rc.view, rc.projection);
-		ui[0]->begin(graphics.GetDeviceContext(), 0);
-		ui[0]->render(graphics.GetDeviceContext(), 100, 200, 480, 360, 1, 1, 1, 1, 0, 0, 0, 480, 360);
-		ui[0]->end(graphics.GetDeviceContext());
+		if (game_timer == 0)
+		{
+			ui[7]->begin(graphics.GetDeviceContext(), 0);
+			ui[7]->render(graphics.GetDeviceContext(), 130, 350, 1400, 650, 1, 1, 1, 0.7f, 0, 0, 0, 1920, 1080);
+			ui[7]->end(graphics.GetDeviceContext());
+			ui[2]->begin(graphics.GetDeviceContext(), 0);
+			ui[2]->render(graphics.GetDeviceContext(), 400, 500, 283, 67, 1, 1, 1, 1, 0, 0, 0, 283, 67);
+			ui[2]->end(graphics.GetDeviceContext());
+		}
+		if (game_timer == 1)
+		{
+			ui[7]->begin(graphics.GetDeviceContext(), 0);
+			ui[7]->render(graphics.GetDeviceContext(), 130, 350, 1400, 650, 1, 1, 1, 0.7f, 0, 0, 0, 1920, 1080);
+			ui[7]->end(graphics.GetDeviceContext());
+			ui[1]->begin(graphics.GetDeviceContext(), 0);
+			ui[1]->render(graphics.GetDeviceContext(), 720, 450, 300, 220, 1, 1, 1, 1, 0, 0, 0, 480, 360);
+			ui[1]->end(graphics.GetDeviceContext());
+			ui[3]->begin(graphics.GetDeviceContext(), 0);
+			ui[3]->render(graphics.GetDeviceContext(), 400, 500, 375, 75, 1, 1, 1, 1, 0, 0, 0, 375, 75);
+			ui[3]->end(graphics.GetDeviceContext());
+			ui[4]->begin(graphics.GetDeviceContext(), 0);
+			ui[4]->render(graphics.GetDeviceContext(), 400, 560, 416, 47, 1, 1, 1, 1, 0, 0, 0, 416, 47);
+			ui[4]->end(graphics.GetDeviceContext());
+		}
+		if (game_timer == 2)
+		{
+			ui[7]->begin(graphics.GetDeviceContext(), 0);
+			ui[7]->render(graphics.GetDeviceContext(), 130, 350, 1400, 650, 1, 1, 1, 0.7f, 0, 0, 0, 1920, 1080);
+			ui[7]->end(graphics.GetDeviceContext());
+			ui[0]->begin(graphics.GetDeviceContext(), 0);
+			ui[0]->render(graphics.GetDeviceContext(), 720, 450, 300, 220, 1, 1, 1, 1, 0, 0, 0, 480, 360);
+			ui[0]->end(graphics.GetDeviceContext());
+			ui[5]->begin(graphics.GetDeviceContext(), 0);
+			ui[5]->render(graphics.GetDeviceContext(), 400, 500, 300, 50, 1, 1, 1, 1, 0, 0, 0, 272, 46);
+			ui[5]->end(graphics.GetDeviceContext());
+			ui[10]->begin(graphics.GetDeviceContext(), 0);
+			ui[10]->render(graphics.GetDeviceContext(), 400, 530, 300, 50, 1, 1, 1, 1, 0, 0, 0, 446, 68);
+			ui[10]->end(graphics.GetDeviceContext());
+		}
+		if (game_timer == 3)
+		{
+			ui[7]->begin(graphics.GetDeviceContext(), 0);
+			ui[7]->render(graphics.GetDeviceContext(), 130, 350, 1400, 650, 1, 1, 1, 0.7f, 0, 0, 0, 1920, 1080);
+			ui[7]->end(graphics.GetDeviceContext());
+			ui[9]->begin(graphics.GetDeviceContext(), 0);
+			ui[9]->render(graphics.GetDeviceContext(), 400, 500, 300, 50, 1, 1, 1, 1, 0, 0, 0, 321, 46);
+			ui[9]->end(graphics.GetDeviceContext());
+
+		}
+		if (clear_check == true)
+		{
+			ui[6]->begin(graphics.GetDeviceContext(), 0);
+			ui[6]->render(graphics.GetDeviceContext(), 600, 400, 258, 258, 1, 1, 1, 1, 0, 0, 0, 258, 258);
+			ui[6]->end(graphics.GetDeviceContext());
+			ui[8]->begin(graphics.GetDeviceContext(), 0);
+			ui[8]->render(graphics.GetDeviceContext(), 950, 540, 200, 69, 1, 1, 1, 1, 0, 0, 0, 450, 69);
+			ui[8]->end(graphics.GetDeviceContext());
+		}
+		Mouse_Cursor->begin(graphics.GetDeviceContext(), 0);
+		Mouse_Cursor->render(graphics.GetDeviceContext(),
+			mouse.GetPositionX() - 50, mouse.GetPositionY() - 50, 100,100,1,1,1,1,0);
+		Mouse_Cursor->end(graphics.GetDeviceContext());
 #endif // HPGAUGE
 #ifdef ENEMYADD
-		CrickEnemyAdd(dc, rc.view, rc.projection);
+		//CrickEnemyAdd(dc, rc.view, rc.projection);
 #endif // ENEMYADD
 	}
 
 #ifdef DEBUGIMGUI
-	player->DrawDebugGUI();
+	/*player->DrawDebugGUI();
 	cameraController->DrawDebugGUI();
 	EnemyManager::Instance().DrawDebugGUI();
-	StageManager::Instance().DrawDebugGUI();
+	StageManager::Instance().DrawDebugGUI();*/
 #endif // DebugImGui
 }
 
@@ -373,25 +464,25 @@ void SceneTutorial::CharacterGauge(ID3D11DeviceContext* dc, const DirectX::XMFLO
 
 	player->SetScreenPos(position);
 
-	for (int i = 0; i < health; ++i)
-	{
-		gauge->Render(
-			dc,
-			position.x - 25 + i * 10, position.y - 70,
-			9, 10,
-			100, 100,
-			25, 10,
-			0,
-			gaugecolor.x, gaugecolor.y, gaugecolor.z, gaugecolor.w);
-		gauge->Render(
-			dc,
-			position.x - 25 + i * 10, position.y - 70,
-			1, 10,
-			100, 100,
-			25, 10,
-			0,
-			0, 0, 0, 1);
-	}
+	//for (int i = 0; i < health; ++i)
+	//{
+	//	gauge->Render(
+	//		dc,
+	//		position.x - 25 + i * 10, position.y - 70,
+	//		9, 10,
+	//		100, 100,
+	//		25, 10,
+	//		0,
+	//		gaugecolor.x, gaugecolor.y, gaugecolor.z, gaugecolor.w);
+	//	gauge->Render(
+	//		dc,
+	//		position.x - 25 + i * 10, position.y - 70,
+	//		1, 10,
+	//		100, 100,
+	//		25, 10,
+	//		0,
+	//		0, 0, 0, 1);
+	//}
 }
 
 void SceneTutorial::CrickEnemyAdd(ID3D11DeviceContext* dc, const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection)

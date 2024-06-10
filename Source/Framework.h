@@ -28,5 +28,7 @@ private:
 	Audio					audio;
 	Graphics				graphics;
 	Input					input;
+
+	//std::unique_ptr<AudioSource>	se;
 };
 
