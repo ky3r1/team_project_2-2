@@ -70,6 +70,6 @@ void SceneResult::Render()
             0, 0, textureWidth, textureHeight,
             0,
             1, 1, 0, 1);
-        score->textout(dc, "score", 400, 600, 300, 300, { 1,1,1,1 });
+        score->textout(dc, "score", 100, 200, 100, 100, { 1,1,1,1 });
     }
 }

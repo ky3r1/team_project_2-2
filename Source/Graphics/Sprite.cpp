@@ -201,6 +201,8 @@ Sprite::Sprite(const char* filename)
 		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 		texture2d->GetDesc(&desc);
 
+		texture2d_desc = desc;
+
 		textureWidth = desc.Width;
 		textureHeight = desc.Height;
 	}
