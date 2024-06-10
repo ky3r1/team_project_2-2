@@ -1,4 +1,5 @@
 #include "SceneTutorial.h"
+#include "Graphics/video.h"
 
 //CameraInclude
 #include "Camera.h"
@@ -22,7 +23,6 @@
 //#include "StageWall.h"
 
 #include "Input/Input.h"
-
 
 // 初期化
 void SceneTutorial::Initialize()
@@ -84,6 +84,9 @@ void SceneTutorial::Initialize()
 	);
 	//カメラコントローラー初期化
 	cameraController = new CameraController();
+
+
+
 #ifdef ALLENEMY
 #ifdef ENEMYSLIME
 	/*for (int index = 0; index < 2; index++)
@@ -119,7 +122,7 @@ void SceneTutorial::Finalize()
 		delete gauge;
 		gauge = nullptr;
 	}
-	
+
 	StageManager::Instance().Clear();
 }
 
@@ -217,7 +220,7 @@ void SceneTutorial::Update(float elapsedTime)
 		enemyAdd = false;
 		if (slime->GetHealth() <= 0)
 		{
-			
+
 		}
 	}
 	if(game_timer==4)
@@ -251,6 +254,7 @@ void SceneTutorial::Render()
 	Camera& camera = Camera::Instance();
 	rc.view = camera.GetView();
 	rc.projection = camera.GetProjection();
+
 
 	// 3Dモデル描画
 	{

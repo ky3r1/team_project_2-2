@@ -197,6 +197,12 @@
     <ClInclude Include="Source\MouseManager.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Graphics\video.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\resource.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -338,6 +344,9 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneTutorial.cpp" />
+    <ClCompile Include="Source\Graphics\video.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="HLSL\Debug.hlsli">
