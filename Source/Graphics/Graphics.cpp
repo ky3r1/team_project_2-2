@@ -54,7 +54,7 @@ Graphics::Graphics(HWND hWnd)
 			swapchainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 			swapchainDesc.BufferCount = 1;		// バックバッファの数
 			swapchainDesc.OutputWindow = hWnd;	// DirectXで描いた画を表示するウインドウ
-			swapchainDesc.Windowed = TRUE;		// ウインドウモードか、フルスクリーンにするか。
+			swapchainDesc.Windowed = FALSE;		// ウインドウモードか、フルスクリーンにするか。
 			swapchainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 			swapchainDesc.Flags = 0; // DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH
 		}

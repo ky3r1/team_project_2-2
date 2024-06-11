@@ -16,6 +16,10 @@ void SceneResult::Initialize()
     //スプライト初期化
     sprite = new Sprite("Data/Sprite/Title.png");
     score = new Sprite("Data/Font/font2.png");
+    back_ground = new Sprite("Data/Sprite/back_ground.png");
+    //posX = 300;
+    totalTime = 120;
+    currentTime = 0;
 }
 
 void SceneResult::Finalize()
@@ -43,6 +47,17 @@ void SceneResult::Update(float elapsedTime)
     {
         SceneManager::Instance().ChangeScene(new SceneLoading(new SceneTitle));
     }
+    ease = true;
+    currentTime++;
+
+    /*if(ease=true)
+    {
+        posX = easeOutElastic(totalTime / currentTime);
+        if (currentTime > totalTime)
+        {
+            ease = false;
+        }
+    }*/
 }
 
 void SceneResult::Render()
@@ -66,12 +81,17 @@ void SceneResult::Render()
         float textureWidth = static_cast<float>(sprite->GetTextureWidth());
         float textureHeight = static_cast<float>(sprite->GetTextureHeight());
         //タイトルスプライト描画
+        back_ground->Render(dc,
+            0, 0, 1920, 1080,
+            0, 0, textureWidth, textureHeight,
+            0,
+            1, 1, 1, 1);
         sprite->Render(dc,
             0, 0, 1920, 1080,
             0, 0, textureWidth, textureHeight,
             0,
-            0,0, 0, 1);
-        score->textout(dc, "score:", 100, 200, 100, 100, { 1,1,1,1 });
-        score->textout(dc, Score, 800, 200, 100, 100, { 1,1,1,1 });
+            0,0, 0, 0.7f);
+        score->textout(dc, "score:", 300, 400, 100, 100, { 1,1,1,1 });
+        score->textout(dc, Score, 1000, 400, 100, 100, { 1,1,1,1 });
     }
 }
