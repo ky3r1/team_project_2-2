@@ -44,7 +44,7 @@ EnemySlime::EnemySlime(int category,int index)
 
     }
 
-    enemy_speed = { 5.0f,2.0f };//X:エネミーのスピード、Y:エネミーのターンスピード
+    enemy_speed = { 6.0f,2.0f };//X:エネミーのスピード、Y:エネミーのターンスピード
     enemy_category = category;
     ChangeColor(color, enemy_category);
 }

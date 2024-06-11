@@ -51,10 +51,10 @@ void SceneTitle::Update(float elapsedTime)
         | GamePad::BTN_X
         | GamePad::BTN_Y
         ;
-    if (mouse.GetPositionX() > 130 &&
-        mouse.GetPositionX() < 530 &&
-        mouse.GetPositionY() > 440 &&
-        mouse.GetPositionY() < 561
+    if (mouse.GetPositionX() > 300 &&
+        mouse.GetPositionX() < 700 &&
+        mouse.GetPositionY() > 600 &&
+        mouse.GetPositionY() < 721
         )
     {
         if (mouse.GetButton() & mouse.BTN_LEFT)
@@ -63,10 +63,10 @@ void SceneTitle::Update(float elapsedTime)
 
         }
     }
-    if (mouse.GetPositionX() > 600 &&
-        mouse.GetPositionX() < 1090 &&
-        mouse.GetPositionY() > 440 &&
-        mouse.GetPositionY() < 561
+    if (mouse.GetPositionX() > 850 &&
+        mouse.GetPositionX() < 1340 &&
+        mouse.GetPositionY() > 600 &&
+        mouse.GetPositionY() < 721
         )
     {
         if (mouse.GetButton() & mouse.BTN_LEFT)
@@ -107,12 +107,12 @@ void SceneTitle::Render()
             0,
             1, 1, 1, 1);
         start->Render(dc,
-            130, 440, 400, 121,
+            300, 600, 400, 121,
             0, 0, 490, 121,
             0,
             1, 1, 1, 1);
         tutorial->Render(dc,
-            600, 440, 490, 121,
+            850, 600, 490, 121,
             0, 0, 709, 121,
             0,
             1, 1, 1, 1);

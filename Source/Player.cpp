@@ -12,8 +12,8 @@
 //TODO:’e‚ÌDelayTime
 #define DELAYAUTOTIME 40
 int a = 0;
-#define DELAYALLANGLETIME 60
-#define DELAYFRONTTIME 60
+#define DELAYALLANGLETIME 40
+#define DELAYFRONTTIME 30
 
 //TODO:PlayerDamage‚Ì“–‚½‚è”»’è‚ÌDelayTime
 #define DELAYPLAYERVSENEMY 60
@@ -49,7 +49,7 @@ Player::Player()
     projectile_front.time = DELAYFRONTTIME;
 
     hit_delay.time = DELAYPLAYERVSENEMY;
-    moveSpeed = 5.0f;
+    moveSpeed = 9.0f;
 
     for (int i = 0; i < 5; i++)enemy_score[i] = 0;
     total_score   = 0;
@@ -209,8 +209,8 @@ void Player::Render(ID3D11DeviceContext* dc, Shader* shader)
     }
 
     //Arrow
-    sp_pos = { 50,550 };
-    sp_endpos = { 100,100 };
+    sp_pos = { 50,850 };
+    sp_endpos = { 200,200 };
     sp_size = { 0,0 };
     sp_endsize = { 100,100 };
     sp_color = { 1,1,1,1 };
@@ -221,8 +221,8 @@ void Player::Render(ID3D11DeviceContext* dc, Shader* shader)
     Arrow->Render(dc, sp_pos, sp_endpos, sp_size, sp_endsize, 0, sp_color);
 
     //Arrow
-    sp_pos = { 150,550 };
-    sp_endpos = { 100,100 };
+    sp_pos = { 250,850 };
+    sp_endpos = { 200,200 };
     sp_size = { 0,0 };
     sp_endsize = { 100,100 };
     switch (player_category)
